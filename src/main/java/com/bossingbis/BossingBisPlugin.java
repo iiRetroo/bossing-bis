@@ -47,6 +47,8 @@ import net.runelite.api.GameState;
 import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.ScriptID;
+import net.runelite.api.Quest;
+import net.runelite.api.QuestState;
 import net.runelite.api.Skill;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.ItemContainerChanged;
@@ -738,6 +740,21 @@ public class BossingBisPlugin extends Plugin
 	{
 		selectedAmmo = ammoId;
 		updateHighlights();
+		planAgainIfBestStyleChanged();
+	}
+
+	/**
+	 * When a cheaper ammo or spell makes another style the best, plans the inventory again for it
+	 * (its potions and so on). Otherwise nothing is searched again.
+	 */
+	private void planAgainIfBestStyleChanged()
+	{
+		OptimizationOutcome o = outcome;
+		StyleResult now = o == null ? null : o.best(selectedAmmo, selectedSpell);
+		if (now != null && now.getType() != o.getPlannedType())
+		{
+			clientThread.invokeLater(() -> recalculate(Trigger.FORCE));
+		}
 	}
 
 	Integer getSelectedAmmo()
@@ -753,6 +770,7 @@ public class BossingBisPlugin extends Plugin
 		selectedSpell = spell;
 		// a cheaper spell can make another style the best
 		updateHighlights();
+		planAgainIfBestStyleChanged();
 	}
 
 	boolean isHighlighting()
@@ -920,6 +938,8 @@ public class BossingBisPlugin extends Plugin
 				}
 			}
 		}
+		// runes in the rune pouch count as owned, though they aren't items in the bank
+		addRunePouch(quantitiesByName, anyIdByName);
 		OwnedItems owned = OwnedItems.of(quantitiesByName, bankIdsByName, anyIdByName);
 		Map<Integer, String> names = new HashMap<>(itemNames);
 
@@ -975,7 +995,9 @@ public class BossingBisPlugin extends Plugin
 		Settings settings = new Settings(boss, selectedMonsterId, config.showPreparation(),
 			config.prayerPotions(), config.prayerRestore(), config.combatPotions(), config.fillFood(),
 			config.lootTools().getMaxKills(), config.specWeapon(), config.burstTargets(), selectedFood,
-			config.serpentineHelm(), config.planSwitches(), config.switchTolerance(), config.wikiSwitches());
+			config.serpentineHelm(), config.planSwitches(), config.switchTolerance(), config.wikiSwitches(), selectedAmmo,
+			selectedSpell, spellbookName(), client.getRealSkillLevel(Skill.MAGIC), finishedQuests(prep.data().spellQuests()),
+			client.getVarbitValue(VarbitID.LUMBRIDGE_DIARY_ELITE_COMPLETE) == 1);
 
 		cancelRunning();
 		SwingUtilities.invokeLater(() ->
@@ -1036,6 +1058,14 @@ public class BossingBisPlugin extends Plugin
 		boolean planSwitches;
 		int switchTolerance;
 		boolean wikiSwitches;
+		/** Ammo and spell picked in the panel, so the inventory is planned for the style they make best. */
+		Integer selectedAmmo;
+		String selectedSpell;
+		/** For teleport spells and fairy rings. */
+		String spellbook;
+		int magicLevel;
+		Set<String> finishedQuests;
+		boolean fairyRingsWithoutStaff;
 	}
 
 	private PlayerSetup buildSetup()
@@ -1076,6 +1106,59 @@ public class BossingBisPlugin extends Plugin
 			.kandarinHardDiary(config.kandarinHard())
 			.blowpipeDartStrength(config.blowpipeDart().getRangedStrength())
 			.build();
+	}
+
+	/** Spellbook names by the SPELLBOOK varbit's value. */
+	private static final String[] SPELLBOOKS = {"standard", "ancient", "lunar", "arceuus"};
+	private static final int[] RUNE_POUCH_TYPES = {VarbitID.RUNE_POUCH_TYPE_1, VarbitID.RUNE_POUCH_TYPE_2,
+		VarbitID.RUNE_POUCH_TYPE_3, VarbitID.RUNE_POUCH_TYPE_4};
+	private static final int[] RUNE_POUCH_QUANTITIES = {VarbitID.RUNE_POUCH_QUANTITY_1, VarbitID.RUNE_POUCH_QUANTITY_2,
+		VarbitID.RUNE_POUCH_QUANTITY_3, VarbitID.RUNE_POUCH_QUANTITY_4};
+
+	/**
+	 * The spellbook the player is on, for teleport spells. Runs on the client thread.
+	 */
+	private String spellbookName()
+	{
+		int value = client.getVarbitValue(VarbitID.SPELLBOOK);
+		return value >= 0 && value < SPELLBOOKS.length ? SPELLBOOKS[value] : null;
+	}
+
+	/**
+	 * Which of these quests (RuneLite Quest names) the player has finished. Runs on the client thread.
+	 */
+	private Set<String> finishedQuests(Set<String> names)
+	{
+		Set<String> out = new HashSet<>();
+		for (Quest quest : Quest.values())
+		{
+			if (names.contains(quest.name()) && quest.getState(client) == QuestState.FINISHED)
+			{
+				out.add(quest.name());
+			}
+		}
+		return out;
+	}
+
+	/**
+	 * Adds the runes in the rune pouch to what the player owns: they aren't items in the bank. Read
+	 * the way RuneLite's Rune Pouch plugin reads them. Runs on the client thread.
+	 */
+	private void addRunePouch(Map<String, Integer> quantitiesByName, Map<String, Integer> anyIdByName)
+	{
+		EnumComposition runes = client.getEnum(EnumID.RUNEPOUCH_RUNE);
+		for (int i = 0; i < RUNE_POUCH_TYPES.length; i++)
+		{
+			int type = client.getVarbitValue(RUNE_POUCH_TYPES[i]);
+			int quantity = client.getVarbitValue(RUNE_POUCH_QUANTITIES[i]);
+			int itemId = type > 0 && quantity > 0 ? runes.getIntValue(type) : -1;
+			if (itemId > 0)
+			{
+				String name = itemNames.computeIfAbsent(itemId, id -> itemManager.getItemComposition(id).getName());
+				quantitiesByName.merge(name, quantity, Integer::sum);
+				anyIdByName.putIfAbsent(name, itemId);
+			}
+		}
 	}
 
 	private static int boost(int level, int flat, int percent)
@@ -1194,15 +1277,10 @@ public class BossingBisPlugin extends Plugin
 
 			OptimizationOutcome.CurrentGear current = currentGear(setup, monster, worn);
 
-			StyleResult best = null;
-			for (StyleResult r : results.values())
-			{
-				if (r.isValid() && (best == null || r.getResult().getDps() > best.getResult().getDps()))
-				{
-					best = r;
-				}
-			}
-
+			// the best style with the ammo and spell picked in the panel: the inventory is planned for it
+			List<StyleResult.Alternative> ammoOptions = optimizer.ammoOptions(results.get(AttackType.RANGED), candidates);
+			StyleResult best = OptimizationOutcome.best(results, settings.getSelectedAmmo(), settings.getSelectedSpell(),
+				ammoOptions, spellOptions);
 			List<OptimizationOutcome.Phase> phases = new ArrayList<>();
 			List<PrepPlan.Switch> switches = new ArrayList<>();
 			Set<String> plannedWeapons = new HashSet<>();
@@ -1237,6 +1315,10 @@ public class BossingBisPlugin extends Plugin
 				.wornNames(wornNames(best))
 				.suggestSpecWeapon(settings.isSpecWeapon())
 				.preferredFood(settings.getPreferredFood())
+				.spellbook(settings.getSpellbook())
+				.magicLevel(settings.getMagicLevel())
+				.finishedQuests(settings.getFinishedQuests())
+				.fairyRingsWithoutStaff(settings.isFairyRingsWithoutStaff())
 				.venomImmune(best != null && best.getGear()[EquipmentSlot.HEAD.ordinal()] != null
 					&& isChargedSerpentine(best.getGear()[EquipmentSlot.HEAD.ordinal()].getItem()))
 				.build())
@@ -1245,8 +1327,8 @@ public class BossingBisPlugin extends Plugin
 			OptimizationOutcome done = new OptimizationOutcome(boss, info.getName(), info.getSlayerTask(), monster,
 				wholeFight, info.isWholeFight() && choices.size() > 1, choices, results, sources, setup,
 				candidates.size(), hints, current, plan, settings.getBurstTargets(), keptNotes,
-				optimizer.ammoOptions(results.get(AttackType.RANGED), candidates), minWeight, tooLight, serpentineCost,
-				spellOptions, phases);
+				ammoOptions, minWeight, tooLight, serpentineCost,
+				spellOptions, phases, best == null ? null : best.getType());
 			outcome = done;
 			updateHighlights();
 			clientThread.invokeLater(() ->

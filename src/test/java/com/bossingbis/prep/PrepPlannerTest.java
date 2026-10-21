@@ -540,4 +540,23 @@ public class PrepPlannerTest
 		assertFalse(names(plan).contains("Anglerfish"));
 		assertEquals(2, plan.getFoodOptions().size());
 	}
+	@Test
+	public void bestUsableTeleportGoesInTheInventory()
+	{
+		// Skotizo: Kourend Castle Teleport is the Catacombs' first route; its runes go in the rune pouch
+		OwnedItems bank = owned("Dark totem", 1, "Divine rune pouch", 1, "Law rune", 100, "Fire rune", 100,
+			"Water rune", 100, "Xeric's talisman", 1);
+		PrepPlanner.Request.RequestBuilder skotizo = request("skotizo", AttackType.SLASH, bank).spellbook("standard")
+			.magicLevel(99);
+		PrepPlan cast = planner.plan(skotizo.finishedQuests(Set.of("CLIENT_OF_KOUREND")).build());
+		assertTrue(cast.getInventory().stream().anyMatch(l -> l.getName().equals("Divine rune pouch")
+			&& l.getNote().contains("teleport to Catacombs of Kourend")));
+		assertFalse(names(cast).contains("Xeric's talisman"));
+		// too low a Magic level: the next route
+		assertTrue(names(planner.plan(skotizo.magicLevel(40).build())).contains("Xeric's talisman"));
+		// a fairy ring route: the staff and the best way to a ring
+		PrepPlan queen = planner.plan(request("kalphite queen", AttackType.STAB,
+			owned("Lunar staff", 1, "Amulet of glory(4)", 1, "Shark", 50)).build());
+		assertTrue(names(queen).containsAll(List.of("Lunar staff", "Amulet of glory")));
+	}
 }
