@@ -418,6 +418,27 @@ public class PrepPlannerTest
 	}
 
 	@Test
+	public void newBossesReviewData()
+	{
+		assertEquals(EquipmentSlot.RING, planner.preferences("doom of mokhaiotl").get(0).getSlot());
+		assertEquals(EquipmentSlot.HANDS, planner.preferences("maggot king").get(0).getSlot());
+		assertTrue(planner.poisons("maggot king"));
+		// the Hueycoatl's tail swaps, when owned
+		PrepPlan huey = planner.plan(request("the hueycoatl", AttackType.CRUSH,
+			owned("Dual macuahuitl", 1, "Blood moon helm", 1, "Shark", 50)).build());
+		assertTrue(names(huey).containsAll(List.of("Dual macuahuitl", "Blood moon helm")));
+		// the Mimic needs its casket, and Watson's house is the way there
+		PrepPlan mimic = planner.plan(request("the mimic", AttackType.MAGIC, owned("Watson teleport", 3)).build());
+		assertTrue(mimic.getNotes().stream().anyMatch(n -> n.contains("Mimic")));
+		assertTrue(names(mimic).contains("Watson teleport"));
+		// Hespori: knives or darts for the flowers, the whole stack in one slot
+		PrepPlan hespori = planner.plan(request("hespori", AttackType.SLASH,
+			owned("Spade", 1, "Rune knife", 100, "Shark", 50)).build());
+		assertTrue(hespori.getInventory().stream()
+			.anyMatch(l -> l.getName().equals("Rune knife") && l.isStackable() && l.getQuantity() == 100));
+	}
+
+	@Test
 	public void infernoEntryAndRoutes()
 	{
 		PrepPlan zuk = planner.plan(request("tzkal-zuk", AttackType.RANGED, owned("Achievement diary cape", 1)).build());

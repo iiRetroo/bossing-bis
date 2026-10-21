@@ -521,12 +521,45 @@
         "Doom of Mokhaiotl (Delve 1)",
         "Doom of Mokhaiotl"
       ],
+      "prefer": [
+        {
+          "slot": "ring",
+          "items": [
+            "Lightbearer"
+          ],
+          "withinPercent": 10,
+          "reason": "the wiki recommends it: special attack energy matters in this fight"
+        }
+      ],
       "locations": [
         "Ruins of Mokhaiotl"
       ],
       "tips": [
         "Needs The Final Dawn.",
         "Two ancient teleporters from the chest west of the lift shorten the trip back."
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Scorching bow"
+          ],
+          "note": "for the larvae",
+          "switch": true
+        },
+        {
+          "names": [
+            "Darklight"
+          ],
+          "note": "for the larvae",
+          "switch": true
+        },
+        {
+          "names": [
+            "Slayer's staff (e)"
+          ],
+          "note": "for the larvae",
+          "switch": true
+        }
       ]
     },
     "duke sucellus": {
@@ -624,6 +657,28 @@
             "Bronze pickaxe"
           ],
           "note": "to mine the shell for gems",
+          "optional": true
+        },
+        {
+          "names": [
+            "Open gem bag",
+            "Gem bag"
+          ],
+          "note": "holds the gems you mine from the shell",
+          "optional": true
+        },
+        {
+          "names": [
+            "Dragon battleaxe"
+          ],
+          "note": "its special attack stands in for a super strength potion",
+          "switch": true
+        },
+        {
+          "names": [
+            "Holy wrench"
+          ],
+          "note": "makes prayer potions restore more (the wiki suggests it for long trips)",
           "optional": true
         }
       ],
@@ -757,11 +812,30 @@
         },
         {
           "names": [
-            "Toxic blowpipe"
+            "Blisterwood stake"
           ],
-          "exact": true,
+          "note": "kills the flowers from range",
+          "switch": true
+        },
+        {
+          "names": [
+            "Rune knife",
+            "Rune dart",
+            "Adamant knife",
+            "Adamant dart",
+            "Mithril knife",
+            "Mithril dart"
+          ],
+          "note": "quickly kills the flowers",
           "switch": true,
-          "note": "one hit from any weapon destroys a flower bud; the wiki uses a ranged one"
+          "stackable": true
+        },
+        {
+          "names": [
+            "Hespori seed"
+          ],
+          "note": "to replant after the kill",
+          "optional": true
         }
       ],
       "tips": [
@@ -781,6 +855,50 @@
       ],
       "tips": [
         "A group boss for up to 20 players. A private instance costs 50,000 coins (25,000 with the hard Combat Achievements)."
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Dual macuahuitl"
+          ],
+          "note": "multi-hit weapon for the tail",
+          "switch": true
+        },
+        {
+          "names": [
+            "Ursine chainmace"
+          ],
+          "note": "special attack for the tail",
+          "switch": true
+        },
+        {
+          "names": [
+            "Blood moon helm"
+          ],
+          "note": "its set effect helps against the tail",
+          "switch": true
+        },
+        {
+          "names": [
+            "Blood moon chestplate"
+          ],
+          "note": "its set effect helps against the tail",
+          "switch": true
+        },
+        {
+          "names": [
+            "Blood moon tassets"
+          ],
+          "note": "its set effect helps against the tail",
+          "switch": true
+        },
+        {
+          "names": [
+            "Holy wrench"
+          ],
+          "note": "makes prayer potions restore more (the wiki suggests it for long trips)",
+          "optional": true
+        }
       ]
     },
     "k'ril tsutsaroth": {
@@ -1038,12 +1156,66 @@
       "monsters": [
         "Maggot King"
       ],
+      "prefer": [
+        {
+          "slot": "hands",
+          "items": [
+            "Inoculation bracelet"
+          ],
+          "withinPercent": 15,
+          "reason": "the wiki recommends it: it makes you immune to the sticky bile"
+        }
+      ],
       "locations": [
         "Vampyrium"
       ],
       "tips": [
         "Needs The Blood Moon Rises. Solo only.",
-        "It can also be a Slayer task (Konar, Nieve or Duradel)."
+        "It can also be a Slayer task (Konar, Nieve or Duradel).",
+        "A hammer, saw, magic stone, 2 cupronickel bars, 2 adamantite bars and 4 ironwood planks build the bank chest in Sangvesti (once)."
+      ],
+      "venom": true,
+      "inventory": [
+        {
+          "names": [
+            "Venator bow"
+          ],
+          "note": "its bounces hit several ur-maggot larvae at once",
+          "switch": true
+        },
+        {
+          "names": [
+            "Magic shortbow (i)",
+            "Magic shortbow",
+            "Rune crossbow"
+          ],
+          "note": "kills the ur-maggot larvae",
+          "switch": true
+        },
+        {
+          "names": [
+            "Elder maul",
+            "Bandos godsword",
+            "Dharok's greataxe"
+          ],
+          "note": "a slow melee weapon for the melee punishes",
+          "switch": true
+        },
+        {
+          "names": [
+            "Eye of Ayak",
+            "Accursed sceptre"
+          ],
+          "note": "special attack lowers its magic defence",
+          "switch": true
+        },
+        {
+          "names": [
+            "Amulet of blood fury"
+          ],
+          "note": "heals some of the damage you take",
+          "switch": true
+        }
       ]
     },
     "the mimic": {
@@ -1051,9 +1223,19 @@
       "monsters": [
         "The Mimic"
       ],
-      "locations": [],
+      "locations": [
+        "Watson's house"
+      ],
       "tips": [
-        "Fought from an elite or master clue casket."
+        "Fought from an elite or master clue casket, once you've talked to the Strange casket."
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Mimic"
+          ],
+          "note": "the casket that starts the fight"
+        }
       ]
     },
     "moons of peril": {
@@ -1070,6 +1252,36 @@
       "tips": [
         "Needs Perilous Moons.",
         "Food and potions can be made inside: the camps have supply crates and cooking stoves."
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Pestle and mortar"
+          ],
+          "note": "makes moonlight potions inside",
+          "optional": true
+        },
+        {
+          "names": [
+            "Rope"
+          ],
+          "note": "catches moss lizards inside",
+          "optional": true
+        },
+        {
+          "names": [
+            "Dual macuahuitl"
+          ],
+          "note": "multi-hit crush weapon, especially good against the Blue Moon",
+          "switch": true
+        },
+        {
+          "names": [
+            "Soulreaper axe"
+          ],
+          "note": "for the Eclipse Moon's clone",
+          "switch": true
+        }
       ]
     },
     "nex": {
@@ -1395,6 +1607,22 @@
       ],
       "tips": [
         "Needs Children of the Sun."
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Saradomin godsword"
+          ],
+          "note": "special attack heals and restores prayer",
+          "switch": true
+        },
+        {
+          "names": [
+            "Venator bow"
+          ],
+          "note": "for the mage fremennik in the waves",
+          "switch": true
+        }
       ]
     },
     "thermonuclear smoke devil": {
@@ -1628,6 +1856,40 @@
       "tips": [
         "Needs A Kingdom Divided and the contract from the Voice of Yama.",
         "Solo, or with a partner who has also signed the contract."
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Purging staff"
+          ],
+          "note": "destroys the void flares",
+          "switch": true
+        },
+        {
+          "names": [
+            "Eye of Ayak",
+            "Accursed sceptre"
+          ],
+          "note": "special attack lowers Yama's magic defence, for magic accuracy",
+          "switch": true
+        },
+        {
+          "names": [
+            "Saradomin godsword"
+          ],
+          "note": "special attack heals and restores prayer, mainly against the Judge of Yama",
+          "switch": true
+        },
+        {
+          "names": [
+            "Inquisitor's mace",
+            "Zombie axe",
+            "Leaf-bladed battleaxe",
+            "Ham joint"
+          ],
+          "note": "a fast melee weapon (4 ticks or faster) for the Judge of Yama",
+          "switch": true
+        }
       ]
     },
     "zulrah": {
@@ -1673,6 +1935,12 @@
       }
     ],
     "Ardeaglais (Wyrmscraig)": [
+      {
+        "text": "Ardeaglais teleport (a reward from the boss)",
+        "items": [
+          "Ardeaglais teleport"
+        ]
+      },
       {
         "text": "Necklace of passage: Wyrmscraig, east of the cathedral",
         "items": [
@@ -2320,6 +2588,14 @@
         "text": "Enchanted lyre: Rellekka, then the boat",
         "items": [
           "Enchanted lyre"
+        ]
+      }
+    ],
+    "Watson's house": [
+      {
+        "text": "Watson teleport scroll",
+        "items": [
+          "Watson teleport"
         ]
       }
     ],
