@@ -559,4 +559,20 @@ public class PrepPlannerTest
 			owned("Lunar staff", 1, "Amulet of glory(4)", 1, "Shark", 50)).build());
 		assertTrue(names(queen).containsAll(List.of("Lunar staff", "Amulet of glory")));
 	}
+	@Test
+	public void elementalStavesAndCombinationRunes()
+	{
+		// Skotizo: Kourend Castle Teleport needs fire and water; steam runes count as both
+		PrepPlanner.Request.RequestBuilder skotizo = request("skotizo", AttackType.SLASH,
+			owned("Dark totem", 1, "Rune pouch", 1, "Law rune", 100, "Steam rune", 100)).spellbook("standard")
+			.magicLevel(99).finishedQuests(Set.of("CLIENT_OF_KOUREND"));
+		assertTrue(planner.plan(skotizo.build()).getInventory().stream()
+			.anyMatch(l -> l.getName().equals("Rune pouch") && l.getNote().contains("steam")));
+		// a worn Twinflame staff gives fire and water, so laws alone do
+		PrepPlan staff = planner.plan(request("skotizo", AttackType.MAGIC, owned("Dark totem", 1, "Rune pouch", 1,
+			"Law rune", 100)).spellbook("standard").magicLevel(99).finishedQuests(Set.of("CLIENT_OF_KOUREND"))
+			.wornNames(Set.of("Twinflame staff")).build());
+		assertTrue(staff.getInventory().stream().anyMatch(l -> l.getName().equals("Rune pouch")
+			&& l.getNote().contains("your staff gives the fire and water")));
+	}
 }
