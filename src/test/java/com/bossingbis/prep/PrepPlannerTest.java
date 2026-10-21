@@ -398,6 +398,16 @@ public class PrepPlannerTest
 	}
 
 	@Test
+	public void infernoEntryAndRoutes()
+	{
+		PrepPlan zuk = planner.plan(request("tzkal-zuk", AttackType.RANGED, owned("Achievement diary cape", 1)).build());
+		assertTrue(zuk.getTips().stream().anyMatch(t -> t.contains("fire cape")));
+		// a worn teleport is a tip, not an inventory slot
+		assertTrue(zuk.getTips().stream().anyMatch(t -> t.startsWith("Wear your Achievement diary cape")));
+		assertFalse(names(zuk).contains("Achievement diary cape"));
+	}
+
+	@Test
 	public void inertTalismanIsNotATeleport()
 	{
 		PrepPlan inert = planner.plan(request("sarachnis", AttackType.SLASH, owned("Xeric's talisman (inert)", 1)).build());

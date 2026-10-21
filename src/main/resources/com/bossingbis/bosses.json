@@ -1230,6 +1230,10 @@
       ],
       "locations": [
         "Mor Ul Rek"
+      ],
+      "tips": [
+        "The TzHaar won't let you into the Inferno until you've given up a fire cape.",
+        "Mor Ul Rek's inner city needs a fire cape shown once."
       ]
     },
     "tztok-jad": {
@@ -1785,6 +1789,20 @@
       },
       {
         "text": "Minigame Teleport: TzHaar Fight Pit"
+      },
+      {
+        "text": "Ghommal's hilt 4 or better: Mor Ul Rek",
+        "items": [
+          "Ghommal's hilt 6",
+          "Ghommal's hilt 5",
+          "Ghommal's hilt 4"
+        ]
+      },
+      {
+        "text": "Achievement diary cape: TzHaar-Mej",
+        "items": [
+          "Achievement diary cape"
+        ]
       }
     ],
     "Stranglewood": [
