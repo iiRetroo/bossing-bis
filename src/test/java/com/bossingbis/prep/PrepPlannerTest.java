@@ -184,6 +184,30 @@ public class PrepPlannerTest
 	}
 
 	@Test
+	public void crossbowForTheGrappleUnlessOneIsWorn()
+	{
+		OwnedItems bank = owned("Mith grapple", 1, "Rune crossbow", 1, "Armadyl crossbow", 1, "Shark", 100);
+		PrepPlan carried = planner.plan(request("kree'arra", AttackType.RANGED, bank).build());
+		assertTrue(names(carried).contains("Rune crossbow"));
+		// wearing any crossbow in the planned set: no extra one
+		PrepPlan worn = planner.plan(request("kree'arra", AttackType.RANGED, bank)
+			.wornNames(Set.of("Armadyl crossbow")).build());
+		assertTrue(names(worn).stream().noneMatch(n -> n.endsWith("crossbow")));
+		assertTrue(names(worn).contains("Mith grapple"));
+	}
+
+	@Test
+	public void godWarsBossesGetTheFollowersTip()
+	{
+		for (String boss : new String[]{"general graardor", "commander zilyana", "k'ril tsutsaroth", "kree'arra", "nex"})
+		{
+			assertTrue(boss, data.boss(boss).tips.stream().anyMatch(t -> t.contains("followers")));
+		}
+		assertFalse(planner.preferences("vorkath").isEmpty());
+		assertEquals(EquipmentSlot.RING, planner.preferences("zulrah").get(0).getSlot());
+	}
+
+	@Test
 	public void missingEntryItemIsFlagged()
 	{
 		PrepPlan plan = planner.plan(request("kree'arra", AttackType.RANGED, owned()).build());

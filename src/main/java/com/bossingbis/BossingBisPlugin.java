@@ -1422,7 +1422,7 @@ public class BossingBisPlugin extends Plugin
 	 * kept and uses that set when the best set without it is no more than its percentage better.
 	 * Records what was kept and the DPS given up.
 	 */
-	private static StyleResult applyPreferences(Optimizer optimizer, List<Optimizer.Candidate> candidates,
+	static StyleResult applyPreferences(Optimizer optimizer, List<Optimizer.Candidate> candidates,
 		AttackType type, StyleResult best, Map<EquipmentSlot, Set<String>> required, List<PrepPlan.Preference> preferences,
 		int minWeight, Map<AttackType, List<String>> notes, Map<AttackType, Double> cost)
 	{

@@ -165,7 +165,8 @@
       ],
       "tips": [
         "You need a rope the first time you enter the God Wars Dungeon.",
-        "Saradomin's Encampment needs 70 Agility and two more ropes the first time."
+        "Saradomin's Encampment needs 70 Agility and two more ropes the first time.",
+        "Wear an item of each god whose followers you walk past; they won't attack you."
       ],
       "locations": [
         "God Wars Dungeon"
@@ -267,7 +268,8 @@
         }
       ],
       "tips": [
-        "You need a rope the first time you enter the God Wars Dungeon."
+        "You need a rope the first time you enter the God Wars Dungeon.",
+        "Wear an item of each god whose followers you walk past; they won't attack you."
       ],
       "locations": [
         "God Wars Dungeon"
@@ -340,7 +342,8 @@
       "venom": true,
       "tips": [
         "You need a rope the first time you enter the God Wars Dungeon.",
-        "Zamorak's Fortress needs 70 Hitpoints to enter."
+        "Zamorak's Fortress needs 70 Hitpoints to enter.",
+        "Wear an item of each god whose followers you walk past; they won't attack you."
       ],
       "locations": [
         "God Wars Dungeon"
@@ -396,11 +399,30 @@
             "Mith grapple"
           ],
           "note": "with any crossbow, to cross to Armadyl's Eyrie"
+        },
+        {
+          "names": [
+            "Bronze crossbow",
+            "Blurite crossbow",
+            "Iron crossbow",
+            "Steel crossbow",
+            "Mithril crossbow",
+            "Adamant crossbow",
+            "Rune crossbow",
+            "Dragon crossbow",
+            "Hunters' crossbow",
+            "Dorgeshuun crossbow",
+            "Phoenix crossbow",
+            "Armadyl crossbow",
+            "Dragon hunter crossbow",
+            "Zaryte crossbow"
+          ],
+          "note": "any crossbow, to fire the mith grapple"
         }
       ],
       "tips": [
         "You need a rope the first time you enter the God Wars Dungeon.",
-        "You need a crossbow to fire the mithril grapple."
+        "Wear an item of each god whose followers you walk past; they won't attack you."
       ],
       "locations": [
         "God Wars Dungeon"
@@ -413,7 +435,8 @@
       ],
       "comboEat": true,
       "tips": [
-        "The Ancient Prison needs the Frozen Door miniquest (base 70 Hitpoints, Ranged, Strength and Agility) and a kill count."
+        "The Ancient Prison needs the Frozen Door miniquest (base 70 Hitpoints, Ranged, Strength and Agility) and a kill count.",
+        "Wear an item of each god whose followers you walk past; they won't attack you."
       ],
       "locations": [
         "God Wars Dungeon"
@@ -632,11 +655,33 @@
       "monsters": [
         "Vorkath (Post-quest)"
       ],
+      "prefer": [
+        {
+          "slot": "shield",
+          "items": [
+            "Dragonfire ward",
+            "Anti-dragon shield",
+            "Dragonfire shield"
+          ],
+          "withinPercent": 20,
+          "reason": "the wiki recommends one even with a super antifire"
+        }
+      ],
       "dragonfire": "dragon",
       "venom": true,
       "comboEat": true,
       "locations": [
         "Ungael"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Slayer's staff",
+            "Dust battlestaff"
+          ],
+          "note": "to cast Crumble Undead (the wiki recommends one)",
+          "optional": true
+        }
       ]
     },
     "zulrah": {
@@ -647,6 +692,18 @@
         "Zulrah (Tanzanite)"
       ],
       "wholeFight": true,
+      "prefer": [
+        {
+          "slot": "ring",
+          "items": [
+            "Ring of suffering (i)",
+            "Ring of suffering",
+            "Ring of recoil"
+          ],
+          "withinPercent": 10,
+          "reason": "the wiki highly recommends a ring with a recoil effect"
+        }
+      ],
       "venom": true,
       "comboEat": true,
       "locations": [

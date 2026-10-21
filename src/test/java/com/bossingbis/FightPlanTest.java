@@ -9,7 +9,9 @@ import com.bossingbis.data.GameData;
 import com.bossingbis.data.GearItem;
 import com.bossingbis.data.Monster;
 import com.bossingbis.data.MonsterResolver;
+import com.bossingbis.prep.PrepData;
 import com.bossingbis.prep.PrepPlan;
+import com.bossingbis.prep.PrepPlanner;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -149,5 +151,32 @@ public class FightPlanTest
 			assertEquals(full.getDps() - p.getDps(), p.getDpsGivenUp(), 1e-9);
 			assertEquals(full.getSwitches().size() - p.getSwitches().size(), p.getSwitchesSaved());
 		}
+	}
+
+	@Test
+	public void vorkathKeepsADragonfireShieldOverATwistedBuckler() throws Exception
+	{
+		PrepPlanner planner = new PrepPlanner(PrepData.load(new Gson()));
+		List<Optimizer.Candidate> bank = new ArrayList<>();
+		for (String n : new String[]{"Dragon hunter crossbow", "Adamant bolts", "Twisted buckler", "Anti-dragon shield",
+			"Black d'hide body", "Black d'hide chaps", "Ava's accumulator", "Amulet of fury"})
+		{
+			GearItem item = data.findItem(n);
+			assertNotNull(n, item);
+			bank.add(new Optimizer.Candidate(item, item.getId()));
+		}
+		Monster vorkath = resolver.forBoss(List.of("Vorkath (Post-quest)")).get(0);
+		Optimizer optimizer = new Optimizer(SETUP, vorkath, new AtomicBoolean());
+		StyleResult best = optimizer.optimise(bank, AttackType.RANGED);
+		assertEquals("Twisted buckler", best.getGear()[EquipmentSlot.SHIELD.ordinal()].getItem().getName());
+
+		Map<AttackType, List<String>> notes = new java.util.EnumMap<>(AttackType.class);
+		Map<AttackType, Double> cost = new java.util.EnumMap<>(AttackType.class);
+		StyleResult kept = BossingBisPlugin.applyPreferences(optimizer, bank, AttackType.RANGED, best,
+			Collections.emptyMap(), planner.preferences("vorkath"), 0, notes, cost);
+		assertEquals("Anti-dragon shield", kept.getGear()[EquipmentSlot.SHIELD.ordinal()].getItem().getName());
+		assertTrue(notes.get(AttackType.RANGED).get(0).startsWith("Anti-dragon shield kept on"));
+		assertEquals(best.getResult().getDps() - kept.getResult().getDps(), cost.get(AttackType.RANGED), 1e-9);
+		System.out.println(notes.get(AttackType.RANGED));
 	}
 }

@@ -249,7 +249,9 @@ public final class PrepPlanner
 		for (PrepData.InventoryItem item : carried)
 		{
 			String name = item.exact ? firstOwnedExact(item.names, owned) : firstOwned(item.names, owned);
-			if ((name == null && item.optional) || (name != null && request.getWornNames().contains(name)))
+			// already worn in the planned set (say, a crossbow for the mith grapple): nothing to carry
+			boolean worn = item.names.stream().anyMatch(request.getWornNames()::contains);
+			if ((name == null && item.optional) || worn)
 			{
 				continue;
 			}
