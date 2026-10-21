@@ -3,6 +3,7 @@ package com.bossingbis.prep;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -88,6 +89,14 @@ public final class PrepData
 		boolean optional;
 		/** Match names exactly ("Fungicide" must not match "Fungicide spray"). */
 		boolean exact;
+		/**
+		 * A swap the wiki recommends for part of the fight, carried only when owned and when the
+		 * Wiki switches setting is on. The note says what it's for, never when to use it.
+		 */
+		@SerializedName("switch")
+		boolean switchItem;
+		/** Only for this version of the boss (matched in its version, e.g. "Awakened"), or null for all. */
+		String onlyFor;
 	}
 
 	/** What a location needs whatever the boss. */

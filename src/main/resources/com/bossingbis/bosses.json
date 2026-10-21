@@ -1,5 +1,5 @@
 {
-  "_comment": "Hand-maintained boss preparation data: what to wear, carry and use to get to each boss. Planning before the trip only. Reasons for gear may mention a mechanic or prayer effect, as the wiki's strategy pages do, but never tell you what to do in the fight: no prayer instructions, timing, positioning or what's coming next. Boss keys are lower case. 'name' is shown in the picker. 'monsters' are the monsters to work out gear against, matched as 'Name (version)', or 'Name' for every version; the first is the default. 'wholeFight': true means every listed monster is fought on each trip (phases, or several monsters), so the plan wears the best set for the first and carries switches for the rest. 'slayerTask' marks bosses that can only be fought on that Slayer task. 'required' lists worn items, by slot, that the boss needs; any one name per slot satisfies it. 'prefer' lists worn items the wiki's strategy page recommends for reasons the DPS maths can't see: {'slot', 'items', 'withinPercent', 'reason'}; the gear search keeps one of the items when the best set without it is no more than withinPercent better. 'inventory' lists items to carry; each entry is satisfied by any one of its names (matched as a prefix, so 'Fungicide spray' matches 'Fungicide spray 10'); 'stackable': true means they fit in one slot, 'optional' means not flagged when missing, 'exact' means match names exactly. 'dragonfire' is 'dragon' or 'wyvern'. 'venom': true marks bosses that poison or envenom you. 'stacks': true adds a Burst tab. 'comboEat': true brings karambwans. 'minWeight' is the least the worn gear must weigh, in kg. 'tips' are shown as they are. 'locations' are keys of 'locations', whose teleport 'items' are name prefixes used to tick off teleports you own (leave it out for spells or fairy rings). 'locationNeeds' are what a location itself needs: worn items ('required'), carried items ('inventory') and 'tips'.",
+  "_comment": "Hand-maintained boss preparation data: what to wear, carry and use to get to each boss. Planning before the trip only. Reasons for gear may mention a mechanic or prayer effect, as the wiki's strategy pages do, but never tell you what to do in the fight: no prayer instructions, timing, positioning or what's coming next. Boss keys are lower case. 'name' is shown in the picker. 'monsters' are the monsters to work out gear against, matched as 'Name (version)', or 'Name' for every version; the first is the default. 'wholeFight': true means every listed monster is fought on each trip (phases, or several monsters), so the plan wears the best set for the first and carries switches for the rest. 'slayerTask' marks bosses that can only be fought on that Slayer task. 'required' lists worn items, by slot, that the boss needs; any one name per slot satisfies it. 'prefer' lists worn items the wiki's strategy page recommends for reasons the DPS maths can't see: {'slot', 'items', 'withinPercent', 'reason'}; the gear search keeps one of the items when the best set without it is no more than withinPercent better. 'inventory' lists items to carry; each entry is satisfied by any one of its names (matched as a prefix, so 'Fungicide spray' matches 'Fungicide spray 10'); 'stackable': true means they fit in one slot, 'optional' means not flagged when missing, 'exact' means match names exactly. 'onlyFor' limits an item to one version of the boss, matched in its version (e.g. 'Awakened'). 'switch': true marks a swap the wiki recommends for part of the fight; it's carried only when owned and the Wiki switches setting is on, and its note says what it's for, never when to use it. 'dragonfire' is 'dragon' or 'wyvern'. 'venom': true marks bosses that poison or envenom you. 'stacks': true adds a Burst tab. 'comboEat': true brings karambwans. 'minWeight' is the least the worn gear must weigh, in kg. 'tips' are shown as they are. 'locations' are keys of 'locations', whose teleport 'items' are name prefixes used to tick off teleports you own (leave it out for spells or fairy rings). 'locationNeeds' are what a location itself needs: worn items ('required'), carried items ('inventory') and 'tips'.",
   "bosses": {
     "abyssal sire": {
       "name": "Abyssal Sire",
@@ -41,11 +41,45 @@
       "monsters": [
         "Araxxor"
       ],
+      "prefer": [
+        {
+          "slot": "feet",
+          "items": [
+            "Aranea boots"
+          ],
+          "withinPercent": 15,
+          "reason": "the wiki recommends them: they block some of Araxxor's ranged attacks"
+        }
+      ],
       "slayerTask": "Araxytes",
       "venom": true,
       "comboEat": true,
       "locations": [
         "Morytania Spider Cave"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Noxious halberd"
+          ],
+          "note": "kills the araxytes safely, from a distance",
+          "switch": true
+        },
+        {
+          "names": [
+            "Heavy ballista"
+          ],
+          "note": "with dragon javelins, kills mirrorback araxytes in one shot",
+          "switch": true
+        },
+        {
+          "names": [
+            "Dragon javelin"
+          ],
+          "note": "for the heavy ballista",
+          "switch": true,
+          "stackable": true
+        }
       ]
     },
     "barrows brothers": {
@@ -216,6 +250,27 @@
           ],
           "note": "special attack lowers Corp's stats by the damage dealt (the wiki's stat-draining method)",
           "optional": true
+        },
+        {
+          "names": [
+            "Inquisitor's great helm"
+          ],
+          "note": "raises special attack accuracy (the DPS figures don't include special attacks)",
+          "switch": true
+        },
+        {
+          "names": [
+            "Mythical cape"
+          ],
+          "note": "raises special attack accuracy (the DPS figures don't include special attacks)",
+          "switch": true
+        },
+        {
+          "names": [
+            "Tyrannical ring"
+          ],
+          "note": "raises special attack accuracy (the DPS figures don't include special attacks)",
+          "switch": true
         }
       ]
     },
@@ -303,8 +358,69 @@
         "Duke Sucellus (Post-quest, Awake)",
         "Duke Sucellus (Awakened, Awake)"
       ],
+      "prefer": [
+        {
+          "slot": "head",
+          "items": [
+            "Slayer helmet (i)",
+            "Slayer helmet",
+            "Gas mask"
+          ],
+          "withinPercent": 15,
+          "reason": "the wiki recommends one: it reduces the gas damage"
+        }
+      ],
       "locations": [
         "Ghorrock Dungeon"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Awakener's orb"
+          ],
+          "note": "needed for the awakened fight",
+          "onlyFor": "Awakened"
+        },
+        {
+          "names": [
+            "Pestle and mortar"
+          ],
+          "note": "to make the poison in the asylum"
+        },
+        {
+          "names": [
+            "Crystal pickaxe",
+            "Dragon pickaxe",
+            "Infernal pickaxe",
+            "3rd age pickaxe",
+            "Rune pickaxe",
+            "Adamant pickaxe",
+            "Mithril pickaxe",
+            "Black pickaxe",
+            "Steel pickaxe",
+            "Iron pickaxe",
+            "Bronze pickaxe"
+          ],
+          "note": "speeds up mining the salt (there's an iron pickaxe on the asylum wall)",
+          "optional": true
+        },
+        {
+          "names": [
+            "Bandos godsword"
+          ],
+          "note": "lowers Duke Sucellus' Defence (the wiki's swap without Oathplate)",
+          "switch": true
+        },
+        {
+          "names": [
+            "Lightbearer"
+          ],
+          "note": "a ring swap for more special attacks",
+          "switch": true
+        }
+      ],
+      "tips": [
+        "Needs Desert Treasure II - The Fallen Empire."
       ]
     },
     "general graardor": {
@@ -421,6 +537,22 @@
       ],
       "locations": [
         "God Wars Dungeon"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Scorching bow"
+          ],
+          "note": "its special attack binds K'ril in place",
+          "switch": true
+        },
+        {
+          "names": [
+            "Lightbearer"
+          ],
+          "note": "with the Scorching bow, for more special attacks",
+          "switch": true
+        }
       ]
     },
     "kalphite queen": {
@@ -518,6 +650,14 @@
             "Zaryte crossbow"
           ],
           "note": "any crossbow, to fire the mith grapple"
+        },
+        {
+          "names": [
+            "Toxic blowpipe"
+          ],
+          "note": "for the minions",
+          "switch": true,
+          "exact": true
         }
       ],
       "tips": [
@@ -559,6 +699,25 @@
           ],
           "note": "skips gathering 40 essence before the Ancient Prison",
           "optional": true
+        },
+        {
+          "names": [
+            "Black salamander",
+            "Tecu salamander",
+            "Red salamander",
+            "Orange salamander"
+          ],
+          "note": "frees players from the Ice Prison without using ammo",
+          "switch": true
+        },
+        {
+          "names": [
+            "Osmumten's fang",
+            "Zamorakian hasta",
+            "Dragon warhammer"
+          ],
+          "note": "frees players from the Ice Prison",
+          "switch": true
         }
       ]
     },
@@ -605,6 +764,29 @@
       "comboEat": true,
       "locations": [
         "Slepe"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Hallowfell"
+          ],
+          "note": "hits husks and parasites together",
+          "switch": true
+        },
+        {
+          "names": [
+            "Dinh's bulwark"
+          ],
+          "note": "its special attack hits both husks",
+          "switch": true
+        },
+        {
+          "names": [
+            "Blisterwood stake"
+          ],
+          "note": "for the sleepwalkers",
+          "switch": true
+        }
       ]
     },
     "sarachnis": {
@@ -695,8 +877,52 @@
         "The Leviathan (Post-quest)",
         "The Leviathan (Awakened)"
       ],
+      "prefer": [
+        {
+          "slot": "ring",
+          "items": [
+            "Lightbearer"
+          ],
+          "withinPercent": 10,
+          "reason": "the wiki recommends it, so special attack energy is back for the next kill"
+        }
+      ],
       "locations": [
         "The Scar"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Awakener's orb"
+          ],
+          "note": "needed for the awakened fight",
+          "onlyFor": "Awakened"
+        },
+        {
+          "names": [
+            "Webweaver bow"
+          ],
+          "note": "its special attack (the wiki's ranged swap)",
+          "switch": true
+        },
+        {
+          "names": [
+            "Toxic blowpipe"
+          ],
+          "note": "the wiki's faster-attacking swap",
+          "switch": true,
+          "exact": true
+        },
+        {
+          "names": [
+            "Thammaron's sceptre"
+          ],
+          "note": "casts the shadow spells that stun the Leviathan",
+          "switch": true
+        }
+      ],
+      "tips": [
+        "Needs Desert Treasure II - The Fallen Empire."
       ]
     },
     "the nightmare": {
@@ -707,6 +933,22 @@
       "comboEat": true,
       "locations": [
         "Slepe"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Crimson kisten"
+          ],
+          "note": "for husks and parasites",
+          "switch": true
+        },
+        {
+          "names": [
+            "Inquisitor's mace"
+          ],
+          "note": "for husks and parasites",
+          "switch": true
+        }
       ]
     },
     "the whisperer": {
@@ -715,8 +957,50 @@
         "The Whisperer (Post-quest)",
         "The Whisperer (Awakened)"
       ],
+      "prefer": [
+        {
+          "slot": "weapon",
+          "items": [
+            "Eldritch Nightmare staff"
+          ],
+          "withinPercent": 10,
+          "reason": "the wiki recommends it: it restores prayer on a hit"
+        }
+      ],
       "locations": [
         "Lassar Undercity"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Awakener's orb"
+          ],
+          "note": "needed for the awakened fight",
+          "onlyFor": "Awakened"
+        },
+        {
+          "names": [
+            "Blackstone fragment"
+          ],
+          "note": "starts the fight and takes you into the Shadow Realm"
+        },
+        {
+          "names": [
+            "Venator bow"
+          ],
+          "note": "clears the Lost Souls (with cheap arrows)",
+          "switch": true
+        },
+        {
+          "names": [
+            "Blisterwood stake"
+          ],
+          "note": "clears the most important Lost Souls",
+          "switch": true
+        }
+      ],
+      "tips": [
+        "Needs Desert Treasure II - The Fallen Empire."
       ]
     },
     "thermonuclear smoke devil": {
@@ -763,6 +1047,18 @@
       ],
       "locations": [
         "Stranglewood"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Awakener's orb"
+          ],
+          "note": "needed for the awakened fight",
+          "onlyFor": "Awakened"
+        }
+      ],
+      "tips": [
+        "Needs Desert Treasure II - The Fallen Empire."
       ]
     },
     "venenatis": {
@@ -851,6 +1147,15 @@
       "comboEat": true,
       "locations": [
         "Zul-Andra"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Magus ring"
+          ],
+          "note": "the magic setup's ring, carried with the recoil ring",
+          "switch": true
+        }
       ]
     }
   },
@@ -886,6 +1191,12 @@
         "text": "Ectophial, then walk south-west",
         "items": [
           "Ectophial"
+        ]
+      },
+      {
+        "text": "Hallowed crystal shard: Hallowed Sepulchre, then the wall shortcut south-east (63 Agility, two long ropes)",
+        "items": [
+          "Hallowed crystal shard"
         ]
       }
     ],
@@ -1218,6 +1529,12 @@
         "text": "Xeric's talisman: Xeric's Honour, then the mountain guide and rowboat",
         "items": [
           "Xeric's talisman"
+        ]
+      },
+      {
+        "text": "Rada's blessing: Kourend Woodland, then the Lovakengj minecart",
+        "items": [
+          "Rada's blessing"
         ]
       }
     ],

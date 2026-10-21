@@ -23,7 +23,7 @@ The ammo, spell and food tiles can be clicked to pick a cheaper option. Bosses t
 
 ## Settings
 
-Prayers and potion boosts assumed in the maths (none by default), which storages to count, how many prayer and combat potions to bring, prayer potions or moth mixes first, switches on or off, loot tools, spec weapon, Serpentine helm against venom, burst targets, highlight colours and the inventory view.
+Prayers and potion boosts assumed in the maths (none by default), which storages to count, how many prayer and combat potions to bring, prayer potions or moth mixes first, switches on or off, wiki-recommended swaps (such as a weapon for a boss's minions) on or off, loot tools, spec weapon, Serpentine helm against venom, burst targets, highlight colours and the inventory view.
 
 ## Data
 

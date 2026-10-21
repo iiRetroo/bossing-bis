@@ -180,6 +180,9 @@ public final class PrepPlanner
 		 */
 		@Builder.Default
 		List<PrepPlan.Switch> switches = Collections.emptyList();
+		/** Also carry the swaps the wiki recommends for part of the fight, when owned. */
+		@Builder.Default
+		boolean wikiSwitches = true;
 		int prayerPotions;
 		@Builder.Default
 		PrayerRestore prayerRestore = PrayerRestore.POTIONS_FIRST;
@@ -187,6 +190,8 @@ public final class PrepPlanner
 		boolean fillFood;
 		/** The monster being fought, for its drops. */
 		String monsterName;
+		/** Its version, such as "Awakened", for items only that version needs. */
+		String monsterVersion;
 		/** Suggest tools for loot that drops at least once per this many kills; 0 is off. */
 		int lootMaxKills;
 		int monsterHitpoints;
@@ -246,8 +251,17 @@ public final class PrepPlanner
 				locationTips.add("If you go to " + key + ": " + needs.summary + ".");
 			}
 		}
+		List<PrepData.InventoryItem> wikiSwitches = new ArrayList<>();
+		String version = request.getMonsterVersion() == null ? "" : request.getMonsterVersion().toLowerCase(Locale.ROOT);
+		carried.removeIf(item -> item.onlyFor != null && !version.contains(item.onlyFor.toLowerCase(Locale.ROOT)));
 		for (PrepData.InventoryItem item : carried)
 		{
+			if (item.switchItem)
+			{
+				// after the gear switches, below
+				wikiSwitches.add(item);
+				continue;
+			}
 			String name = item.exact ? firstOwnedExact(item.names, owned) : firstOwned(item.names, owned);
 			// already worn in the planned set (say, a crossbow for the mith grapple): nothing to carry
 			boolean worn = item.names.stream().anyMatch(request.getWornNames()::contains);
@@ -268,6 +282,18 @@ public final class PrepPlanner
 			{
 				slots += addLine(lines, ids, owned, sw.getName(), 1, sw.getNote(), false);
 			}
+		}
+
+		// swaps the wiki recommends for part of the fight: only ones you own, and not already planned
+		for (PrepData.InventoryItem item : request.isWikiSwitches() ? wikiSwitches : List.<PrepData.InventoryItem>of())
+		{
+			String name = item.exact ? firstOwnedExact(item.names, owned) : firstOwned(item.names, owned);
+			boolean worn = item.names.stream().anyMatch(request.getWornNames()::contains);
+			if (name == null || worn || item.names.stream().anyMatch(n -> listed(lines, n)))
+			{
+				continue;
+			}
+			slots += addLine(lines, ids, owned, name, 1, "wiki switch: " + item.note, false);
 		}
 
 		if (info != null && "dragon".equals(info.dragonfire))

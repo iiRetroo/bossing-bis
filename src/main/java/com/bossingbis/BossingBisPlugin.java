@@ -941,7 +941,7 @@ public class BossingBisPlugin extends Plugin
 		Settings settings = new Settings(boss, selectedMonsterId, config.showPreparation(),
 			config.prayerPotions(), config.prayerRestore(), config.combatPotions(), config.fillFood(),
 			config.lootTools().getMaxKills(), config.specWeapon(), config.burstTargets(), selectedFood,
-			config.serpentineHelm(), config.planSwitches(), config.switchTolerance());
+			config.serpentineHelm(), config.planSwitches(), config.switchTolerance(), config.wikiSwitches());
 
 		cancelRunning();
 		SwingUtilities.invokeLater(() ->
@@ -1001,6 +1001,7 @@ public class BossingBisPlugin extends Plugin
 		BossingBisConfig.SerpentineHelm serpentineHelm;
 		boolean planSwitches;
 		int switchTolerance;
+		boolean wikiSwitches;
 	}
 
 	private PlayerSetup buildSetup()
@@ -1187,11 +1188,13 @@ public class BossingBisPlugin extends Plugin
 				.requirements(requirements)
 				.owned(owned)
 				.switches(switches)
+				.wikiSwitches(settings.isWikiSwitches())
 				.prayerPotions(settings.getPrayerPotions())
 				.prayerRestore(settings.getPrayerRestore())
 				.combatPotions(settings.getCombatPotions())
 				.fillFood(settings.isFillFood())
 				.monsterName(monster.getName())
+				.monsterVersion(monster.getVersion())
 				.lootMaxKills(settings.getLootMaxKills())
 				.monsterHitpoints(monster.getHitpoints())
 				.plannedWeapons(plannedWeapons)

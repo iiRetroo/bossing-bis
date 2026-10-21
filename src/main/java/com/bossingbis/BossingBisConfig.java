@@ -325,13 +325,26 @@ public interface BossingBisConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "wikiSwitches",
+		name = "Wiki switches",
+		description = "Also carry swaps the OSRS Wiki's strategy pages recommend for part of a fight (such as a "
+			+ "weapon for a boss's minions), when you own them. Turn off to leave more room for food.",
+		section = prepSection,
+		position = 7
+	)
+	default boolean wikiSwitches()
+	{
+		return true;
+	}
+
+	@ConfigItem(
 		keyName = "lootTools",
 		name = "Loot tools",
 		description = "Suggest items for what the monster drops: a herb sack for herbs, a rune pouch for "
 			+ "alchables, a bonecrusher for bones and so on. Common drops only counts loot that drops at "
 			+ "least once every " + 64 + " kills on average.",
 		section = prepSection,
-		position = 7
+		position = 8
 	)
 	default LootTools lootTools()
 	{
@@ -344,7 +357,7 @@ public interface BossingBisConfig extends Config
 		description = "Suggest a Defence-lowering special attack weapon you own (Dragon warhammer, Bandos godsword "
 			+ "and so on) for monsters with lots of HP",
 		section = prepSection,
-		position = 8
+		position = 9
 	)
 	default boolean specWeapon()
 	{
@@ -356,7 +369,7 @@ public interface BossingBisConfig extends Config
 		name = "Highlight supplies",
 		description = "Outline suggested supplies in your bank as well as gear",
 		section = prepSection,
-		position = 9
+		position = 10
 	)
 	default boolean highlightSupplies()
 	{
@@ -369,7 +382,7 @@ public interface BossingBisConfig extends Config
 		name = "Supply highlight colour",
 		description = "Colour of the outline around suggested supplies",
 		section = prepSection,
-		position = 10
+		position = 11
 	)
 	default Color supplyHighlightColor()
 	{

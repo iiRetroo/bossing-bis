@@ -253,6 +253,40 @@ public class PrepPlannerTest
 	}
 
 	@Test
+	public void wikiSwitchesAreOwnedOnlyAndCanBeTurnedOff()
+	{
+		OwnedItems bank = owned("Hallowfell", 1, "Blisterwood stake", 1, "Shark", 50);
+		PrepPlan on = planner.plan(request("phosani's nightmare", AttackType.CRUSH, bank).build());
+		assertTrue(names(on).containsAll(List.of("Hallowfell", "Blisterwood stake")));
+		// Dinh's bulwark isn't owned, so it isn't suggested
+		assertFalse(names(on).contains("Dinh's bulwark"));
+		assertTrue(on.getInventory().stream().filter(l -> l.getName().equals("Hallowfell"))
+			.allMatch(l -> l.getNote().startsWith("wiki switch: ")));
+		PrepPlan off = planner.plan(request("phosani's nightmare", AttackType.CRUSH, bank).wikiSwitches(false).build());
+		assertFalse(names(off).contains("Hallowfell"));
+		// an item already worn in the set isn't carried as a switch too
+		PrepPlan worn = planner.plan(request("phosani's nightmare", AttackType.CRUSH, bank)
+			.wornNames(Set.of("Hallowfell")).build());
+		assertFalse(names(worn).contains("Hallowfell"));
+	}
+
+	@Test
+	public void awakenersOrbOnlyForAwakenedFights()
+	{
+		OwnedItems bank = owned("Awakener's orb", 2, "Pestle and mortar", 1, "Shark", 50);
+		PrepPlan normal = planner.plan(request("duke sucellus", AttackType.CRUSH, bank)
+			.monsterVersion("Post-quest, Awake").build());
+		assertFalse(names(normal).contains("Awakener's orb"));
+		assertTrue(names(normal).contains("Pestle and mortar"));
+		PrepPlan awakened = planner.plan(request("duke sucellus", AttackType.CRUSH, bank)
+			.monsterVersion("Awakened, Awake").build());
+		assertTrue(names(awakened).contains("Awakener's orb"));
+		// the Whisperer can't be started without a blackstone fragment
+		PrepPlan whisperer = planner.plan(request("the whisperer", AttackType.MAGIC, owned()).build());
+		assertTrue(whisperer.getNotes().stream().anyMatch(n -> n.contains("Blackstone fragment")));
+	}
+
+	@Test
 	public void inertTalismanIsNotATeleport()
 	{
 		PrepPlan inert = planner.plan(request("sarachnis", AttackType.SLASH, owned("Xeric's talisman (inert)", 1)).build());
