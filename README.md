@@ -7,7 +7,7 @@
 Pick a boss in the side panel. No Slayer task is needed. From your bank (plus potion storage, group storage and what you're wearing and carrying) it shows:
 
 - **Your highest-DPS set for each combat style**, worked out with the OSRS Wiki DPS calculator's formulas. The set is outlined in your bank, and **Show in bank** filters your bank to it.
-- **A whole-fight plan** for bosses with several monsters or phases (Dagannoth Kings, Barrows, Zulrah, Grotesque Guardians, Abyssal Sire, Alchemical Hydra, Phantom Muspah, Kalphite Queen). It picks the best set for each, wears the first, and carries the items that differ as switches.
+- **A whole-fight plan** for bosses with several monsters or phases (Dagannoth Kings, Barrows, Zulrah, Grotesque Guardians, Abyssal Sire, Alchemical Hydra, Phantom Muspah, Kalphite Queen). It picks the best set for each, wears the first, and carries the items that differ as switches. To keep the inventory free, it keeps your main set's items wherever that costs little DPS (*Fewer switches*, 10% by default), and the panel says what that gave up.
 - **A 28-slot inventory**: entry items (a mith grapple for Kree'arra, a spade for Barrows), switches, antifire and anti-venom where needed, prayer potions, a potion for your best style, a spec weapon, loot tools, a teleport, and your best food (with karambwans for combo eating).
 - **Gear the boss needs**, kept in every set: boots of stone for Hydra, a Tortugan shield and 40 kg of armour for the Shellbane gryphon, a dragonfire shield for Vorkath if you have no super antifire.
 - **How to get there**, ticked off when you own the teleport item.

@@ -309,6 +309,21 @@ public interface BossingBisConfig extends Config
 		return true;
 	}
 
+	@Range(max = 50)
+	@ConfigItem(
+		keyName = "switchTolerance",
+		name = "Fewer switches (%)",
+		description = "Carry fewer switches when it costs little: against each other monster or phase, keep your "
+			+ "main set's items if that loses no more than this many percent of the DPS. 0 always uses the "
+			+ "best set for each.",
+		section = prepSection,
+		position = 6
+	)
+	default int switchTolerance()
+	{
+		return 10;
+	}
+
 	@ConfigItem(
 		keyName = "lootTools",
 		name = "Loot tools",
@@ -316,7 +331,7 @@ public interface BossingBisConfig extends Config
 			+ "alchables, a bonecrusher for bones and so on. Common drops only counts loot that drops at "
 			+ "least once every " + 64 + " kills on average.",
 		section = prepSection,
-		position = 6
+		position = 7
 	)
 	default LootTools lootTools()
 	{
@@ -329,7 +344,7 @@ public interface BossingBisConfig extends Config
 		description = "Suggest a Defence-lowering special attack weapon you own (Dragon warhammer, Bandos godsword "
 			+ "and so on) for monsters with lots of HP",
 		section = prepSection,
-		position = 7
+		position = 8
 	)
 	default boolean specWeapon()
 	{
@@ -341,7 +356,7 @@ public interface BossingBisConfig extends Config
 		name = "Highlight supplies",
 		description = "Outline suggested supplies in your bank as well as gear",
 		section = prepSection,
-		position = 8
+		position = 9
 	)
 	default boolean highlightSupplies()
 	{
@@ -354,7 +369,7 @@ public interface BossingBisConfig extends Config
 		name = "Supply highlight colour",
 		description = "Colour of the outline around suggested supplies",
 		section = prepSection,
-		position = 9
+		position = 10
 	)
 	default Color supplyHighlightColor()
 	{

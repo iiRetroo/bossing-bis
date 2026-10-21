@@ -41,16 +41,24 @@ public class FightPlanTest
 		resolver = new MonsterResolver(data);
 	}
 
-	@Test
-	public void dagannothKingsGetSwitchesForEachKing()
+	private static final PlayerSetup SETUP = PlayerSetup.builder().attack(99).strength(99).ranged(99).magic(99)
+		.hitpoints(99).blowpipeDartStrength(35).build();
+
+	/** A mid-level bank with a set for each style. */
+	private static final String[] BANK = {"Abyssal whip", "Dragon defender", "Fighter torso", "Bandos tassets",
+		"Helm of Neitiznot", "Barrows gloves", "Dragon boots", "Amulet of fury", "Fire cape", "Berserker ring (i)",
+		"Rune crossbow", "Adamant bolts", "Black d'hide body", "Black d'hide chaps", "Ava's accumulator",
+		"Trident of the Swamp", "Occult necklace", "Mystic robe top", "Mystic robe bottom", "Dragon warhammer"};
+
+	/**
+	 * A whole-fight plan for the Dagannoth Kings with this switch tolerance, printed for checking.
+	 */
+	private static List<OptimizationOutcome.Phase> planKings(int tolerance, List<PrepPlan.Switch> switches,
+		StyleResult[] mainOut)
 	{
-		PlayerSetup setup = PlayerSetup.builder().attack(99).strength(99).ranged(99).magic(99).hitpoints(99)
-			.blowpipeDartStrength(35).build();
 		List<Optimizer.Candidate> bank = new ArrayList<>();
 		Map<Integer, String> names = new HashMap<>();
-		for (String n : new String[]{"Abyssal whip", "Dragon defender", "Fighter torso", "Bandos tassets",
-			"Helm of Neitiznot", "Barrows gloves", "Dragon boots", "Amulet of fury", "Fire cape", "Berserker ring (i)",
-			"Rune crossbow", "Adamant bolts", "Trident of the Swamp", "Dragon warhammer"})
+		for (String n : BANK)
 		{
 			GearItem item = data.findItem(n);
 			assertNotNull(n, item);
@@ -60,7 +68,7 @@ public class FightPlanTest
 		List<Monster> kings = resolver.forBoss(List.of("Dagannoth Rex", "Dagannoth Prime", "Dagannoth Supreme"));
 		Monster rex = kings.get(0);
 		AtomicBoolean cancel = new AtomicBoolean();
-		Optimizer optimizer = new Optimizer(setup, rex, cancel);
+		Optimizer optimizer = new Optimizer(SETUP, rex, cancel);
 		StyleResult main = null;
 		for (AttackType t : AttackType.values())
 		{
@@ -75,37 +83,71 @@ public class FightPlanTest
 			}
 		}
 		assertNotNull(main);
+		mainOut[0] = main;
 
 		List<OptimizationOutcome.Phase> phases = new ArrayList<>();
-		List<PrepPlan.Switch> switches = new ArrayList<>();
 		Set<String> weapons = new HashSet<>();
-		BossingBisPlugin.planPhases(kings, rex, main, setup, cancel, bank, Collections.emptyMap(),
-			Collections.emptyList(), 0, names, phases, switches, weapons);
-
+		BossingBisPlugin.planPhases(kings, rex, main, SETUP, cancel, bank, Collections.emptyMap(),
+			Collections.emptyList(), 0, tolerance, names, phases, switches, weapons);
+		System.out.println("tolerance " + tolerance + "%:");
 		for (OptimizationOutcome.Phase p : phases)
 		{
-			System.out.printf("%s: %s %.2f DPS, switches %s%n", p.getMonster().getName(), p.getType(), p.getDps(),
+			System.out.printf("  %s: %s %.2f DPS (gave up %.2f, saved %d), switches %s%n", p.getMonster().getName(),
+				p.getType(), p.getDps(), p.getDpsGivenUp(), p.getSwitchesSaved(),
 				p.getSwitches().stream().map(c -> c.getItem().getName()).collect(java.util.stream.Collectors.toList()));
 		}
+		return phases;
+	}
+
+	@Test
+	public void dagannothKingsGetSwitchesForEachKing()
+	{
+		List<PrepPlan.Switch> switches = new ArrayList<>();
+		StyleResult[] main = new StyleResult[1];
+		List<OptimizationOutcome.Phase> phases = planKings(0, switches, main);
 		assertEquals(3, phases.size());
-		assertEquals(rex, phases.get(0).getMonster());
+		assertEquals("Dagannoth Rex", phases.get(0).getMonster().getName());
 		assertTrue(phases.get(0).getSwitches().isEmpty());
-		// Prime and Supreme are weak to other styles than Rex, so their weapons are switches
+		// Prime and Supreme are weak to other styles than Rex, so there are switches
 		assertTrue(switches.size() >= 2);
 		for (OptimizationOutcome.Phase p : phases.subList(1, 3))
 		{
-			assertTrue(p.getMonster().getName(), p.getType() != main.getType()
-				|| !p.getSwitches().isEmpty() || p.getDps() > 0);
+			// with no tolerance, every phase uses its best set
+			assertEquals(0, p.getSwitchesSaved());
+			assertEquals(0, p.getDpsGivenUp(), 1e-9);
 			for (Optimizer.Candidate c : p.getSwitches())
 			{
-				Optimizer.Candidate mainItem = main.getGear()[c.getItem().getSlot().ordinal()];
+				Optimizer.Candidate mainItem = main[0].getGear()[c.getItem().getSlot().ordinal()];
 				assertTrue(mainItem == null || mainItem.getItem().getId() != c.getItem().getId());
 			}
 		}
 		// every switch is listed once
 		assertEquals(switches.size(), new HashSet<>(switches).size());
 		assertTrue(switches.stream().allMatch(s -> s.getNote().startsWith("switch for ")));
-		assertTrue(weapons.size() >= 1);
-		assertTrue(main.getGear()[EquipmentSlot.WEAPON.ordinal()] != null);
+		assertTrue(main[0].getGear()[EquipmentSlot.WEAPON.ordinal()] != null);
+	}
+
+	@Test
+	public void toleranceCarriesFewerSwitchesForLittleDps()
+	{
+		List<PrepPlan.Switch> all = new ArrayList<>();
+		List<OptimizationOutcome.Phase> best = planKings(0, all, new StyleResult[1]);
+		// the default, printed for comparison
+		List<PrepPlan.Switch> byDefault = new ArrayList<>();
+		planKings(10, byDefault, new StyleResult[1]);
+		assertTrue(byDefault.size() <= all.size());
+		List<PrepPlan.Switch> fewer = new ArrayList<>();
+		List<OptimizationOutcome.Phase> trimmed = planKings(25, fewer, new StyleResult[1]);
+		assertTrue("expected fewer switches: " + fewer.size() + " vs " + all.size(), fewer.size() < all.size());
+		for (int i = 1; i < trimmed.size(); i++)
+		{
+			OptimizationOutcome.Phase full = best.get(i);
+			OptimizationOutcome.Phase p = trimmed.get(i);
+			assertTrue(p.getSwitches().size() <= full.getSwitches().size());
+			// never more than 25% below the phase's best set
+			assertTrue(p.getDps() * 125 >= full.getDps() * 100 - 1e-6);
+			assertEquals(full.getDps() - p.getDps(), p.getDpsGivenUp(), 1e-9);
+			assertEquals(full.getSwitches().size() - p.getSwitches().size(), p.getSwitchesSaved());
+		}
 	}
 }

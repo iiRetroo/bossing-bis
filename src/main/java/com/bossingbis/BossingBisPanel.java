@@ -673,6 +673,11 @@ class BossingBisPanel extends PluginPanel
 				}
 				list.add(left(row));
 			}
+			if (p.getSwitchesSaved() > 0)
+			{
+				list.add(left(text(p.getSwitchesSaved() + " fewer switch" + (p.getSwitchesSaved() == 1 ? "" : "es")
+					+ " for " + DPS_FORMAT.format(p.getDpsGivenUp()) + " DPS less than its best set.", MUTED, true)));
+			}
 		}
 		list.add(left(text("The switches are included in the inventory below.", MUTED, true)));
 		return list;

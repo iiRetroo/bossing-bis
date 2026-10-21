@@ -84,6 +84,10 @@ class OptimizationOutcome
 		AttackType type;
 		double dps;
 		List<Optimizer.Candidate> switches;
+		/** Switches left out because keeping the main set's items cost little DPS. */
+		int switchesSaved;
+		/** DPS given up against this monster to carry fewer switches. */
+		double dpsGivenUp;
 	}
 
 	StyleResult best()
