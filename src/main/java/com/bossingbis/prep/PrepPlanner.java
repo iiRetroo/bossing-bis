@@ -270,7 +270,9 @@ public final class PrepPlanner
 				continue;
 			}
 			int have = name != null ? owned.count(name, item.exact) : 0;
-			lines.add(new PrepPlan.InventoryLine(name != null ? name : item.names.get(0), 1, have, item.note,
+			// a stackable item brings the whole stack in its one slot
+			int quantity = item.stackable ? Math.max(1, have) : 1;
+			lines.add(new PrepPlan.InventoryLine(name != null ? name : item.names.get(0), quantity, have, item.note,
 				!item.optional, name != null ? owned.anyId(name, item.exact) : -1, item.stackable));
 			collect(name, item.exact, owned, ids);
 			slots++;
@@ -293,7 +295,9 @@ public final class PrepPlanner
 			{
 				continue;
 			}
-			slots += addLine(lines, ids, owned, name, 1, "wiki switch: " + item.note, false);
+			slots += item.stackable
+				? addStack(lines, ids, owned, name, "wiki switch: " + item.note)
+				: addLine(lines, ids, owned, name, 1, "wiki switch: " + item.note, false);
 		}
 
 		if (info != null && "dragon".equals(info.dragonfire))

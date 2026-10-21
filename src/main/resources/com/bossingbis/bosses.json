@@ -208,10 +208,20 @@
         "Artio"
       ],
       "tips": [
-        "This boss is in the Wilderness: only bring what you're willing to lose."
+        "This boss is in the Wilderness: only bring what you're willing to lose.",
+        "Callisto needs the medium Wilderness Diary."
       ],
       "locations": [
         "Callisto's den (Wilderness)"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Looting bag"
+          ],
+          "note": "carries extra loot (its contents are lost if you die)",
+          "optional": true
+        }
       ]
     },
     "cerberus": {
@@ -253,6 +263,15 @@
       ],
       "locations": [
         "Rogues' Castle"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Looting bag"
+          ],
+          "note": "carries extra loot (its contents are lost if you die)",
+          "optional": true
+        }
       ]
     },
     "chaos fanatic": {
@@ -265,6 +284,23 @@
       ],
       "locations": [
         "Chaos Fanatic (Wilderness)"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Looting bag"
+          ],
+          "note": "carries extra loot (its contents are lost if you die)",
+          "optional": true
+        },
+        {
+          "names": [
+            "Ghorrock teleport"
+          ],
+          "stackable": true,
+          "optional": true,
+          "note": "bring at least two: a free inventory slot lets the Fanatic unequip your gear"
+        }
       ]
     },
     "commander zilyana": {
@@ -341,6 +377,15 @@
       ],
       "locations": [
         "Bandit Camp (Wilderness)"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Looting bag"
+          ],
+          "note": "carries extra loot (its contents are lost if you die)",
+          "optional": true
+        }
       ]
     },
     "dagannoth kings": {
@@ -400,10 +445,25 @@
             "Bronze axe"
           ],
           "note": "to chop the swamp vine on Fossil Island"
+        },
+        {
+          "names": [
+            "Antidote++",
+            "Antidote+",
+            "Superantipoison",
+            "Antipoison",
+            "Anti-venom+",
+            "Anti-venom"
+          ],
+          "note": "one dose for the spined mushroom on the path through the swamp"
+        },
+        {
+          "names": [
+            "Rake"
+          ],
+          "note": "clears the smaller vines (not needed with the Mycelium mushtrees)",
+          "optional": true
         }
-      ],
-      "tips": [
-        "A rake clears the smaller vines if you walk through the swamp."
       ],
       "locations": [
         "Fossil Island"
@@ -926,6 +986,15 @@
       ],
       "locations": [
         "Scorpion Pit (Wilderness)"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Looting bag"
+          ],
+          "note": "carries extra loot (its contents are lost if you die)",
+          "optional": true
+        }
       ]
     },
     "scurrius": {
@@ -1173,10 +1242,44 @@
       ],
       "venom": true,
       "tips": [
-        "This boss is in the Wilderness: only bring what you're willing to lose."
+        "This boss is in the Wilderness: only bring what you're willing to lose.",
+        "Venenatis needs the medium Wilderness Diary and Spindel the hard one, unless you're on a Slayer task for them."
       ],
       "locations": [
         "Silk Chasm (Wilderness)"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Looting bag"
+          ],
+          "note": "carries extra loot (its contents are lost if you die)",
+          "optional": true
+        },
+        {
+          "names": [
+            "Dinh's bulwark"
+          ],
+          "note": "hits several spiderlings at once",
+          "switch": true
+        },
+        {
+          "names": [
+            "Black chinchompa",
+            "Red chinchompa",
+            "Chinchompa"
+          ],
+          "note": "for the spiderlings",
+          "switch": true,
+          "stackable": true
+        },
+        {
+          "names": [
+            "Phoenix necklace"
+          ],
+          "note": "emergency healing (the wiki suggests one)",
+          "optional": true
+        }
       ]
     },
     "vet'ion": {
@@ -1191,6 +1294,15 @@
       ],
       "locations": [
         "Vet'ion's Rest (Wilderness)"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Looting bag"
+          ],
+          "note": "carries extra loot (its contents are lost if you die)",
+          "optional": true
+        }
       ]
     },
     "vorkath": {
@@ -1344,6 +1456,18 @@
       },
       {
         "text": "Annakarl Teleport (Ancient Magicks), then walk south"
+      },
+      {
+        "text": "Games necklace: Corporeal Beast, then walk north",
+        "items": [
+          "Games necklace"
+        ]
+      },
+      {
+        "text": "Wilderness sword 4: Fountain of Rune (hard Wilderness Diary)",
+        "items": [
+          "Wilderness sword 4"
+        ]
       }
     ],
     "Taverley Dungeon": [
@@ -1663,6 +1787,18 @@
         "items": [
           "Annakarl teleport"
         ]
+      },
+      {
+        "text": "Games necklace: Corporeal Beast, then head north-east",
+        "items": [
+          "Games necklace"
+        ]
+      },
+      {
+        "text": "Wilderness sword 4: Fountain of Rune, then run south-west (hard Wilderness Diary)",
+        "items": [
+          "Wilderness sword 4"
+        ]
       }
     ],
     "Vet'ion's Rest (Wilderness)": [
@@ -1676,6 +1812,12 @@
         "text": "Carrallanger teleport tablet, then walk north-east",
         "items": [
           "Carrallanger teleport"
+        ]
+      },
+      {
+        "text": "Games necklace: Corporeal Beast, then walk to Vet'ion's Rest",
+        "items": [
+          "Games necklace"
         ]
       }
     ],

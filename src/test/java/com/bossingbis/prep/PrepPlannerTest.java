@@ -308,6 +308,31 @@ public class PrepPlannerTest
 	}
 
 	@Test
+	public void batchSixReviewData()
+	{
+		// a looting bag for the Wilderness bosses, when owned
+		PrepPlan scorpia = planner.plan(request("scorpia", AttackType.MAGIC, owned("Looting bag", 1, "Shark", 50)).build());
+		assertTrue(names(scorpia).contains("Looting bag"));
+		// stackable switches bring the whole stack in one slot
+		PrepPlan venenatis = planner.plan(request("venenatis", AttackType.RANGED,
+			owned("Black chinchompa", 200, "Shark", 50)).build());
+		assertTrue(venenatis.getInventory().stream()
+			.anyMatch(l -> l.getName().equals("Black chinchompa") && l.isStackable() && l.getQuantity() == 200));
+		// two or more Ghorrock teleports stack in one slot for the Chaos Fanatic
+		PrepPlan fanatic = planner.plan(request("chaos fanatic", AttackType.MAGIC,
+			owned("Ghorrock teleport", 3, "Shark", 50)).build());
+		assertTrue(fanatic.getInventory().stream()
+			.anyMatch(l -> l.getName().equals("Ghorrock teleport") && l.isStackable() && l.getQuantity() == 3));
+		// the Deranged archaeologist's path needs a dose of antipoison
+		PrepPlan deranged = planner.plan(request("deranged archaeologist", AttackType.MAGIC, owned("Shark", 50)).build());
+		assertTrue(deranged.getNotes().stream().anyMatch(n -> n.contains("Antidote++")));
+		// Wilderness sword 4 reaches Callisto
+		assertTrue(planner.plan(request("callisto", AttackType.RANGED, owned("Wilderness sword 4", 1)).build())
+			.getTeleports().stream().anyMatch(t -> t.getText().startsWith("Wilderness sword 4")
+				&& Boolean.TRUE.equals(t.getOwned())));
+	}
+
+	@Test
 	public void inertTalismanIsNotATeleport()
 	{
 		PrepPlan inert = planner.plan(request("sarachnis", AttackType.SLASH, owned("Xeric's talisman (inert)", 1)).build());
