@@ -65,6 +65,13 @@
             "Spade"
           ],
           "note": "to dig into the crypts"
+        },
+        {
+          "names": [
+            "Strange old lockpick"
+          ],
+          "note": "opens locked doors in the tunnels (uses a charge)",
+          "optional": true
         }
       ],
       "locations": [
@@ -204,11 +211,25 @@
         "Dagannoth Supreme"
       ],
       "wholeFight": true,
-      "tips": [
-        "A rune thrownaxe opens the first door of the Waterbirth dungeon on your own."
-      ],
       "locations": [
         "Waterbirth Island"
+      ],
+      "venom": true,
+      "inventory": [
+        {
+          "names": [
+            "Rune thrownaxe"
+          ],
+          "note": "opens the first door of the Waterbirth dungeon (not needed with the 85 Agility shortcut)",
+          "optional": true
+        },
+        {
+          "names": [
+            "Pet rock"
+          ],
+          "note": "holds a door plate in the Waterbirth dungeon (not needed with the 85 Agility shortcut)",
+          "optional": true
+        }
       ]
     },
     "deranged archaeologist": {
@@ -300,6 +321,14 @@
             "Lit black candle"
           ],
           "note": "a light source for the tunnels, unless you've lit the Fire of Eternal Light"
+        },
+        {
+          "names": [
+            "Falador shield 4",
+            "Falador shield 3"
+          ],
+          "note": "helps you find the mole in the lair (the wiki recommends it)",
+          "optional": true
         }
       ],
       "tips": [
@@ -356,17 +385,43 @@
         "Kalphite Queen (Airborne)"
       ],
       "wholeFight": true,
+      "prefer": [
+        {
+          "slot": "ring",
+          "items": [
+            "Ring of suffering (i)",
+            "Ring of suffering",
+            "Ring of recoil"
+          ],
+          "withinPercent": 10,
+          "reason": "the wiki recommends a ring with a recoil effect"
+        }
+      ],
       "tips": [
         "You need two ropes the first time; after the hard Desert Diary they stay in place."
       ],
       "locations": [
         "Kalphite Lair"
-      ]
+      ],
+      "venom": true
     },
     "king black dragon": {
       "name": "King Black Dragon",
       "monsters": [
         "King Black Dragon"
+      ],
+      "prefer": [
+        {
+          "slot": "shield",
+          "items": [
+            "Dragonfire ward",
+            "Anti-dragon shield",
+            "Dragonfire shield",
+            "Ancient wyvern shield"
+          ],
+          "withinPercent": 20,
+          "reason": "the wiki recommends one even with a super antifire"
+        }
       ],
       "dragonfire": "dragon",
       "venom": true,
@@ -478,6 +533,16 @@
       "name": "Sarachnis",
       "monsters": [
         "Sarachnis"
+      ],
+      "prefer": [
+        {
+          "slot": "feet",
+          "items": [
+            "Aranea boots"
+          ],
+          "withinPercent": 15,
+          "reason": "the wiki recommends them"
+        }
       ],
       "tips": [
         "Bring a knife or a slash weapon for the webs, unless you wear Aranea boots."
@@ -956,6 +1021,12 @@
       }
     ],
     "Forthos Dungeon": [
+      {
+        "text": "Xeric's talisman: Xeric's Glade, then walk west to the dungeon",
+        "items": [
+          "Xeric's talisman"
+        ]
+      },
       {
         "text": "Skills necklace: Woodcutting Guild, then walk north",
         "items": [

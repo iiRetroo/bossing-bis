@@ -208,6 +208,33 @@ public class PrepPlannerTest
 	}
 
 	@Test
+	public void batchTwoReviewData()
+	{
+		// a dragonfire-protecting shield for the KBD, a recoil ring for the Kalphite Queen, Aranea boots for Sarachnis
+		assertEquals(EquipmentSlot.SHIELD, planner.preferences("king black dragon").get(0).getSlot());
+		assertEquals(EquipmentSlot.RING, planner.preferences("kalphite queen").get(0).getSlot());
+		assertEquals(EquipmentSlot.FEET, planner.preferences("sarachnis").get(0).getSlot());
+		assertTrue(planner.poisons("dagannoth kings"));
+		assertTrue(planner.poisons("kalphite queen"));
+		// optional entry items only show when owned
+		PrepPlan without = planner.plan(request("dagannoth kings", AttackType.RANGED, owned("Shark", 50)).build());
+		assertFalse(names(without).contains("Rune thrownaxe"));
+		PrepPlan with = planner.plan(request("dagannoth kings", AttackType.RANGED,
+			owned("Rune thrownaxe", 1, "Pet rock", 1, "Shark", 50)).build());
+		assertTrue(names(with).containsAll(List.of("Rune thrownaxe", "Pet rock")));
+	}
+
+	@Test
+	public void inertTalismanIsNotATeleport()
+	{
+		PrepPlan inert = planner.plan(request("sarachnis", AttackType.SLASH, owned("Xeric's talisman (inert)", 1)).build());
+		assertTrue(inert.getTeleports().stream().filter(t -> t.getText().startsWith("Xeric's talisman"))
+			.allMatch(t -> Boolean.FALSE.equals(t.getOwned())));
+		PrepPlan charged = planner.plan(request("sarachnis", AttackType.SLASH, owned("Xeric's talisman", 1)).build());
+		assertTrue(names(charged).contains("Xeric's talisman"));
+	}
+
+	@Test
 	public void missingEntryItemIsFlagged()
 	{
 		PrepPlan plan = planner.plan(request("kree'arra", AttackType.RANGED, owned()).build());

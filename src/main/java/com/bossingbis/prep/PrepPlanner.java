@@ -708,6 +708,8 @@ public final class PrepPlanner
 			{
 				have -= owned.count(n, true);
 			}
+			// an inert Xeric's talisman can't teleport until it's recharged
+			have -= owned.count(n + " (inert)", true);
 			if (have > 0)
 			{
 				return n;
