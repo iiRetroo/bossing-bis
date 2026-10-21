@@ -77,6 +77,18 @@
         }
       ]
     },
+    "amoxliatl": {
+      "name": "Amoxliatl",
+      "monsters": [
+        "Amoxliatl (Post-quest)"
+      ],
+      "locations": [
+        "Ruins of Tapoyauik"
+      ],
+      "tips": [
+        "Needs The Heart of Darkness. After it, the Tower of Ascension's lift is a shortcut."
+      ]
+    },
     "araxxor": {
       "name": "Araxxor",
       "monsters": [
@@ -162,6 +174,18 @@
       ],
       "locations": [
         "Barrows"
+      ]
+    },
+    "brutus": {
+      "name": "Brutus",
+      "monsters": [
+        "Brutus"
+      ],
+      "locations": [
+        "Lumbridge cow field"
+      ],
+      "tips": [
+        "Needs The Ides of Milk."
       ]
     },
     "bryophyta": {
@@ -425,6 +449,27 @@
         }
       ]
     },
+    "demonic brutus": {
+      "name": "Demonic Brutus",
+      "monsters": [
+        "Demonic Brutus (Brutus)",
+        "Demonic Brutus (Ghost)"
+      ],
+      "locations": [
+        "Lumbridge cow field"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Abyssal potato"
+          ],
+          "note": "fed to Brutus, it starts one attempt (potatoes grow in the Scar)"
+        }
+      ],
+      "tips": [
+        "Needs Desert Treasure II - The Fallen Empire."
+      ]
+    },
     "deranged archaeologist": {
       "name": "Deranged archaeologist",
       "monsters": [
@@ -468,6 +513,20 @@
       ],
       "locations": [
         "Fossil Island"
+      ]
+    },
+    "doom of mokhaiotl": {
+      "name": "Doom of Mokhaiotl",
+      "monsters": [
+        "Doom of Mokhaiotl (Delve 1)",
+        "Doom of Mokhaiotl"
+      ],
+      "locations": [
+        "Ruins of Mokhaiotl"
+      ],
+      "tips": [
+        "Needs The Final Dawn.",
+        "Two ancient teleporters from the chest west of the lift shorten the trip back."
       ]
     },
     "duke sucellus": {
@@ -539,6 +598,38 @@
       ],
       "tips": [
         "Needs Desert Treasure II - The Fallen Empire."
+      ]
+    },
+    "gemstone crab": {
+      "name": "Gemstone Crab",
+      "monsters": [
+        "Gemstone Crab"
+      ],
+      "locations": [
+        "Tlati Rainforest"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Crystal pickaxe",
+            "Dragon pickaxe",
+            "Infernal pickaxe",
+            "3rd age pickaxe",
+            "Rune pickaxe",
+            "Adamant pickaxe",
+            "Mithril pickaxe",
+            "Black pickaxe",
+            "Steel pickaxe",
+            "Iron pickaxe",
+            "Bronze pickaxe"
+          ],
+          "note": "to mine the shell for gems",
+          "optional": true
+        }
+      ],
+      "tips": [
+        "Only the 16 players who deal the most damage get gems.",
+        "It moves between three spots; each has a cave leading to it."
       ]
     },
     "general graardor": {
@@ -646,6 +737,50 @@
       ],
       "locations": [
         "Slayer Tower"
+      ]
+    },
+    "hespori": {
+      "name": "Hespori",
+      "monsters": [
+        "Hespori"
+      ],
+      "venom": true,
+      "locations": [
+        "Farming Guild"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Spade"
+          ],
+          "note": "harvesting the grown Hespori seed wakes it"
+        },
+        {
+          "names": [
+            "Toxic blowpipe"
+          ],
+          "exact": true,
+          "switch": true,
+          "note": "one hit from any weapon destroys a flower bud; the wiki uses a ranged one"
+        }
+      ],
+      "tips": [
+        "Needs 65 Farming and a Hespori seed grown in the patch in the Farming Guild's west wing."
+      ]
+    },
+    "the hueycoatl": {
+      "name": "The Hueycoatl",
+      "monsters": [
+        "The Hueycoatl (Normal)",
+        "The Hueycoatl (Tail)",
+        "The Hueycoatl (Body)"
+      ],
+      "wholeFight": true,
+      "locations": [
+        "Darkfrost"
+      ],
+      "tips": [
+        "A group boss for up to 20 players. A private instance costs 50,000 coins (25,000 with the hard Combat Achievements)."
       ]
     },
     "k'ril tsutsaroth": {
@@ -832,6 +967,111 @@
         "God Wars Dungeon"
       ]
     },
+    "the leviathan": {
+      "name": "The Leviathan",
+      "monsters": [
+        "The Leviathan (Post-quest)",
+        "The Leviathan (Awakened)"
+      ],
+      "prefer": [
+        {
+          "slot": "ring",
+          "items": [
+            "Lightbearer"
+          ],
+          "withinPercent": 10,
+          "reason": "the wiki recommends it, so special attack energy is back for the next kill"
+        }
+      ],
+      "locations": [
+        "The Scar"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Awakener's orb"
+          ],
+          "note": "needed for the awakened fight",
+          "onlyFor": "Awakened"
+        },
+        {
+          "names": [
+            "Webweaver bow"
+          ],
+          "note": "its special attack (the wiki's ranged swap)",
+          "switch": true
+        },
+        {
+          "names": [
+            "Toxic blowpipe"
+          ],
+          "note": "the wiki's faster-attacking swap",
+          "switch": true,
+          "exact": true
+        },
+        {
+          "names": [
+            "Thammaron's sceptre"
+          ],
+          "note": "casts the shadow spells that stun the Leviathan",
+          "switch": true
+        }
+      ],
+      "tips": [
+        "Needs Desert Treasure II - The Fallen Empire."
+      ]
+    },
+    "mad angel": {
+      "name": "Mad Angel",
+      "monsters": [
+        "Mad Angel (Post-quest)"
+      ],
+      "locations": [
+        "Ardeaglais (Wyrmscraig)"
+      ],
+      "tips": [
+        "Needs Fallen From Grace."
+      ]
+    },
+    "maggot king": {
+      "name": "Maggot King",
+      "monsters": [
+        "Maggot King"
+      ],
+      "locations": [
+        "Vampyrium"
+      ],
+      "tips": [
+        "Needs The Blood Moon Rises. Solo only.",
+        "It can also be a Slayer task (Konar, Nieve or Duradel)."
+      ]
+    },
+    "the mimic": {
+      "name": "The Mimic",
+      "monsters": [
+        "The Mimic"
+      ],
+      "locations": [],
+      "tips": [
+        "Fought from an elite or master clue casket."
+      ]
+    },
+    "moons of peril": {
+      "name": "Moons of Peril",
+      "monsters": [
+        "Blood Moon",
+        "Blue Moon",
+        "Eclipse Moon (Regular)"
+      ],
+      "wholeFight": true,
+      "locations": [
+        "Cam Torum"
+      ],
+      "tips": [
+        "Needs Perilous Moons.",
+        "Food and potions can be made inside: the camps have supply crates and cooking stoves."
+      ]
+    },
     "nex": {
       "name": "Nex",
       "monsters": [
@@ -881,6 +1121,32 @@
             "Dragon warhammer"
           ],
           "note": "frees players from the Ice Prison",
+          "switch": true
+        }
+      ]
+    },
+    "the nightmare": {
+      "name": "The Nightmare",
+      "monsters": [
+        "The Nightmare"
+      ],
+      "comboEat": true,
+      "locations": [
+        "Slepe"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Crimson kisten"
+          ],
+          "note": "for husks and parasites",
+          "switch": true
+        },
+        {
+          "names": [
+            "Inquisitor's mace"
+          ],
+          "note": "for husks and parasites",
           "switch": true
         }
       ]
@@ -956,6 +1222,53 @@
           "note": "for the sleepwalkers",
           "switch": true
         }
+      ]
+    },
+    "revenant maledictus": {
+      "name": "Revenant maledictus",
+      "monsters": [
+        "Revenant maledictus"
+      ],
+      "locations": [
+        "Revenant Caves"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Looting bag"
+          ],
+          "note": "carries extra loot (its contents are lost if you die)",
+          "optional": true
+        }
+      ],
+      "tips": [
+        "This boss is in the Wilderness: only bring what you're willing to lose.",
+        "Appears rarely while you kill revenants in the Revenant Caves."
+      ]
+    },
+    "royal titans": {
+      "name": "Royal Titans",
+      "monsters": [
+        "Branda the Fire Queen",
+        "Eldric the Ice King"
+      ],
+      "wholeFight": true,
+      "prefer": [
+        {
+          "slot": "weapon",
+          "items": [
+            "Twinflame staff"
+          ],
+          "withinPercent": 10,
+          "reason": "the wiki recommends it: it switches between fire and water spells by itself"
+        }
+      ],
+      "locations": [
+        "Royal Titans' lair"
+      ],
+      "tips": [
+        "Branda counts for a fire giant Slayer task and Eldric for an ice giant one.",
+        "The fight is made for two players, but can be done solo."
       ]
     },
     "sarachnis": {
@@ -1072,136 +1385,16 @@
         "Catacombs of Kourend"
       ]
     },
-    "the leviathan": {
-      "name": "The Leviathan",
+    "sol heredit": {
+      "name": "Sol Heredit (Fortis Colosseum)",
       "monsters": [
-        "The Leviathan (Post-quest)",
-        "The Leviathan (Awakened)"
-      ],
-      "prefer": [
-        {
-          "slot": "ring",
-          "items": [
-            "Lightbearer"
-          ],
-          "withinPercent": 10,
-          "reason": "the wiki recommends it, so special attack energy is back for the next kill"
-        }
+        "Sol Heredit"
       ],
       "locations": [
-        "The Scar"
-      ],
-      "inventory": [
-        {
-          "names": [
-            "Awakener's orb"
-          ],
-          "note": "needed for the awakened fight",
-          "onlyFor": "Awakened"
-        },
-        {
-          "names": [
-            "Webweaver bow"
-          ],
-          "note": "its special attack (the wiki's ranged swap)",
-          "switch": true
-        },
-        {
-          "names": [
-            "Toxic blowpipe"
-          ],
-          "note": "the wiki's faster-attacking swap",
-          "switch": true,
-          "exact": true
-        },
-        {
-          "names": [
-            "Thammaron's sceptre"
-          ],
-          "note": "casts the shadow spells that stun the Leviathan",
-          "switch": true
-        }
+        "Fortis Colosseum"
       ],
       "tips": [
-        "Needs Desert Treasure II - The Fallen Empire."
-      ]
-    },
-    "the nightmare": {
-      "name": "The Nightmare",
-      "monsters": [
-        "The Nightmare"
-      ],
-      "comboEat": true,
-      "locations": [
-        "Slepe"
-      ],
-      "inventory": [
-        {
-          "names": [
-            "Crimson kisten"
-          ],
-          "note": "for husks and parasites",
-          "switch": true
-        },
-        {
-          "names": [
-            "Inquisitor's mace"
-          ],
-          "note": "for husks and parasites",
-          "switch": true
-        }
-      ]
-    },
-    "the whisperer": {
-      "name": "The Whisperer",
-      "monsters": [
-        "The Whisperer (Post-quest)",
-        "The Whisperer (Awakened)"
-      ],
-      "prefer": [
-        {
-          "slot": "weapon",
-          "items": [
-            "Eldritch Nightmare staff"
-          ],
-          "withinPercent": 10,
-          "reason": "the wiki recommends it: it restores prayer on a hit"
-        }
-      ],
-      "locations": [
-        "Lassar Undercity"
-      ],
-      "inventory": [
-        {
-          "names": [
-            "Awakener's orb"
-          ],
-          "note": "needed for the awakened fight",
-          "onlyFor": "Awakened"
-        },
-        {
-          "names": [
-            "Blackstone fragment"
-          ],
-          "note": "starts the fight and takes you into the Shadow Realm"
-        },
-        {
-          "names": [
-            "Venator bow"
-          ],
-          "note": "clears the Lost Souls (with cheap arrows)",
-          "switch": true
-        },
-        {
-          "names": [
-            "Blisterwood stake"
-          ],
-          "note": "clears the most important Lost Souls",
-          "switch": true
-        }
-      ],
-      "tips": [
-        "Needs Desert Treasure II - The Fallen Empire."
+        "Needs Children of the Sun."
       ]
     },
     "thermonuclear smoke devil": {
@@ -1372,6 +1565,71 @@
         }
       ]
     },
+    "the whisperer": {
+      "name": "The Whisperer",
+      "monsters": [
+        "The Whisperer (Post-quest)",
+        "The Whisperer (Awakened)"
+      ],
+      "prefer": [
+        {
+          "slot": "weapon",
+          "items": [
+            "Eldritch Nightmare staff"
+          ],
+          "withinPercent": 10,
+          "reason": "the wiki recommends it: it restores prayer on a hit"
+        }
+      ],
+      "locations": [
+        "Lassar Undercity"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Awakener's orb"
+          ],
+          "note": "needed for the awakened fight",
+          "onlyFor": "Awakened"
+        },
+        {
+          "names": [
+            "Blackstone fragment"
+          ],
+          "note": "starts the fight and takes you into the Shadow Realm"
+        },
+        {
+          "names": [
+            "Venator bow"
+          ],
+          "note": "clears the Lost Souls (with cheap arrows)",
+          "switch": true
+        },
+        {
+          "names": [
+            "Blisterwood stake"
+          ],
+          "note": "clears the most important Lost Souls",
+          "switch": true
+        }
+      ],
+      "tips": [
+        "Needs Desert Treasure II - The Fallen Empire."
+      ]
+    },
+    "yama": {
+      "name": "Yama",
+      "monsters": [
+        "Yama (Normal)"
+      ],
+      "locations": [
+        "Chasm of Fire"
+      ],
+      "tips": [
+        "Needs A Kingdom Divided and the contract from the Voice of Yama.",
+        "Solo, or with a partner who has also signed the contract."
+      ]
+    },
     "zulrah": {
       "name": "Zulrah",
       "monsters": [
@@ -1414,38 +1672,31 @@
         "text": "Fairy ring DIP"
       }
     ],
-    "Karuulm Slayer Dungeon": [
+    "Ardeaglais (Wyrmscraig)": [
       {
-        "text": "Fairy ring CIR"
+        "text": "Necklace of passage: Wyrmscraig, east of the cathedral",
+        "items": [
+          "Necklace of passage"
+        ]
       },
       {
-        "text": "Rada's blessing: Mount Karuulm",
+        "text": "Slayer ring: Wyrmscraig Cavern, near the cathedral's basement",
         "items": [
-          "Rada's blessing 3",
-          "Rada's blessing 4"
+          "Slayer ring"
         ]
       }
     ],
-    "Morytania Spider Cave": [
+    "Bandit Camp (Wilderness)": [
       {
-        "text": "Spider cave teleport scroll",
+        "text": "Burning amulet: Bandit Camp",
         "items": [
-          "Spider cave teleport"
+          "Burning amulet"
         ]
       },
       {
-        "text": "Fairy ring ALQ, then walk south"
-      },
-      {
-        "text": "Ectophial, then walk south-west",
+        "text": "Ring of dueling: Ferox Enclave, then walk north-west",
         "items": [
-          "Ectophial"
-        ]
-      },
-      {
-        "text": "Hallowed crystal shard: Hallowed Sepulchre, then the wall shortcut south-east (63 Agility, two long ropes)",
-        "items": [
-          "Hallowed crystal shard"
+          "Ring of dueling"
         ]
       }
     ],
@@ -1467,17 +1718,6 @@
       },
       {
         "text": "Fairy ring BIP, then walk north"
-      }
-    ],
-    "Varrock Sewers": [
-      {
-        "text": "Giantsoul amulet: Bryophyta",
-        "items": [
-          "Giantsoul amulet"
-        ]
-      },
-      {
-        "text": "Varrock Teleport (standard spellbook), then the manhole east of the palace"
       }
     ],
     "Callisto's den (Wilderness)": [
@@ -1503,20 +1743,32 @@
         ]
       }
     ],
-    "Taverley Dungeon": [
+    "Cam Torum": [
       {
-        "text": "Key master teleport scroll: right by Cerberus' lair",
+        "text": "Calcified moth: Cam Torum",
         "items": [
-          "Key master teleport"
+          "Calcified moth"
         ]
       },
       {
-        "text": "Falador Teleport (standard spellbook), then walk west"
+        "text": "Pendant of Ates: Ralos' Rise, then walk north-west around the mountain (47 Agility shortcut)",
+        "items": [
+          "Pendant of Ates"
+        ]
+      },
+      {
+        "text": "Quetzal to Cam Torum's entrance, then walk north"
       }
     ],
-    "Rogues' Castle": [
+    "Catacombs of Kourend": [
       {
-        "text": "Wilderness Obelisk to level 50, then walk west"
+        "text": "Kourend Castle Teleport (standard spellbook)"
+      },
+      {
+        "text": "Xeric's talisman: Xeric's Heart, then the Catacombs entrance",
+        "items": [
+          "Xeric's talisman"
+        ]
       }
     ],
     "Chaos Fanatic (Wilderness)": [
@@ -1533,14 +1785,21 @@
         ]
       }
     ],
-    "God Wars Dungeon": [
+    "Chasm of Fire": [
       {
-        "text": "Trollheim Teleport (standard spellbook)"
+        "text": "Chasm teleport scroll: by the Voice of Yama",
+        "items": [
+          "Chasm teleport scroll"
+        ]
       },
       {
-        "text": "Ghommal's hilt: God Wars Dungeon",
+        "text": "Fairy ring DJR, then walk north-west"
+      },
+      {
+        "text": "Book of the Dead or Kharedst's memoirs: History and Hearsay, then walk north",
         "items": [
-          "Ghommal's hilt"
+          "Book of the Dead",
+          "Kharedst's memoirs"
         ]
       }
     ],
@@ -1552,26 +1811,77 @@
         ]
       }
     ],
-    "Bandit Camp (Wilderness)": [
+    "Darkfrost": [
       {
-        "text": "Burning amulet: Bandit Camp",
+        "text": "Pendant of Ates: the Darkfrost",
         "items": [
-          "Burning amulet"
+          "Pendant of Ates"
         ]
       },
       {
-        "text": "Ring of dueling: Ferox Enclave, then walk north-west",
+        "text": "Quetzal to Quetzacalli Gorge"
+      }
+    ],
+    "Falador Park": [
+      {
+        "text": "Ring of wealth: Falador Park",
         "items": [
-          "Ring of dueling"
+          "Ring of wealth"
+        ]
+      },
+      {
+        "text": "Falador Teleport (standard spellbook), then walk east"
+      }
+    ],
+    "Farming Guild": [
+      {
+        "text": "Skills necklace: Farming Guild",
+        "items": [
+          "Skills necklace"
+        ]
+      },
+      {
+        "text": "Farming cape: Farming Guild",
+        "items": [
+          "Farming cape"
         ]
       }
     ],
-    "Waterbirth Island": [
+    "Forthos Dungeon": [
       {
-        "text": "Enchanted lyre: Rellekka, then the boat",
+        "text": "Xeric's talisman: Xeric's Glade, then walk west to the dungeon",
         "items": [
-          "Enchanted lyre"
+          "Xeric's talisman"
         ]
+      },
+      {
+        "text": "Skills necklace: Woodcutting Guild, then walk north",
+        "items": [
+          "Skills necklace"
+        ]
+      },
+      {
+        "text": "Watson teleport scroll",
+        "items": [
+          "Watson teleport"
+        ]
+      },
+      {
+        "text": "Spirit tree to Hosidius, just south of the ruin"
+      }
+    ],
+    "Fortis Colosseum": [
+      {
+        "text": "Ring of dueling: Fortis Colosseum (after 12,000 Glory)",
+        "items": [
+          "Ring of dueling"
+        ]
+      },
+      {
+        "text": "Civitas illa Fortis Teleport (standard spellbook), then walk south-east"
+      },
+      {
+        "text": "Quetzal to the Colosseum's stop, then walk east"
       }
     ],
     "Fossil Island": [
@@ -1599,31 +1909,32 @@
         "text": "Fairy ring DKS, then Larry's boat to Weiss"
       }
     ],
-    "Falador Park": [
+    "God Wars Dungeon": [
       {
-        "text": "Ring of wealth: Falador Park",
-        "items": [
-          "Ring of wealth"
-        ]
+        "text": "Trollheim Teleport (standard spellbook)"
       },
       {
-        "text": "Falador Teleport (standard spellbook), then walk east"
-      }
-    ],
-    "Slayer Tower": [
-      {
-        "text": "Slayer ring: Slayer Tower",
+        "text": "Ghommal's hilt: God Wars Dungeon",
         "items": [
-          "Slayer ring"
+          "Ghommal's hilt"
         ]
-      },
-      {
-        "text": "Fairy ring CKS"
       }
     ],
     "Kalphite Lair": [
       {
         "text": "Fairy ring BIQ"
+      }
+    ],
+    "Karuulm Slayer Dungeon": [
+      {
+        "text": "Fairy ring CIR"
+      },
+      {
+        "text": "Rada's blessing: Mount Karuulm",
+        "items": [
+          "Rada's blessing 3",
+          "Rada's blessing 4"
+        ]
       }
     ],
     "King Black Dragon Lair": [
@@ -1642,6 +1953,73 @@
         "text": "Fairy ring AKQ"
       }
     ],
+    "Lassar Undercity": [
+      {
+        "text": "Ring of shadows: Lassar Undercity (after the sirenic tablet)",
+        "items": [
+          "Ring of shadows"
+        ]
+      },
+      {
+        "text": "Mind altar teleport, then walk south-east to Camdozaal",
+        "items": [
+          "Mind altar teleport"
+        ]
+      },
+      {
+        "text": "Lassar Teleport (Ancient Magicks)"
+      }
+    ],
+    "Lumbridge cow field": [
+      {
+        "text": "Lumbridge Teleport (standard spellbook), then walk to the cow field"
+      }
+    ],
+    "Mor Ul Rek": [
+      {
+        "text": "Fairy ring BLP"
+      },
+      {
+        "text": "Minigame Teleport: TzHaar Fight Pit"
+      },
+      {
+        "text": "Ghommal's hilt 4 or better: Mor Ul Rek",
+        "items": [
+          "Ghommal's hilt 6",
+          "Ghommal's hilt 5",
+          "Ghommal's hilt 4"
+        ]
+      },
+      {
+        "text": "Achievement diary cape: TzHaar-Mej",
+        "items": [
+          "Achievement diary cape"
+        ]
+      }
+    ],
+    "Morytania Spider Cave": [
+      {
+        "text": "Spider cave teleport scroll",
+        "items": [
+          "Spider cave teleport"
+        ]
+      },
+      {
+        "text": "Fairy ring ALQ, then walk south"
+      },
+      {
+        "text": "Ectophial, then walk south-west",
+        "items": [
+          "Ectophial"
+        ]
+      },
+      {
+        "text": "Hallowed crystal shard: Hallowed Sepulchre, then the wall shortcut south-east (63 Agility, two long ropes)",
+        "items": [
+          "Hallowed crystal shard"
+        ]
+      }
+    ],
     "Obor's lair": [
       {
         "text": "Giantsoul amulet: Obor",
@@ -1654,6 +2032,115 @@
         "items": [
           "Amulet of glory"
         ]
+      }
+    ],
+    "Revenant Caves": [
+      {
+        "text": "Revenant cave teleport scroll",
+        "items": [
+          "Revenant cave teleport"
+        ]
+      },
+      {
+        "text": "Burning amulet: Bandit Camp, then walk east",
+        "items": [
+          "Burning amulet"
+        ]
+      }
+    ],
+    "Rogues' Castle": [
+      {
+        "text": "Wilderness Obelisk to level 50, then walk west"
+      }
+    ],
+    "Royal Titans' lair": [
+      {
+        "text": "Giantsoul amulet: Royal Titans",
+        "items": [
+          "Giantsoul amulet"
+        ]
+      },
+      {
+        "text": "Fairy ring AIQ, then the Asgarnian Ice Dungeon (north past the pirates, then west; or the 60 Agility shortcut west of the ladder)"
+      }
+    ],
+    "Ruins of Mokhaiotl": [
+      {
+        "text": "Mokhaiotl waystone",
+        "items": [
+          "Mokhaiotl waystone"
+        ]
+      },
+      {
+        "text": "Pendant of Ates: Kastori, then walk north-west",
+        "items": [
+          "Pendant of Ates"
+        ]
+      },
+      {
+        "text": "Quetzal whistle: Tal Teklan, then east to the Tonali Cavern and the Crypt of Tonali",
+        "items": [
+          "Quetzal whistle"
+        ]
+      }
+    ],
+    "Ruins of Tapoyauik": [
+      {
+        "text": "Pendant of Ates: Twilight Temple, near the lift",
+        "items": [
+          "Pendant of Ates"
+        ]
+      },
+      {
+        "text": "Quetzal to Salvager Overlook, then walk south to the Twilight Temple"
+      },
+      {
+        "text": "Quetzal to Quetzacalli Gorge, then north-east and south around the Proudspire"
+      }
+    ],
+    "Scorpion Pit (Wilderness)": [
+      {
+        "text": "Ardougne or Edgeville lever to the Deserted Keep, then walk north (slash the web) and east"
+      },
+      {
+        "text": "Wilderness obelisk to level 50, then walk west past Rogues' Castle"
+      }
+    ],
+    "Silk Chasm (Wilderness)": [
+      {
+        "text": "Wilderness crabs teleport",
+        "items": [
+          "Wilderness crabs teleport"
+        ]
+      },
+      {
+        "text": "Annakarl teleport tablet, then walk south-east",
+        "items": [
+          "Annakarl teleport"
+        ]
+      },
+      {
+        "text": "Games necklace: Corporeal Beast, then head north-east",
+        "items": [
+          "Games necklace"
+        ]
+      },
+      {
+        "text": "Wilderness sword 4: Fountain of Rune, then run south-west (hard Wilderness Diary)",
+        "items": [
+          "Wilderness sword 4"
+        ]
+      }
+    ],
+    "Slayer Tower": [
+      {
+        "text": "Slayer ring: Slayer Tower",
+        "items": [
+          "Slayer ring"
+        ]
+      },
+      {
+        "text": "Fairy ring CKS"
       }
     ],
     "Slepe": [
@@ -1688,90 +2175,6 @@
         ]
       }
     ],
-    "Forthos Dungeon": [
-      {
-        "text": "Xeric's talisman: Xeric's Glade, then walk west to the dungeon",
-        "items": [
-          "Xeric's talisman"
-        ]
-      },
-      {
-        "text": "Skills necklace: Woodcutting Guild, then walk north",
-        "items": [
-          "Skills necklace"
-        ]
-      },
-      {
-        "text": "Watson teleport scroll",
-        "items": [
-          "Watson teleport"
-        ]
-      },
-      {
-        "text": "Spirit tree to Hosidius, just south of the ruin"
-      }
-    ],
-    "Scorpion Pit (Wilderness)": [
-      {
-        "text": "Ardougne or Edgeville lever to the Deserted Keep, then walk north (slash the web) and east"
-      },
-      {
-        "text": "Wilderness obelisk to level 50, then walk west past Rogues' Castle"
-      }
-    ],
-    "The Great Conch": [
-      {
-        "text": "Fairy ring CJQ"
-      }
-    ],
-    "Catacombs of Kourend": [
-      {
-        "text": "Kourend Castle Teleport (standard spellbook)"
-      },
-      {
-        "text": "Xeric's talisman: Xeric's Heart, then the Catacombs entrance",
-        "items": [
-          "Xeric's talisman"
-        ]
-      }
-    ],
-    "The Scar": [
-      {
-        "text": "Ring of shadows: the Scar (after the scarred tablet)",
-        "items": [
-          "Ring of shadows"
-        ]
-      },
-      {
-        "text": "Amulet of the eye: Temple of the Eye",
-        "items": [
-          "Amulet of the eye"
-        ]
-      },
-      {
-        "text": "Necklace of passage: Wizards' Tower, then the basement portal",
-        "items": [
-          "Necklace of passage"
-        ]
-      }
-    ],
-    "Lassar Undercity": [
-      {
-        "text": "Ring of shadows: Lassar Undercity (after the sirenic tablet)",
-        "items": [
-          "Ring of shadows"
-        ]
-      },
-      {
-        "text": "Mind altar teleport, then walk south-east to Camdozaal",
-        "items": [
-          "Mind altar teleport"
-        ]
-      },
-      {
-        "text": "Lassar Teleport (Ancient Magicks)"
-      }
-    ],
     "Smoke Devil Dungeon": [
       {
         "text": "Fairy ring BKP, then walk north-east"
@@ -1780,28 +2183,6 @@
         "text": "Ring of dueling: Castle Wars",
         "items": [
           "Ring of dueling"
-        ]
-      }
-    ],
-    "Mor Ul Rek": [
-      {
-        "text": "Fairy ring BLP"
-      },
-      {
-        "text": "Minigame Teleport: TzHaar Fight Pit"
-      },
-      {
-        "text": "Ghommal's hilt 4 or better: Mor Ul Rek",
-        "items": [
-          "Ghommal's hilt 6",
-          "Ghommal's hilt 5",
-          "Ghommal's hilt 4"
-        ]
-      },
-      {
-        "text": "Achievement diary cape: TzHaar-Mej",
-        "items": [
-          "Achievement diary cape"
         ]
       }
     ],
@@ -1828,30 +2209,90 @@
         ]
       }
     ],
-    "Silk Chasm (Wilderness)": [
+    "Taverley Dungeon": [
       {
-        "text": "Wilderness crabs teleport",
+        "text": "Key master teleport scroll: right by Cerberus' lair",
         "items": [
-          "Wilderness crabs teleport"
+          "Key master teleport"
         ]
       },
       {
-        "text": "Annakarl teleport tablet, then walk south-east",
+        "text": "Falador Teleport (standard spellbook), then walk west"
+      }
+    ],
+    "The Great Conch": [
+      {
+        "text": "Fairy ring CJQ"
+      }
+    ],
+    "The Scar": [
+      {
+        "text": "Ring of shadows: the Scar (after the scarred tablet)",
         "items": [
-          "Annakarl teleport"
+          "Ring of shadows"
         ]
       },
       {
-        "text": "Games necklace: Corporeal Beast, then head north-east",
+        "text": "Amulet of the eye: Temple of the Eye",
         "items": [
-          "Games necklace"
+          "Amulet of the eye"
         ]
       },
       {
-        "text": "Wilderness sword 4: Fountain of Rune, then run south-west (hard Wilderness Diary)",
+        "text": "Necklace of passage: Wizards' Tower, then the basement portal",
         "items": [
-          "Wilderness sword 4"
+          "Necklace of passage"
         ]
+      }
+    ],
+    "Tlati Rainforest": [
+      {
+        "text": "Pendant of Ates: Kastori",
+        "items": [
+          "Pendant of Ates"
+        ]
+      },
+      {
+        "text": "Fairy ring AIS, then south-west along the River Varla and Achilka's boat to Kastori"
+      }
+    ],
+    "Ungael": [
+      {
+        "text": "Enchanted lyre: Rellekka, then Torfinn's boat",
+        "items": [
+          "Enchanted lyre"
+        ]
+      },
+      {
+        "text": "Fremennik sea boots 4: Rellekka, then Torfinn's boat",
+        "items": [
+          "Fremennik sea boots 4"
+        ]
+      },
+      {
+        "text": "Rellekka teleport, then Torfinn's boat",
+        "items": [
+          "Rellekka teleport"
+        ]
+      }
+    ],
+    "Vampyrium": [
+      {
+        "text": "Drakan's medallion: Castle Drakan, then into Vampyrium and east (the aranei scout's route is quicker once rescued)",
+        "items": [
+          "Drakan's medallion"
+        ]
+      }
+    ],
+    "Varrock Sewers": [
+      {
+        "text": "Giantsoul amulet: Bryophyta",
+        "items": [
+          "Giantsoul amulet"
+        ]
+      },
+      {
+        "text": "Varrock Teleport (standard spellbook), then the manhole east of the palace"
       }
     ],
     "Vet'ion's Rest (Wilderness)": [
@@ -1874,23 +2315,11 @@
         ]
       }
     ],
-    "Ungael": [
+    "Waterbirth Island": [
       {
-        "text": "Enchanted lyre: Rellekka, then Torfinn's boat",
+        "text": "Enchanted lyre: Rellekka, then the boat",
         "items": [
           "Enchanted lyre"
-        ]
-      },
-      {
-        "text": "Fremennik sea boots 4: Rellekka, then Torfinn's boat",
-        "items": [
-          "Fremennik sea boots 4"
-        ]
-      },
-      {
-        "text": "Rellekka teleport, then Torfinn's boat",
-        "items": [
-          "Rellekka teleport"
         ]
       }
     ],

@@ -398,6 +398,26 @@ public class PrepPlannerTest
 	}
 
 	@Test
+	public void bossesAddedFromTheWikisBossList()
+	{
+		for (String boss : new String[]{"royal titans", "amoxliatl", "the hueycoatl", "yama", "doom of mokhaiotl",
+			"moons of peril", "sol heredit", "gemstone crab", "hespori", "the mimic", "revenant maledictus", "brutus",
+			"demonic brutus", "mad angel", "maggot king"})
+		{
+			assertNotNull(boss, data.boss(boss));
+		}
+		// the Royal Titans are fought together, and each counts for its own giant Slayer task
+		assertTrue(data.boss("royal titans").isWholeFight());
+		assertEquals(List.of("Branda the Fire Queen", "Eldric the Ice King"), data.boss("royal titans").getMonsters());
+		PrepPlan titans = planner.plan(request("royal titans", AttackType.MAGIC, owned("Giantsoul amulet", 1)).build());
+		assertTrue(titans.getTips().stream().anyMatch(t -> t.contains("fire giant")));
+		assertTrue(names(titans).contains("Giantsoul amulet"));
+		// Demonic Brutus can't be started without an abyssal potato
+		assertTrue(planner.plan(request("demonic brutus", AttackType.SLASH, owned()).build())
+			.getNotes().stream().anyMatch(n -> n.contains("Abyssal potato")));
+	}
+
+	@Test
 	public void infernoEntryAndRoutes()
 	{
 		PrepPlan zuk = planner.plan(request("tzkal-zuk", AttackType.RANGED, owned("Achievement diary cape", 1)).build());
