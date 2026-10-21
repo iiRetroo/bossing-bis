@@ -1,5 +1,5 @@
 {
-  "_comment": "Hand-maintained boss preparation data: what to wear, carry and use to get to each boss. Planning before the trip only: never add anything about the fight itself (attacks, phases, timing, where to stand, prayers or hazards). Boss keys are lower case. 'name' is shown in the picker. 'monsters' are the monsters to work out gear against, matched as 'Name (version)', or 'Name' for every version; the first is the default. 'wholeFight': true means every listed monster is fought on each trip (phases, or several monsters), so the plan wears the best set for the first and carries switches for the rest. 'slayerTask' marks bosses that can only be fought on that Slayer task. 'required' lists worn items, by slot, that the boss needs; any one name per slot satisfies it. 'prefer' lists worn items the wiki's strategy page recommends for reasons the DPS maths can't see: {'slot', 'items', 'withinPercent', 'reason'}; the gear search keeps one of the items when the best set without it is no more than withinPercent better. 'inventory' lists items to carry; each entry is satisfied by any one of its names (matched as a prefix, so 'Fungicide spray' matches 'Fungicide spray 10'); 'stackable': true means they fit in one slot, 'optional' means not flagged when missing, 'exact' means match names exactly. 'dragonfire' is 'dragon' or 'wyvern'. 'venom': true marks bosses that poison or envenom you. 'stacks': true adds a Burst tab. 'comboEat': true brings karambwans. 'minWeight' is the least the worn gear must weigh, in kg. 'tips' are shown as they are. 'locations' are keys of 'locations', whose teleport 'items' are name prefixes used to tick off teleports you own (leave it out for spells or fairy rings). 'locationNeeds' are what a location itself needs: worn items ('required'), carried items ('inventory') and 'tips'.",
+  "_comment": "Hand-maintained boss preparation data: what to wear, carry and use to get to each boss. Planning before the trip only. Reasons for gear may mention a mechanic or prayer effect, as the wiki's strategy pages do, but never tell you what to do in the fight: no prayer instructions, timing, positioning or what's coming next. Boss keys are lower case. 'name' is shown in the picker. 'monsters' are the monsters to work out gear against, matched as 'Name (version)', or 'Name' for every version; the first is the default. 'wholeFight': true means every listed monster is fought on each trip (phases, or several monsters), so the plan wears the best set for the first and carries switches for the rest. 'slayerTask' marks bosses that can only be fought on that Slayer task. 'required' lists worn items, by slot, that the boss needs; any one name per slot satisfies it. 'prefer' lists worn items the wiki's strategy page recommends for reasons the DPS maths can't see: {'slot', 'items', 'withinPercent', 'reason'}; the gear search keeps one of the items when the best set without it is no more than withinPercent better. 'inventory' lists items to carry; each entry is satisfied by any one of its names (matched as a prefix, so 'Fungicide spray' matches 'Fungicide spray 10'); 'stackable': true means they fit in one slot, 'optional' means not flagged when missing, 'exact' means match names exactly. 'dragonfire' is 'dragon' or 'wyvern'. 'venom': true marks bosses that poison or envenom you. 'stacks': true adds a Burst tab. 'comboEat': true brings karambwans. 'minWeight' is the least the worn gear must weigh, in kg. 'tips' are shown as they are. 'locations' are keys of 'locations', whose teleport 'items' are name prefixes used to tick off teleports you own (leave it out for spells or fairy rings). 'locationNeeds' are what a location itself needs: worn items ('required'), carried items ('inventory') and 'tips'.",
   "bosses": {
     "abyssal sire": {
       "name": "Abyssal Sire",
@@ -71,6 +71,17 @@
             "Strange old lockpick"
           ],
           "note": "opens locked doors in the tunnels (uses a charge)",
+          "optional": true
+        },
+        {
+          "names": [
+            "Ghommal's hilt 6",
+            "Ghommal's hilt 5",
+            "Ghommal's hilt 4",
+            "Ghommal's hilt 3",
+            "Ghommal's hilt 2"
+          ],
+          "note": "stops the prayer drain in the Barrows tunnels once equipped (the wiki recommends it)",
           "optional": true
         }
       ],
@@ -189,6 +200,23 @@
       ],
       "locations": [
         "Corporeal Beast's Lair"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Emberlight",
+            "Arclight"
+          ],
+          "note": "special attack lowers Attack, Strength and Defence (the wiki's stat-draining method)",
+          "optional": true
+        },
+        {
+          "names": [
+            "Bandos godsword"
+          ],
+          "note": "special attack lowers Corp's stats by the damage dealt (the wiki's stat-draining method)",
+          "optional": true
+        }
       ]
     },
     "crazy archaeologist": {
@@ -228,6 +256,13 @@
             "Pet rock"
           ],
           "note": "holds a door plate in the Waterbirth dungeon (not needed with the 85 Agility shortcut)",
+          "optional": true
+        },
+        {
+          "names": [
+            "Falador shield 4"
+          ],
+          "note": "its daily prayer restore helps your prayer last (a wiki tip)",
           "optional": true
         }
       ]
@@ -327,7 +362,7 @@
             "Falador shield 4",
             "Falador shield 3"
           ],
-          "note": "helps you find the mole in the lair (the wiki recommends it)",
+          "note": "locates the mole after it burrows (the wiki recommends it)",
           "optional": true
         }
       ],
@@ -367,6 +402,16 @@
       "name": "K'ril Tsutsaroth",
       "monsters": [
         "K'ril Tsutsaroth"
+      ],
+      "prefer": [
+        {
+          "slot": "shield",
+          "items": [
+            "Spectral spirit shield"
+          ],
+          "withinPercent": 15,
+          "reason": "the wiki recommends it: it halves the prayer drain of K'ril's special attack"
+        }
       ],
       "venom": true,
       "tips": [
@@ -488,13 +533,33 @@
       "monsters": [
         "Nex"
       ],
+      "prefer": [
+        {
+          "slot": "shield",
+          "items": [
+            "Spectral spirit shield"
+          ],
+          "withinPercent": 15,
+          "reason": "the wiki recommends it: it reduces the prayer drain from several of Nex's attacks"
+        }
+      ],
       "comboEat": true,
       "tips": [
         "The Ancient Prison needs the Frozen Door miniquest (base 70 Hitpoints, Ranged, Strength and Agility) and a kill count.",
-        "Wear an item of each god whose followers you walk past; they won't attack you."
+        "Wear an item of each god whose followers you walk past; they won't attack you.",
+        "A Zarosian item (such as Ancient d'hide or Zaryte vambraces) keeps the Zarosian monsters by the altar passive and lets you use the altar."
       ],
       "locations": [
         "God Wars Dungeon"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Ecumenical key"
+          ],
+          "note": "skips gathering 40 essence before the Ancient Prison",
+          "optional": true
+        }
       ]
     },
     "obor": {
@@ -517,6 +582,19 @@
       "wholeFight": true,
       "locations": [
         "Ghorrock Dungeon"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Sapphire dragon bolts (e)",
+            "Sapphire bolts (e)"
+          ],
+          "note": "for a crossbow: they drain the Muspah's prayer shield (the wiki recommends them)",
+          "optional": true
+        }
+      ],
+      "tips": [
+        "Reaching the Muspah needs Secrets of the North."
       ]
     },
     "phosani's nightmare": {
@@ -766,7 +844,7 @@
             "Ring of recoil"
           ],
           "withinPercent": 10,
-          "reason": "the wiki highly recommends a ring with a recoil effect"
+          "reason": "the wiki highly recommends a ring with a recoil effect, which kills the snakelings"
         }
       ],
       "venom": true,
@@ -1017,6 +1095,18 @@
         "text": "Drakan's medallion: Ver Sinhaza, then walk north and east",
         "items": [
           "Drakan's medallion"
+        ]
+      },
+      {
+        "text": "Ectophial, then Andras's boat from the Ectofuntus dock (10,000 coins)",
+        "items": [
+          "Ectophial"
+        ]
+      },
+      {
+        "text": "Hallowed crystal shard: Hallowed Sepulchre, then the shortcut east (63 Agility, two long ropes)",
+        "items": [
+          "Hallowed crystal shard"
         ]
       }
     ],

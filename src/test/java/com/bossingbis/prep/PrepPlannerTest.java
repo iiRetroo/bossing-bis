@@ -153,7 +153,9 @@ public class PrepPlannerTest
 	}
 
 	/**
-	 * The data must stay a planner for before the trip: nothing about the fight itself.
+	 * The data must stay a planner for before the trip. Gear reasons may mention mechanics and prayer
+	 * effects, as the wiki does, but never tell you what to do in the fight: no prayer instructions,
+	 * timing, positioning or what's coming next.
 	 */
 	@Test
 	public void bossDataHasNoFightHelp() throws Exception
@@ -165,8 +167,13 @@ public class PrepPlannerTest
 		}
 		// the format note at the top names what's forbidden; check everything after it
 		text = text.substring(text.indexOf("\"bosses\""));
-		for (String banned : new String[]{"safespot", "safe spot", "stand ", "tile", "protect from", "pray",
-			"flinch", "next attack", "dodge", "avoid", "when it", "phase"})
+		for (String banned : new String[]{
+			// positioning
+			"safespot", "safe spot", "stand ", "standing", "tile", "dodge",
+			// prayer instructions
+			"protect from", "pray against", "switch prayer", "turn on", "activate", "piety", "rigour", "augury",
+			// timing and what's coming
+			"flinch", "next attack", "when it", "when he", "when she", "when the", "as soon as", "swap to"})
 		{
 			assertFalse("boss data mentions \"" + banned + "\"", text.contains(banned));
 		}
@@ -222,6 +229,27 @@ public class PrepPlannerTest
 		PrepPlan with = planner.plan(request("dagannoth kings", AttackType.RANGED,
 			owned("Rune thrownaxe", 1, "Pet rock", 1, "Shark", 50)).build());
 		assertTrue(names(with).containsAll(List.of("Rune thrownaxe", "Pet rock")));
+	}
+
+	@Test
+	public void mechanicReasonsFromTheWiki()
+	{
+		// Spectral spirit shield for its prayer-drain reduction
+		assertEquals("Spectral spirit shield", planner.preferences("k'ril tsutsaroth").get(0).getItems().get(0));
+		assertEquals("Spectral spirit shield", planner.preferences("nex").get(0).getItems().get(0));
+		// Ghommal's hilt for the Barrows tunnels, best tier owned
+		PrepPlan barrows = planner.plan(request("barrows brothers", AttackType.MAGIC,
+			owned("Spade", 1, "Ghommal's hilt 2", 1, "Ghommal's hilt 4", 1, "Shark", 50)).build());
+		assertTrue(names(barrows).contains("Ghommal's hilt 4"));
+		assertFalse(names(barrows).contains("Ghommal's hilt 2"));
+		// Corp: the stat-draining special attack weapons, alongside the usual spec weapon
+		PrepPlan corp = planner.plan(request("corporeal beast", AttackType.STAB,
+			owned("Arclight", 1, "Bandos godsword", 1, "Dragon warhammer", 1, "Shark", 50))
+			.monsterHitpoints(2000).suggestSpecWeapon(true).build());
+		assertTrue(names(corp).containsAll(List.of("Arclight", "Bandos godsword", "Dragon warhammer")));
+		// more ways to Slepe
+		assertTrue(planner.plan(request("the nightmare", AttackType.SLASH, owned("Ectophial", 1)).build())
+			.getTeleports().stream().anyMatch(t -> t.getText().startsWith("Ectophial") && Boolean.TRUE.equals(t.getOwned())));
 	}
 
 	@Test
