@@ -323,7 +323,9 @@ public final class PrepPlanner
 			String anti = firstOwned(s.antivenom, owned);
 			if (anti != null)
 			{
-				slots += addLine(lines, ids, owned, anti, 1, "this boss can poison or envenom you", false);
+				boolean poisonOnly = s.poisonOnly != null && s.poisonOnly.contains(anti);
+				slots += addLine(lines, ids, owned, anti, 1, "this boss can poison or envenom you"
+					+ (poisonOnly ? "; this cures poison but not venom" : ""), false);
 			}
 			else
 			{
@@ -349,20 +351,9 @@ public final class PrepPlanner
 		{
 			slots += addLine(lines, ids, owned, potion, combatPotions, "boosts your " + styleName, false);
 		}
-		else if (bestType != null && bestType.isMelee() && combatPotions > 0
-			&& (firstOwned(s.attackPotions, owned) != null || firstOwned(s.strengthPotions, owned) != null))
+		else if (bestType != null && bestType.isMelee() && combatPotions > 0)
 		{
-			// no combat potion: separate attack and strength potions boost the same stats
-			String attack = firstOwned(s.attackPotions, owned);
-			String strength = firstOwned(s.strengthPotions, owned);
-			if (attack != null)
-			{
-				slots += addLine(lines, ids, owned, attack, combatPotions, "boosts your Attack", false);
-			}
-			if (strength != null)
-			{
-				slots += addLine(lines, ids, owned, strength, combatPotions, "boosts your Strength", false);
-			}
+			slots += addMeleeFallback(lines, ids, owned, combatPotions, notes);
 		}
 		else if (bestType != null && combatPotions > 0)
 		{
@@ -508,9 +499,57 @@ public final class PrepPlanner
 		}
 		if (missing[0] == wanted)
 		{
-			notes.add(mode == PrayerRestore.POTIONS_ONLY
-				? "No prayer potions or super restores found."
-				: "No prayer potions, super restores or moonlight moth mixes found.");
+			boolean mixesLeftOut = mode == PrayerRestore.POTIONS_ONLY && firstOwned(s.prayerMixes, owned) != null;
+			notes.add(mode != PrayerRestore.POTIONS_ONLY
+				? "No prayer potions, super restores, sanfew serums or moonlight moth mixes found."
+				: mixesLeftOut
+				? "No prayer potions, super restores or sanfew serums found. You have moonlight moth mixes; set "
+					+ "Prayer restore to include them."
+				: "No prayer potions, super restores or sanfew serums found.");
+		}
+		return slots;
+	}
+
+	/**
+	 * Melee potions when there's no super combat potion: super attack and super strength potions,
+	 * else a combat potion, else attack and strength potions. A missing super potion is made up
+	 * with the plain one for that stat.
+	 */
+	private int addMeleeFallback(List<PrepPlan.InventoryLine> lines, Set<Integer> ids, OwnedItems owned,
+		int count, List<String> notes)
+	{
+		PrepData.Supplies s = data.supplies();
+		String superAttack = firstOwned(s.attackPotions, owned);
+		String superStrength = firstOwned(s.strengthPotions, owned);
+		String combat = firstOwned(s.weakMeleePotions, owned);
+		String attack;
+		String strength;
+		if (superAttack != null || superStrength != null)
+		{
+			attack = superAttack != null ? superAttack : firstOwned(s.weakAttackPotions, owned);
+			strength = superStrength != null ? superStrength : firstOwned(s.weakStrengthPotions, owned);
+		}
+		else if (combat != null)
+		{
+			return addLine(lines, ids, owned, combat, count, "boosts your melee", false);
+		}
+		else
+		{
+			attack = firstOwned(s.weakAttackPotions, owned);
+			strength = firstOwned(s.weakStrengthPotions, owned);
+		}
+		int slots = 0;
+		if (attack != null)
+		{
+			slots += addLine(lines, ids, owned, attack, count, "boosts your Attack", false);
+		}
+		if (strength != null)
+		{
+			slots += addLine(lines, ids, owned, strength, count, "boosts your Strength", false);
+		}
+		if (attack == null && strength == null)
+		{
+			notes.add("No melee boosting potion found.");
 		}
 		return slots;
 	}

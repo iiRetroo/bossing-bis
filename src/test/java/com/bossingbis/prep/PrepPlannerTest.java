@@ -348,6 +348,56 @@ public class PrepPlannerTest
 	}
 
 	@Test
+	public void meleePotionFallbacks()
+	{
+		// a super combat potion first
+		assertTrue(names(planner.plan(request("general graardor", AttackType.CRUSH,
+			owned("Super combat potion(4)", 2, "Super attack(4)", 2, "Super strength(4)", 2)).build()))
+			.contains("Super combat potion"));
+		// super attack and strength beat a plain combat potion
+		List<String> pair = names(planner.plan(request("general graardor", AttackType.CRUSH,
+			owned("Combat potion(4)", 2, "Super attack(4)", 2, "Super strength(4)", 2)).build()));
+		assertTrue(pair.containsAll(List.of("Super attack", "Super strength")));
+		assertFalse(pair.contains("Combat potion"));
+		// a missing super potion is made up with the plain one for that stat
+		List<String> mixed = names(planner.plan(request("general graardor", AttackType.CRUSH,
+			owned("Super attack(4)", 2, "Strength potion(4)", 2)).build()));
+		assertTrue(mixed.containsAll(List.of("Super attack", "Strength potion")));
+		// then a combat potion, then attack and strength potions
+		assertTrue(names(planner.plan(request("general graardor", AttackType.CRUSH,
+			owned("Combat potion(4)", 2, "Attack potion(4)", 2)).build())).contains("Combat potion"));
+		List<String> plain = names(planner.plan(request("general graardor", AttackType.CRUSH,
+			owned("Attack potion(4)", 2, "Strength potion(4)", 2)).build()));
+		assertTrue(plain.containsAll(List.of("Attack potion", "Strength potion")));
+		assertTrue(planner.plan(request("general graardor", AttackType.CRUSH, owned()).build())
+			.getNotes().contains("No melee boosting potion found."));
+	}
+
+	@Test
+	public void supplyFallbacks()
+	{
+		// sanfew serums restore prayer when there are no prayer potions or super restores
+		assertTrue(names(planner.plan(request("giant mole", AttackType.SLASH, owned("Sanfew serum(4)", 6)).build()))
+			.contains("Sanfew serum"));
+		// moth mixes make up for missing prayer potions, unless the setting leaves them out, which a note says
+		assertTrue(names(planner.plan(request("giant mole", AttackType.SLASH, owned("Moonlight moth mix (2)", 10))
+			.build())).contains("Moonlight moth mix"));
+		PrepPlan potionsOnly = planner.plan(request("giant mole", AttackType.SLASH, owned("Moonlight moth mix (2)", 10))
+			.prayerRestore(PrayerRestore.POTIONS_ONLY).build());
+		assertTrue(potionsOnly.getNotes().stream().anyMatch(n -> n.contains("You have moonlight moth mixes")));
+		// an antipoison when there's no anti-venom, with a note that it doesn't stop venom
+		PrepPlan antipoison = planner.plan(request("zulrah", AttackType.MAGIC, owned("Superantipoison(4)", 1)).build());
+		assertTrue(antipoison.getInventory().stream().anyMatch(l -> l.getName().equals("Superantipoison")
+			&& l.getNote().contains("not venom")));
+		// an antifire mix counts as antifire
+		assertTrue(names(planner.plan(request("vorkath", AttackType.RANGED, owned("Super antifire mix(2)", 2)).build()))
+			.contains("Super antifire mix"));
+		// forgotten brew for magic when there's no magic potion
+		assertTrue(names(planner.plan(request("zulrah", AttackType.MAGIC, owned("Forgotten brew(4)", 1)).build()))
+			.contains("Forgotten brew"));
+	}
+
+	@Test
 	public void inertTalismanIsNotATeleport()
 	{
 		PrepPlan inert = planner.plan(request("sarachnis", AttackType.SLASH, owned("Xeric's talisman (inert)", 1)).build());
