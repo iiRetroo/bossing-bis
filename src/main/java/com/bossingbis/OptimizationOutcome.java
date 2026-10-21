@@ -1,0 +1,154 @@
+package com.bossingbis;
+
+import com.bossingbis.calc.CalcResult;
+import com.bossingbis.calc.Optimizer;
+import com.bossingbis.calc.PlayerSetup;
+import com.bossingbis.calc.StyleResult;
+import com.bossingbis.data.AttackType;
+import com.bossingbis.data.EquipmentSlot;
+import com.bossingbis.data.Monster;
+import com.bossingbis.prep.PrepPlan;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import lombok.Value;
+
+/**
+ * Everything the panel and overlay need from one finished calculation. Immutable once built.
+ */
+@Value
+class OptimizationOutcome
+{
+	String bossKey;
+	String bossName;
+	/** The Slayer task the boss can only be fought on, or null. */
+	String slayerTask;
+	/** The monster the main set is worked out against. */
+	Monster monster;
+	/** Planned as a whole fight: the main set plus switches for the other monsters or phases. */
+	boolean wholeFight;
+	/** The boss has several monsters or phases fought together, so a whole-fight plan is offered. */
+	boolean wholeFightOffered;
+	/** The boss's monsters, for the panel's picker. */
+	List<Monster> monsterChoices;
+	Map<AttackType, StyleResult> results;
+	Map<Integer, ItemSource> sources;
+	PlayerSetup setup;
+	int itemsScanned;
+	/** Per style, what charging or repairing owned items would add; only present when it beats the real result. */
+	Map<AttackType, ChargeHint> chargeHints;
+	/** DPS of the gear currently worn, in its best style; null if nothing worn can attack. */
+	CurrentGear currentGear;
+	/** Requirements, inventory and teleports; only the requirements when preparation is turned off. */
+	PrepPlan prep;
+	/** Monsters each burst or barrage is assumed to hit, for the Burst result. */
+	int burstTargets;
+	/** Per style, the boss's recommended items that were kept on, and what they cost. */
+	Map<AttackType, List<String>> keptNotes;
+	/** The ranged set with each owned ammo swapped in, best first; empty when it takes none. */
+	List<StyleResult.Alternative> ammoOptions;
+	/** The least the worn set must weigh for this boss, in grams; 0 for no limit. */
+	int minWeight;
+	/** Styles where nothing owned is heavy enough, so the best set shown is too light. */
+	Set<AttackType> tooLight;
+	/** Per style, the DPS given up to wear a Serpentine helm against poison; only where it was worn. */
+	Map<AttackType, Double> serpentineCost;
+	/** Magic and Burst: the set with each spell it can cast, best first. */
+	Map<AttackType, List<StyleResult.Alternative>> spellOptions;
+	/** Whole fight only: the main monster first, then each other monster with its switches. */
+	List<Phase> phases;
+
+	@Value
+	static class ChargeHint
+	{
+		double dps;
+		/** Names of the owned items that would need charging or repairing. */
+		List<String> items;
+	}
+
+	@Value
+	static class CurrentGear
+	{
+		AttackType type;
+		CalcResult result;
+	}
+
+	/**
+	 * One monster or phase of the fight, with the style and DPS of its best set and the items that
+	 * set adds to the main one.
+	 */
+	@Value
+	static class Phase
+	{
+		Monster monster;
+		AttackType type;
+		double dps;
+		List<Optimizer.Candidate> switches;
+	}
+
+	StyleResult best()
+	{
+		StyleResult best = null;
+		for (StyleResult r : results.values())
+		{
+			if (r.isValid() && (best == null || r.getResult().getDps() > best.getResult().getDps()))
+			{
+				best = r;
+			}
+		}
+		return best;
+	}
+
+	/**
+	 * The result for a type, or the overall best when type is null.
+	 */
+	StyleResult resultFor(AttackType type)
+	{
+		return type == null ? best() : results.get(type);
+	}
+
+	/**
+	 * A magic or burst result with the chosen spell, or the result itself when no spell is chosen
+	 * or it isn't one of the options for that style.
+	 */
+	StyleResult withSpell(StyleResult r, String spell)
+	{
+		if (r == null || spell == null)
+		{
+			return r;
+		}
+		for (StyleResult.Alternative alt : spellOptions.getOrDefault(r.getType(), List.of()))
+		{
+			if (spell.equals(alt.getResult().getSpell().getName()))
+			{
+				return new StyleResult(r.getType(), alt.getResult(), r.getGear(), r.getCombinationsTried(),
+					r.getItemsConsidered(), r.getItemsAfterPruning(), r.getSetsConsidered(), r.isStoppedEarly(),
+					r.getAlternatives());
+			}
+		}
+		return r;
+	}
+
+	/**
+	 * The ranged result with the chosen ammo swapped in, or the result itself when no ammo is
+	 * chosen or it isn't one of the options.
+	 */
+	StyleResult withAmmo(StyleResult r, Integer ammoId)
+	{
+		if (r == null || ammoId == null || r.getType() != AttackType.RANGED)
+		{
+			return r;
+		}
+		for (StyleResult.Alternative alt : ammoOptions)
+		{
+			Optimizer.Candidate ammo = alt.getGear()[EquipmentSlot.AMMO.ordinal()];
+			if (ammo != null && ammo.getOwnedItemId() == ammoId)
+			{
+				return new StyleResult(r.getType(), alt.getResult(), alt.getGear(), r.getCombinationsTried(),
+					r.getItemsConsidered(), r.getItemsAfterPruning(), r.getSetsConsidered(), r.isStoppedEarly(),
+					r.getAlternatives());
+			}
+		}
+		return r;
+	}
+}

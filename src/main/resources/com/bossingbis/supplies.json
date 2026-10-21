@@ -1,0 +1,63 @@
+{
+  "_comment": "Hand-maintained supply catalogue. Lists are in order of preference. Food names must match exactly; other names match the item name exactly or followed by '(' or a space, so 'Prayer potion' matches 'Prayer potion(3)'.",
+
+  "food": [
+    {"name": "Anglerfish", "heal": 22},
+    {"name": "Manta ray", "heal": 22},
+    {"name": "Dark crab", "heal": 22},
+    {"name": "Tuna potato", "heal": 22},
+    {"name": "Sea turtle", "heal": 21},
+    {"name": "Shark", "heal": 20},
+    {"name": "Cooked karambwan", "heal": 18},
+    {"name": "Monkfish", "heal": 16},
+    {"name": "Swordfish", "heal": 14},
+    {"name": "Bass", "heal": 13},
+    {"name": "Lobster", "heal": 12},
+    {"name": "Tuna", "heal": 10},
+    {"name": "Salmon", "heal": 9},
+    {"name": "Trout", "heal": 7}
+  ],
+
+  "meleePotions": ["Divine super combat potion", "Super combat potion", "Combat potion"],
+  "attackPotions": ["Divine super attack potion", "Super attack", "Attack potion"],
+  "strengthPotions": ["Divine super strength potion", "Super strength", "Strength potion"],
+  "rangedPotions": ["Divine ranging potion", "Ranging potion", "Divine bastion potion", "Bastion potion"],
+  "magicPotions": ["Divine magic potion", "Magic potion", "Divine battlemage potion", "Battlemage potion"],
+  "magicBoostItems": ["Saturated heart", "Imbued heart"],
+  "prayerPotions": ["Prayer potion", "Super restore"],
+  "prayerMixes": ["Moonlight moth mix"],
+  "comboFood": ["Cooked karambwan"],
+  "wornTeleports": ["Ghommal's hilt", "Rada's blessing", "Karamja gloves", "Farming cape", "Mythical cape",
+    "Fremennik sea boots"],
+  "unchargedTeleports": ["Amulet of glory", "Combat bracelet", "Skills necklace", "Ring of wealth"],
+  "stackableTeleports": ["Mos le'harmless teleport", "Tai bwo wannai teleport", "Spider cave teleport", "Revenant cave teleport",
+    "Mort'ton teleport", "Chasm teleport scroll", "Colossal wyrm teleport scroll", "Lunar isle teleport", "Nardah teleport",
+    "Watson teleport", "Draynor manor teleport", "Hosidius teleport", "Barrows teleport", "Annakarl teleport",
+    "Ghorrock teleport", "Icy basalt", "Wilderness crabs teleport", "Carrallanger teleport", "Rellekka teleport",
+    "Mind altar teleport", "Zul-andra teleport"],
+  "superAntifire": ["Extended super antifire", "Super antifire potion"],
+  "antifire": ["Extended antifire", "Antifire potion"],
+  "antivenom": ["Anti-venom+", "Anti-venom", "Antidote++", "Antidote+"],
+
+  "lootTools": {
+    "herbs": ["Open herb sack", "Herb sack"],
+    "seeds": ["Open seed box", "Seed box"],
+    "gems": ["Open gem bag", "Gem bag"],
+    "bones": ["Bonecrusher"],
+    "ashes": ["Ash sanctifier"],
+    "alchables": ["Divine rune pouch", "Rune pouch"]
+  },
+  "alchRunes": ["Nature rune"],
+  "lureWeapons": ["Bronze knife", "Iron knife", "Bronze dart", "Iron dart", "Steel knife", "Steel dart", "Black knife", "Mithril knife", "Mithril dart"],
+  "specWeapons": [
+    {"name": "Elder maul", "note": "lowers Defence by 35% on hit"},
+    {"name": "Dragon warhammer", "note": "lowers Defence by 30% on hit"},
+    {"name": "Bandos godsword", "note": "lowers Defence by the damage it deals"},
+    {"name": "Arclight", "note": "lowers Attack, Strength and Defence (more against demons)"},
+    {"name": "Barrelchest anchor", "note": "lowers a combat stat by the damage it deals"}
+  ],
+  "specMinHitpoints": 250,
+
+  "dragonfireShields": ["Dragonfire shield", "Dragonfire ward", "Ancient wyvern shield", "Anti-dragon shield"],
+  "wyvernShields": ["Ancient wyvern shield", "Dragonfire shield", "Dragonfire ward", "Elemental shield", "Mind shield"]
+}
