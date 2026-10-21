@@ -199,7 +199,8 @@
       ],
       "locations": [
         "Varrock Sewers"
-      ]
+      ],
+      "venom": true
     },
     "callisto": {
       "name": "Callisto and Artio",
@@ -889,11 +890,16 @@
       "monsters": [
         "Obor"
       ],
-      "tips": [
-        "A giant key opens the gate the first time (it isn't used up)."
-      ],
       "locations": [
         "Obor's lair"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Giant key"
+          ],
+          "note": "opens Obor's chest after the kill (and the gate the first time)"
+        }
       ]
     },
     "phantom muspah": {
@@ -1005,6 +1011,20 @@
       ],
       "locations": [
         "Varrock Sewers"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Bone mace",
+            "Bone shortbow",
+            "Bone staff"
+          ],
+          "note": "hits the summoned rats with no attack delay",
+          "switch": true
+        }
+      ],
+      "tips": [
+        "Pick a private instance at the broken bars; the public Scurrius is stronger."
       ]
     },
     "shellbane gryphon": {
@@ -1037,6 +1057,15 @@
             "Dark totem"
           ],
           "note": "use it on the altar in the centre of the Catacombs; one totem per attempt"
+        },
+        {
+          "names": [
+            "Emberlight",
+            "Arclight",
+            "Toxic blowpipe"
+          ],
+          "note": "disables the altars (Emberlight or Arclight in one hit)",
+          "switch": true
         }
       ],
       "locations": [
@@ -1694,6 +1723,12 @@
     "Catacombs of Kourend": [
       {
         "text": "Kourend Castle Teleport (standard spellbook)"
+      },
+      {
+        "text": "Xeric's talisman: Xeric's Heart, then the Catacombs entrance",
+        "items": [
+          "Xeric's talisman"
+        ]
       }
     ],
     "The Scar": [

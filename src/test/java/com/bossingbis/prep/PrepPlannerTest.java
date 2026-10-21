@@ -333,6 +333,21 @@ public class PrepPlannerTest
 	}
 
 	@Test
+	public void batchSevenReviewData()
+	{
+		// Obor's chest uses up a giant key every kill
+		PrepPlan obor = planner.plan(request("obor", AttackType.SLASH, owned("Shark", 50)).build());
+		assertTrue(obor.getNotes().stream().anyMatch(n -> n.contains("Giant key")));
+		assertTrue(planner.poisons("bryophyta"));
+		// Skotizo: an Arclight for the altars, a Xeric's talisman route
+		PrepPlan skotizo = planner.plan(request("skotizo", AttackType.SLASH,
+			owned("Dark totem", 1, "Arclight", 1, "Xeric's talisman", 1, "Shark", 50)).build());
+		assertTrue(names(skotizo).contains("Arclight"));
+		assertTrue(skotizo.getTeleports().stream().anyMatch(t -> t.getText().startsWith("Xeric's talisman")
+			&& Boolean.TRUE.equals(t.getOwned())));
+	}
+
+	@Test
 	public void inertTalismanIsNotATeleport()
 	{
 		PrepPlan inert = planner.plan(request("sarachnis", AttackType.SLASH, owned("Xeric's talisman (inert)", 1)).build());
