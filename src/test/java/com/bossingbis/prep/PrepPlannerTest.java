@@ -287,6 +287,27 @@ public class PrepPlannerTest
 	}
 
 	@Test
+	public void batchFiveReviewData()
+	{
+		// a gas mask also protects against the smoke
+		assertTrue(planner.requirements("thermonuclear smoke devil", owned(), Set.of("Gas mask")).get(0).isOwned());
+		// Kraken: the Sanguinesti staff is preferred, fishing explosives only when owned
+		assertEquals(EquipmentSlot.WEAPON, planner.preferences("kraken").get(0).getSlot());
+		PrepPlan kraken = planner.plan(request("kraken", AttackType.MAGIC, owned("Fishing explosive", 30, "Shark", 50)).build());
+		assertTrue(names(kraken).contains("Fishing explosive"));
+		// Cerberus: the key master teleport scroll stacks in one slot
+		PrepPlan cerberus = planner.plan(request("cerberus", AttackType.SLASH,
+			owned("Key master teleport", 5, "Spectral spirit shield", 1, "Shark", 50)).build());
+		assertTrue(cerberus.getInventory().stream()
+			.anyMatch(l -> l.getName().equals("Key master teleport") && l.isStackable()));
+		assertTrue(names(cerberus).contains("Spectral spirit shield"));
+		// Grotesque Guardians: no nose peg when a Slayer helmet is worn
+		PrepPlan guardians = planner.plan(request("grotesque guardians", AttackType.CRUSH,
+			owned("Nose peg", 1, "Rock hammer", 1, "Shark", 50)).wornNames(Set.of("Slayer helmet (i)")).build());
+		assertFalse(names(guardians).contains("Nose peg"));
+	}
+
+	@Test
 	public void inertTalismanIsNotATeleport()
 	{
 		PrepPlan inert = planner.plan(request("sarachnis", AttackType.SLASH, owned("Xeric's talisman (inert)", 1)).build());

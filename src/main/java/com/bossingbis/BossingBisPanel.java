@@ -328,8 +328,8 @@ class BossingBisPanel extends PluginPanel
 
 		if (outcome.getSlayerTask() != null)
 		{
-			content.add(left(text("Only on a " + outcome.getSlayerTask() + " Slayer task. Worked out without the "
-				+ "Slayer helmet's on-task bonus.", WARN, true)));
+			content.add(left(text("Only on a " + outcome.getSlayerTask() + " Slayer task, so the Slayer helmet's "
+				+ "on-task bonus is counted.", WARN, true)));
 		}
 		content.add(styleTabs(best, shownType));
 		renderWarnings(best);
@@ -1142,7 +1142,7 @@ class BossingBisPanel extends PluginPanel
 	private static String assumptions(PlayerSetup s)
 	{
 		return "Levels: Atk " + s.getAttack() + ", Str " + s.getStrength() + ", Rng " + s.getRanged()
-			+ ", Mag " + s.getMagic() + ". Not on a Slayer task. Spellbook: " + (s.isAncientSpellbook() ? "Ancient" : "Standard") + ".";
+			+ ", Mag " + s.getMagic() + ". " + (s.isOnSlayerTask() ? "On" : "Not on") + " a Slayer task. Spellbook: " + (s.isAncientSpellbook() ? "Ancient" : "Standard") + ".";
 	}
 
 	/**

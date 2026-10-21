@@ -1036,7 +1036,7 @@ public class BossingBisPlugin extends Plugin
 			.rangedStrengthPrayer(config.rangedPrayer().getStrength())
 			.magicAccuracyPrayer(config.magicPrayer().getAccuracy())
 			.magicDamagePrayer(config.magicPrayer().getDamage())
-			// planned off task: no Slayer helmet bonus
+			// off task unless the boss needs a task; see runOptimisation
 			.onSlayerTask(false)
 			.ancientSpellbook(ancients)
 			.kandarinHardDiary(config.kandarinHard())
@@ -1054,12 +1054,14 @@ public class BossingBisPlugin extends Plugin
 	 */
 	private void runOptimisation(MonsterResolver res, PrepPlanner prep, AtomicBoolean cancel,
 		List<Optimizer.Candidate> candidates, List<Optimizer.Candidate> chargeable, Map<Integer, ItemSource> sources,
-		OwnedItems owned, Map<Integer, String> names, GearItem[] worn, PlayerSetup setup, Settings settings)
+		OwnedItems owned, Map<Integer, String> names, GearItem[] worn, PlayerSetup offTask, Settings settings)
 	{
 		try
 		{
 			String boss = settings.getBoss();
 			PrepData.BossInfo info = prep.data().boss(boss);
+			// bosses that can only be fought on a Slayer task always get the Slayer helmet's bonus
+			PlayerSetup setup = offTask.toBuilder().onSlayerTask(info.getSlayerTask() != null).build();
 			List<Monster> choices = res.forBoss(info.getMonsters());
 			if (choices.isEmpty())
 			{

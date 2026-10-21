@@ -11,6 +11,23 @@
       "venom": true,
       "locations": [
         "Abyssal Nexus"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Scorching bow"
+          ],
+          "note": "kills the respiratory systems without a full gear swap",
+          "switch": true
+        },
+        {
+          "names": [
+            "Bronze arrow"
+          ],
+          "note": "cheap arrows for the Scorching bow",
+          "switch": true,
+          "stackable": true
+        }
       ]
     },
     "alchemical hydra": {
@@ -34,6 +51,30 @@
       "comboEat": true,
       "locations": [
         "Karuulm Slayer Dungeon"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Bonecrusher necklace",
+            "Dragonbone necklace"
+          ],
+          "note": "restores prayer from the bones, for longer trips",
+          "switch": true
+        },
+        {
+          "names": [
+            "Noxious halberd"
+          ],
+          "note": "its special attack cures poison (half your special attack energy)",
+          "switch": true
+        },
+        {
+          "names": [
+            "Bracelet of slaughter"
+          ],
+          "note": "can extend your Slayer task",
+          "switch": true
+        }
       ]
     },
     "araxxor": {
@@ -184,6 +225,22 @@
       ],
       "locations": [
         "Taverley Dungeon"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Spectral spirit shield"
+          ],
+          "note": "halves the prayer drain from the Summoned Souls",
+          "switch": true
+        },
+        {
+          "names": [
+            "Bracelet of slaughter"
+          ],
+          "note": "can extend your Slayer task",
+          "switch": true
+        }
       ]
     },
     "chaos elemental": {
@@ -505,6 +562,22 @@
             "Granite hammer"
           ],
           "note": "to finish them off"
+        },
+        {
+          "names": [
+            "Nose peg",
+            "Slayer helmet (i)",
+            "Slayer helmet"
+          ],
+          "note": "for the aberrant spectres on the way up the tower",
+          "optional": true
+        },
+        {
+          "names": [
+            "Noxious halberd"
+          ],
+          "note": "melee on Dawn (the wiki says other halberds are too slow)",
+          "switch": true
         }
       ],
       "tips": [
@@ -616,8 +689,38 @@
         "Kraken (Kraken)"
       ],
       "slayerTask": "Cave kraken",
+      "prefer": [
+        {
+          "slot": "weapon",
+          "items": [
+            "Sanguinesti staff"
+          ],
+          "withinPercent": 10,
+          "reason": "the wiki recommends it: its healing means less food"
+        }
+      ],
       "locations": [
         "Kraken Cove"
+      ],
+      "inventory": [
+        {
+          "names": [
+            "Fishing explosive"
+          ],
+          "note": "used on the large whirlpool, it starts the fight at once",
+          "stackable": true,
+          "optional": true
+        },
+        {
+          "names": [
+            "Bracelet of slaughter"
+          ],
+          "note": "can extend your Slayer task",
+          "switch": true
+        }
+      ],
+      "tips": [
+        "A private instance costs 25,000 coins."
       ]
     },
     "kree'arra": {
@@ -1013,7 +1116,8 @@
         "head": [
           "Facemask",
           "Slayer helmet",
-          "Slayer helmet (i)"
+          "Slayer helmet (i)",
+          "Gas mask"
         ]
       },
       "comboEat": true,
@@ -1243,6 +1347,12 @@
       }
     ],
     "Taverley Dungeon": [
+      {
+        "text": "Key master teleport scroll: right by Cerberus' lair",
+        "items": [
+          "Key master teleport"
+        ]
+      },
       {
         "text": "Falador Teleport (standard spellbook), then walk west"
       }
@@ -1500,6 +1610,9 @@
       }
     ],
     "Smoke Devil Dungeon": [
+      {
+        "text": "Fairy ring BKP, then walk north-east"
+      },
       {
         "text": "Ring of dueling: Castle Wars",
         "items": [

@@ -154,6 +154,27 @@ public class FightPlanTest
 	}
 
 	@Test
+	public void slayerHelmetCountsOnTaskOnlyBosses()
+	{
+		// task-only bosses are planned on task, where a Slayer helmet (i) beats a Neitiznot faceguard
+		List<Optimizer.Candidate> bank = new ArrayList<>();
+		for (String n : new String[]{"Abyssal whip", "Slayer helmet (i)", "Neitiznot faceguard", "Fighter torso",
+			"Bandos tassets", "Dragon defender"})
+		{
+			GearItem item = data.findItem(n);
+			assertNotNull(n, item);
+			bank.add(new Optimizer.Candidate(item, item.getId()));
+		}
+		Monster cerberus = resolver.forBoss(List.of("Cerberus")).get(0);
+		StyleResult onTask = new Optimizer(SETUP.toBuilder().onSlayerTask(true).build(), cerberus, new AtomicBoolean())
+			.optimise(bank, AttackType.SLASH);
+		StyleResult offTask = new Optimizer(SETUP, cerberus, new AtomicBoolean()).optimise(bank, AttackType.SLASH);
+		assertEquals("Slayer helmet (i)", onTask.getGear()[EquipmentSlot.HEAD.ordinal()].getItem().getName());
+		assertEquals("Neitiznot faceguard", offTask.getGear()[EquipmentSlot.HEAD.ordinal()].getItem().getName());
+		assertTrue(onTask.getResult().getDps() > offTask.getResult().getDps());
+	}
+
+	@Test
 	public void vorkathKeepsADragonfireShieldOverATwistedBuckler() throws Exception
 	{
 		PrepPlanner planner = new PrepPlanner(PrepData.load(new Gson()));

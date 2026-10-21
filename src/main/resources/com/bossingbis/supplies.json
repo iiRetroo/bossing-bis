@@ -34,7 +34,7 @@
     "Mort'ton teleport", "Chasm teleport scroll", "Colossal wyrm teleport scroll", "Lunar isle teleport", "Nardah teleport",
     "Watson teleport", "Draynor manor teleport", "Hosidius teleport", "Barrows teleport", "Annakarl teleport",
     "Ghorrock teleport", "Icy basalt", "Wilderness crabs teleport", "Carrallanger teleport", "Rellekka teleport",
-    "Mind altar teleport", "Zul-andra teleport"],
+    "Mind altar teleport", "Zul-andra teleport", "Key master teleport"],
   "superAntifire": ["Extended super antifire", "Super antifire potion"],
   "antifire": ["Extended antifire", "Antifire potion"],
   "antivenom": ["Anti-venom+", "Anti-venom", "Antidote++", "Antidote+"],
