@@ -13,7 +13,7 @@ Pick a boss in the side panel. No Slayer task is needed. From your bank (plus po
 - **How to get there**, ticked off when you own the teleport item.
 - **A rough kill time** (HP / DPS, for the whole fight when planning one).
 
-The ammo, spell and food tiles can be clicked to pick a cheaper option. Bosses that can only be fought on a Slayer task are marked "(task only)" and get the Slayer helmet's on-task bonus; every other boss is worked out off task.
+The ammo, spell and food tiles can be clicked to pick a cheaper option. Picking cheaper ammo or a cheaper spell updates the style tabs and the bank outline. **Hide highlights**, next to Show in bank, turns the bank outlines off (say, if you stop part way), and **Feedback and suggestions** at the bottom of the panel opens the plugin's GitHub issues page. Bosses that can only be fought on a Slayer task are marked "(task only)" and get the Slayer helmet's on-task bonus; every other boss is worked out off task.
 
 ## Small and safe
 

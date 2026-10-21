@@ -74,6 +74,7 @@ import net.runelite.client.ui.ClientToolbar;
 import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.util.ImageUtil;
+import net.runelite.client.util.LinkBrowser;
 
 /**
  * Reads the bank, works out the highest-DPS gear for the boss picked in the side panel (and gear
@@ -98,6 +99,8 @@ public class BossingBisPlugin extends Plugin
 	private static final String POTION_STORE_KEY = "potionStore";
 	private static final String GROUP_STORAGE_KEY = "groupStorage";
 	private static final int MAX_DOSES = 4;
+	/** Where feedback and suggestions go: the plugin's GitHub issues. */
+	private static final String FEEDBACK_URL = "https://github.com/iiRetroo/bossing-bis/issues";
 	/** Helms that make you immune to poison and venom while charged. */
 	private static final Set<String> SERPENTINE_HELMS = Set.of("Serpentine helm", "Tanzanite helm", "Magma helm");
 
@@ -622,6 +625,13 @@ public class BossingBisPlugin extends Plugin
 			|| "highlightSupplies".equals(key) || "supplyHighlightColor".equals(key))
 		{
 			updateHighlightColors();
+			SwingUtilities.invokeLater(() ->
+			{
+				if (panel != null)
+				{
+					panel.redraw();
+				}
+			});
 		}
 		else if ("inventoryView".equals(key))
 		{
@@ -741,6 +751,30 @@ public class BossingBisPlugin extends Plugin
 	void selectSpell(String spell)
 	{
 		selectedSpell = spell;
+		// a cheaper spell can make another style the best
+		updateHighlights();
+	}
+
+	boolean isHighlighting()
+	{
+		return config.highlightBank();
+	}
+
+	/**
+	 * Called from the panel: turns the bank outlines off or on, the same as the Highlight in bank
+	 * setting.
+	 */
+	void toggleHighlights()
+	{
+		configManager.setConfiguration(BossingBisConfig.GROUP, "highlightBank", !config.highlightBank());
+	}
+
+	/**
+	 * Called from the panel: opens the plugin's GitHub issues page for feedback and suggestions.
+	 */
+	void openFeedback()
+	{
+		LinkBrowser.browse(FEEDBACK_URL);
 	}
 
 	String getSelectedSpell()
@@ -1618,7 +1652,7 @@ public class BossingBisPlugin extends Plugin
 			return;
 		}
 		supplyHighlightIds = sorted(o.getPrep().getSupplyBankIds());
-		StyleResult r = o.withAmmo(o.resultFor(selectedType), selectedAmmo);
+		StyleResult r = o.resultFor(selectedType, selectedAmmo, selectedSpell);
 		if (r == null || !r.isValid())
 		{
 			highlightIds = new int[0];

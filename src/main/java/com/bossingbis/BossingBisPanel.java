@@ -96,6 +96,7 @@ class BossingBisPanel extends PluginPanel
 	private final ItemManager itemManager;
 
 	private final JLabel statusLabel = new JLabel();
+	private final JButton highlightToggle = new JButton();
 	private final JPanel content = new JPanel();
 	private final JComboBox<String> bossSelect = new JComboBox<>();
 	private final List<String> bossKeys = new ArrayList<>();
@@ -177,15 +178,40 @@ class BossingBisPanel extends PluginPanel
 		showInBank.setFont(FontManager.getRunescapeSmallFont());
 		showInBank.setToolTipText("Filter your bank to the suggested gear and supplies (click again for the full bank)");
 		showInBank.addActionListener(e -> plugin.toggleBankTag());
-		JPanel bankRow = new JPanel(new BorderLayout());
+		highlightToggle.setFont(FontManager.getRunescapeSmallFont());
+		highlightToggle.setToolTipText("Turn the bank outlines off or on, say if you stop a task part way");
+		highlightToggle.addActionListener(e ->
+		{
+			plugin.toggleHighlights();
+			updateHighlightToggle();
+		});
+		updateHighlightToggle();
+		JPanel bankRow = new JPanel(new GridLayout(1, 2, 4, 0));
 		bankRow.setBorder(new EmptyBorder(4, 0, 0, 0));
-		bankRow.add(showInBank, BorderLayout.CENTER);
+		bankRow.add(showInBank);
+		bankRow.add(highlightToggle);
 		header.add(left(bankRow));
 
 		add(header, BorderLayout.NORTH);
 
 		content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 		add(content, BorderLayout.CENTER);
+
+		JLabel feedback = new JLabel("Feedback and suggestions");
+		feedback.setFont(FontManager.getRunescapeSmallFont());
+		feedback.setForeground(MUTED);
+		feedback.setToolTipText("Opens the plugin's GitHub page in your browser");
+		feedback.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		feedback.setBorder(new EmptyBorder(8, 0, 0, 0));
+		feedback.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				plugin.openFeedback();
+			}
+		});
+		add(feedback, BorderLayout.SOUTH);
 
 		showMessage("Open your bank to scan your gear.");
 	}
@@ -268,7 +294,13 @@ class BossingBisPanel extends PluginPanel
 	 */
 	void redraw()
 	{
+		updateHighlightToggle();
 		render();
+	}
+
+	private void updateHighlightToggle()
+	{
+		highlightToggle.setText(plugin.isHighlighting() ? "Hide highlights" : "Show highlights");
 	}
 
 	void showOutcome(OptimizationOutcome outcome, AttackType selected)
@@ -321,7 +353,7 @@ class BossingBisPanel extends PluginPanel
 			return;
 		}
 
-		StyleResult best = outcome.best();
+		StyleResult best = outcome.best(plugin.getSelectedAmmo(), plugin.getSelectedSpell());
 		AttackType shownType = selected != null ? selected : best == null ? null : best.getType();
 		StyleResult shown = shownType == null ? null : outcome.withSpell(outcome.withAmmo(
 			outcome.getResults().get(shownType), plugin.getSelectedAmmo()), plugin.getSelectedSpell());
@@ -347,6 +379,10 @@ class BossingBisPanel extends PluginPanel
 			content.add(gap(6));
 			content.add(statsBox(shown, best));
 			content.add(banner(shown.getResult(), shown.getType()));
+			if (shown.getType() == AttackType.BURST && !outcome.getSetup().isAncientSpellbook())
+			{
+				content.add(left(text("Bursting needs the Ancient spellbook, and you're not on it.", WARN, true)));
+			}
 			if (outcome.getTooLight().contains(shown.getType()))
 			{
 				content.add(left(text("None of your sets for this style reach "
@@ -402,9 +438,10 @@ class BossingBisPanel extends PluginPanel
 				// burst only for bosses whose monsters stack
 				continue;
 			}
-			StyleResult r = outcome.getResults().get(t);
+			// with the ammo and spell picked in the panel, so cheaper picks show their real DPS
+			StyleResult r = outcome.adjusted(t, plugin.getSelectedAmmo(), plugin.getSelectedSpell());
 			boolean valid = r != null && r.isValid();
-			boolean isBest = best != null && r == best;
+			boolean isBest = best != null && t == best.getType();
 			Color dpsColor = !valid ? MUTED : isBest ? GOOD : Color.WHITE;
 			JLabel tab = new JLabel("<html><center>" + TAB_NAMES[t.ordinal()] + "<br><font color='"
 				+ hex(dpsColor) + "'>" + (valid ? DPS_FORMAT.format(r.getResult().getDps()) : "-")
@@ -561,7 +598,7 @@ class BossingBisPanel extends PluginPanel
 		box.setBackground(TILE_BACKGROUND);
 		box.setOpaque(true);
 		box.setBorder(BorderFactory.createCompoundBorder(
-			BorderFactory.createLineBorder(shown == best ? GOOD.darker() : TILE_BORDER),
+			BorderFactory.createLineBorder(best != null && shown.getType() == best.getType() ? GOOD.darker() : TILE_BORDER),
 			new EmptyBorder(4, 6, 4, 6)));
 
 		JLabel dps = new JLabel("DPS: " + DPS_FORMAT.format(r.getDps()));
@@ -735,7 +772,7 @@ class BossingBisPanel extends PluginPanel
 
 	private String shownTypeName()
 	{
-		StyleResult best = outcome.best();
+		StyleResult best = outcome.best(plugin.getSelectedAmmo(), plugin.getSelectedSpell());
 		AttackType t = selected != null ? selected : best == null ? null : best.getType();
 		return t == null ? "" : t.getDisplayName();
 	}
