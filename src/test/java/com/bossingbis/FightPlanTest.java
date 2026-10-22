@@ -74,10 +74,6 @@ public class FightPlanTest
 		StyleResult main = null;
 		for (AttackType t : AttackType.values())
 		{
-			if (t == AttackType.BURST)
-			{
-				continue;
-			}
 			StyleResult r = optimizer.optimise(bank, t);
 			if (r.isValid() && (main == null || r.getResult().getDps() > main.getResult().getDps()))
 			{

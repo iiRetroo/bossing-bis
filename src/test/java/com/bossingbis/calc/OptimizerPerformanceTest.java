@@ -4,7 +4,7 @@ import com.bossingbis.data.AttackType;
 import com.bossingbis.data.GameData;
 import com.bossingbis.data.GearItem;
 import com.bossingbis.data.Monster;
-import com.bossingbis.data.MonsterResolver;
+import com.bossingbis.data.TestMonsters;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class OptimizerPerformanceTest
 	public void everyItemInTheGame() throws Exception
 	{
 		GameData data = GameData.load(new Gson());
-		Monster target = new MonsterResolver(data).fromName("Abyssal demons");
+		Monster target = TestMonsters.named("Abyssal demon");
 		List<Optimizer.Candidate> bank = new ArrayList<>();
 		for (int id = 0; id < 40_000; id++)
 		{
@@ -35,11 +35,7 @@ public class OptimizerPerformanceTest
 		for (AttackType type : AttackType.values())
 		{
 			long start = System.nanoTime();
-			// burst is magic with a burst setup, as the plugin runs it
-			StyleResult r = type == AttackType.BURST
-				? new Optimizer(DpsCalculatorTest.maxed(true).toBuilder().ancientSpellbook(true).burstTargets(3).build(), target)
-					.optimise(bank, AttackType.MAGIC)
-				: optimizer.optimise(bank, type);
+			StyleResult r = optimizer.optimise(bank, type);
 			long ms = (System.nanoTime() - start) / 1_000_000;
 			System.out.printf("%s: %.3f dps, %d -> %d items, %d combinations, %d ms, stopped early %s%n",
 				type, r.getResult().getDps(), r.getItemsConsidered(), r.getItemsAfterPruning(),
@@ -61,7 +57,7 @@ public class OptimizerPerformanceTest
 	public void everyItemWithAMinimumWeight() throws Exception
 	{
 		GameData data = GameData.load(new Gson());
-		Monster target = new MonsterResolver(data).fromName("Gryphons");
+		Monster target = TestMonsters.named("Gryphon");
 		List<Optimizer.Candidate> bank = new ArrayList<>();
 		for (int id = 0; id < 40_000; id++)
 		{

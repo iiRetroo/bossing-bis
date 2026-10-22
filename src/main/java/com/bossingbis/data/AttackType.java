@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * The combat styles the optimiser searches. Each one is optimised separately. BURST is magic with
- * an Ancient burst or barrage on a stack of monsters; the calculator itself only ever sees MAGIC.
+ * The combat styles the optimiser searches. Each one is optimised separately.
  */
 @Getter
 @RequiredArgsConstructor
@@ -15,8 +14,7 @@ public enum AttackType
 	SLASH("Slash"),
 	CRUSH("Crush"),
 	RANGED("Ranged"),
-	MAGIC("Magic"),
-	BURST("Burst");
+	MAGIC("Magic");
 
 	private final String displayName;
 

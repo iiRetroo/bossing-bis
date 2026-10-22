@@ -26,7 +26,6 @@ public class GameData
 {
 	private final Map<Integer, GearItem> itemsById = new HashMap<>();
 	private final Map<Integer, Integer> aliasToBase = new HashMap<>();
-	private final Map<Integer, Monster> monstersById = new HashMap<>();
 	private final List<Monster> monsters = new ArrayList<>();
 
 	public static GameData load(Gson gson) throws IOException
@@ -104,7 +103,6 @@ public class GameData
 					Collections.unmodifiableSet(attrs), a.get(17).getAsInt() == 1,
 					a.get(18).getAsString(), a.get(19).getAsInt());
 				monsters.add(m);
-				monstersById.putIfAbsent(m.getId(), m);
 			}
 		}
 	}
@@ -200,11 +198,6 @@ public class GameData
 			default:
 				return 2;
 		}
-	}
-
-	public Monster getMonster(int npcId)
-	{
-		return monstersById.get(npcId);
 	}
 
 	public List<Monster> getMonsters()

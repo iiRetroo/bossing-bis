@@ -5,7 +5,7 @@ import com.bossingbis.data.EquipmentSlot;
 import com.bossingbis.data.GameData;
 import com.bossingbis.data.GearItem;
 import com.bossingbis.data.Monster;
-import com.bossingbis.data.MonsterResolver;
+import com.bossingbis.data.TestMonsters;
 import com.google.gson.Gson;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class DpsCalculatorTest
 	public static void load() throws Exception
 	{
 		data = GameData.load(new Gson());
-		abyssalDemon = new MonsterResolver(data).fromName("Abyssal demons");
+		abyssalDemon = TestMonsters.named("Abyssal demon");
 	}
 
 	static PlayerSetup maxed(boolean onTask)
@@ -109,7 +109,7 @@ public class DpsCalculatorTest
 	@Test
 	public void flyingMonstersAreImmuneToNonPolearmMelee()
 	{
-		Monster aviansie = new MonsterResolver(data).fromName("Aviansies");
+		Monster aviansie = TestMonsters.named("Aviansie");
 		assertNotNull(aviansie);
 		assertTrue(aviansie.has(Monster.FLYING));
 		DpsCalculator calc = new DpsCalculator(maxed(false), aviansie);
@@ -125,25 +125,5 @@ public class DpsCalculatorTest
 		assertTrue(r.getSpell().getName().endsWith("Surge"));
 		assertTrue(r.getMaxHit() >= 21);
 		assertEquals(5, r.getAttackSpeedTicks());
-	}
-
-	@Test
-	public void burstHitsEveryTargetAndNeedsTheLevel()
-	{
-		GearItem[] kodai = gear("Kodai wand");
-		Spell barrage = Spell.ANCIENT.get(Spell.ANCIENT.size() - 1);
-		assertEquals("Ice Barrage", barrage.getName());
-		CalcResult one = new DpsCalculator(maxed(false), abyssalDemon).single(kodai, AttackType.MAGIC, Stance.AUTOCAST, barrage);
-		PlayerSetup burst = maxed(false).toBuilder().ancientSpellbook(true).burstTargets(3).build();
-		CalcResult three = new DpsCalculator(burst, abyssalDemon).best(kodai, AttackType.MAGIC);
-		assertEquals("Ice Barrage", three.getSpell().getName());
-		assertEquals(one.getDps() * 3, three.getDps(), 1e-9);
-		assertEquals(one.getMaxHit(), three.getMaxHit());
-
-		// Ice Burst at 70, nothing below Smoke Burst's 62
-		PlayerSetup lower = burst.toBuilder().magic(75).build();
-		assertEquals("Ice Burst", new DpsCalculator(lower, abyssalDemon).best(kodai, AttackType.MAGIC).getSpell().getName());
-		PlayerSetup low = burst.toBuilder().magic(61).build();
-		assertEquals(0, new DpsCalculator(low, abyssalDemon).best(kodai, AttackType.MAGIC).getDps(), 0);
 	}
 }

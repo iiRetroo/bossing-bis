@@ -43,10 +43,6 @@ public final class DpsCalculator
 	 */
 	public CalcResult best(GearItem[] gear, AttackType type)
 	{
-		if (type == AttackType.MAGIC && player.getBurstTargets() > 0)
-		{
-			return bestBurst(gear);
-		}
 		GearItem weapon = gear[WEAPON];
 		String category = weapon == null ? "Unarmed" : weapon.getCategory();
 		List<Stance> stances = WeaponRules.stances(category, type);
@@ -93,8 +89,8 @@ public final class DpsCalculator
 	}
 
 	/**
-	 * The result for every spell this gear can cast: autocast spells for the weapon's spellbook, or
-	 * bursts and barrages when set up for them. Empty when the weapon has its own spell or none.
+	 * The result for every spell this gear can autocast on the weapon's spellbook. Empty when the
+	 * weapon has its own spell or none.
 	 */
 	public List<CalcResult> spellResults(GearItem[] gear)
 	{
@@ -107,19 +103,6 @@ public final class DpsCalculator
 			}
 		}
 		List<CalcResult> out = new ArrayList<>();
-		if (player.getBurstTargets() > 0)
-		{
-			for (Spell spell : Spell.castable(Spell.ANCIENT, player.getMagic()))
-			{
-				if (spell.isMultiTarget())
-				{
-					CalcResult r = new Attack(gear, names, AttackType.MAGIC, Stance.AUTOCAST, spell).result();
-					out.add(new CalcResult(r.getDps() * player.getBurstTargets(), r.getMaxHit(), r.getAccuracy(),
-						r.getAttackSpeedTicks(), r.getStance(), r.getSpell()));
-				}
-			}
-			return out;
-		}
 		GearItem weapon = gear[WEAPON];
 		String category = weapon == null ? "Unarmed" : weapon.getCategory();
 		if (!WeaponRules.stances(category, AttackType.MAGIC).contains(Stance.AUTOCAST))
@@ -133,42 +116,6 @@ public final class DpsCalculator
 			out.add(new Attack(gear, names, AttackType.MAGIC, Stance.AUTOCAST, spell).result());
 		}
 		return out;
-	}
-
-	/**
-	 * Casting an Ancient burst or barrage by hand (any weapon can) on a stack of monsters: the best
-	 * one for the Magic level, with DPS on one target times the number of targets. Each target is
-	 * rolled separately in game, so the expected damage simply adds up.
-	 */
-	private CalcResult bestBurst(GearItem[] gear)
-	{
-		Set<String> names = new HashSet<>(16);
-		for (GearItem g : gear)
-		{
-			if (g != null)
-			{
-				names.add(g.isInactiveArclight() ? "Darklight" : g.getName());
-			}
-		}
-		CalcResult best = CalcResult.NONE;
-		for (Spell spell : Spell.castable(Spell.ANCIENT, player.getMagic()))
-		{
-			if (!spell.isMultiTarget())
-			{
-				continue;
-			}
-			CalcResult r = new Attack(gear, names, AttackType.MAGIC, Stance.AUTOCAST, spell).result();
-			if (r.getDps() > best.getDps())
-			{
-				best = r;
-			}
-		}
-		if (best == CalcResult.NONE)
-		{
-			return best;
-		}
-		return new CalcResult(best.getDps() * player.getBurstTargets(), best.getMaxHit(), best.getAccuracy(),
-			best.getAttackSpeedTicks(), best.getStance(), best.getSpell());
 	}
 
 	/**

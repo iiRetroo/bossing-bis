@@ -85,7 +85,7 @@ class BossingBisPanel extends PluginPanel
 		{EquipmentSlot.HANDS, EquipmentSlot.FEET, EquipmentSlot.RING},
 	};
 
-	private static final String[] TAB_NAMES = {"Stab", "Slash", "Crush", "Rng", "Mag", "Burst"};
+	private static final String[] TAB_NAMES = {"Stab", "Slash", "Crush", "Rng", "Mag"};
 
 	/** Text wraps at this width (pixels) so labels get the right height in the narrow sidebar. */
 	private static final int TEXT_WIDTH = 160;
@@ -431,7 +431,6 @@ class BossingBisPanel extends PluginPanel
 		{
 			if (!outcome.getResults().containsKey(t))
 			{
-				// Burst is SlayerBIS's: no boss here gets a result for it
 				continue;
 			}
 			// with the ammo and spell picked in the panel, so cheaper picks show their real DPS

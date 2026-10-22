@@ -51,7 +51,7 @@ class OptimizationOutcome
 	Set<AttackType> tooLight;
 	/** Per style, the DPS given up to wear a Serpentine helm against poison; only where it was worn. */
 	Map<AttackType, Double> serpentineCost;
-	/** Magic and Burst: the set with each spell it can cast, best first. */
+	/** Magic: the set with each spell it can cast, best first. */
 	Map<AttackType, List<StyleResult.Alternative>> spellOptions;
 	/** Whole fight only: the main monster first, then each other monster with its switches. */
 	List<Phase> phases;
@@ -159,7 +159,7 @@ class OptimizationOutcome
 	}
 
 	/**
-	 * A magic or burst result with the chosen spell, or the result itself when no spell is chosen
+	 * A magic result with the chosen spell, or the result itself when no spell is chosen
 	 * or it isn't one of the options for that style.
 	 */
 	StyleResult withSpell(StyleResult r, String spell)

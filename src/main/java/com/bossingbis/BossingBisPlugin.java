@@ -182,7 +182,7 @@ public class BossingBisPlugin extends Plugin
 	private volatile Integer selectedAmmo;
 	/** Main food picked in the panel, or null for the best owned. */
 	private volatile String selectedFood;
-	/** Spell picked in the panel for the magic or burst set, or null for the best. */
+	/** Spell picked in the panel for the magic set, or null for the best. */
 	private volatile String selectedSpell;
 	/** Sorted bank item ids to outline; replaced wholesale so the overlay never sees a partial update. */
 	private volatile int[] highlightIds = new int[0];
@@ -1234,23 +1234,20 @@ public class BossingBisPlugin extends Plugin
 			Set<AttackType> tooLight = EnumSet.noneOf(AttackType.class);
 			for (AttackType type : AttackType.values())
 			{
-				if (type != AttackType.BURST)
+				StyleResult r = optimizer.optimise(candidates, type, required, minWeight);
+				if (minWeight > 0 && !r.isValid())
 				{
-					StyleResult r = optimizer.optimise(candidates, type, required, minWeight);
-					if (minWeight > 0 && !r.isValid())
+					// nothing owned is heavy enough: show the best set anyway, with a warning
+					r = optimizer.optimise(candidates, type, required);
+					if (r.isValid())
 					{
-						// nothing owned is heavy enough: show the best set anyway, with a warning
-						r = optimizer.optimise(candidates, type, required);
-						if (r.isValid())
-						{
-							tooLight.add(type);
-						}
+						tooLight.add(type);
 					}
-					int weight = tooLight.contains(type) ? 0 : minWeight;
-					r = applyPreferences(optimizer, candidates, type, r, required, preferences, weight, keptNotes, keptCost);
-					results.put(type, poisons ? preferSerpentine(optimizer, candidates, type, r, required,
-						settings.getSerpentineHelm().getPercent(), serpentineCost, weight) : r);
 				}
+				int weight = tooLight.contains(type) ? 0 : minWeight;
+				r = applyPreferences(optimizer, candidates, type, r, required, preferences, weight, keptNotes, keptCost);
+				results.put(type, poisons ? preferSerpentine(optimizer, candidates, type, r, required,
+					settings.getSerpentineHelm().getPercent(), serpentineCost, weight) : r);
 			}
 			Map<AttackType, List<StyleResult.Alternative>> spellOptions = new EnumMap<>(AttackType.class);
 			spellOptions.put(AttackType.MAGIC, optimizer.spellOptions(results.get(AttackType.MAGIC)));
@@ -1383,10 +1380,6 @@ public class BossingBisPlugin extends Plugin
 			StyleResult best = null;
 			for (AttackType type : AttackType.values())
 			{
-				if (type == AttackType.BURST)
-				{
-					continue;
-				}
 				StyleResult r = optimizer.optimise(candidates, type, required, minWeight);
 				if (!r.isValid())
 				{
@@ -1696,10 +1689,6 @@ public class BossingBisPlugin extends Plugin
 		withCharged.addAll(chargeable);
 		for (AttackType type : AttackType.values())
 		{
-			if (type == AttackType.BURST)
-			{
-				continue;
-			}
 			StyleResult charged = optimizer.optimise(withCharged, type, required);
 			// compare with the best set before any recommended items or Serpentine helm
 			double withoutCharging = results.get(type).getResult().getDps() + givenUp.getOrDefault(type, 0.0);

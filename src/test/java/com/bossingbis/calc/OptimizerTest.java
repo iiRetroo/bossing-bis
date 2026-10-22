@@ -6,6 +6,7 @@ import com.bossingbis.data.GameData;
 import com.bossingbis.data.GearItem;
 import com.bossingbis.data.Monster;
 import com.bossingbis.data.MonsterResolver;
+import com.bossingbis.data.TestMonsters;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,17 +51,15 @@ public class OptimizerTest
 		return c == null ? null : c.getItem().getName();
 	}
 
-	private static Monster monster(String task)
+	private static Monster monster(String name)
 	{
-		Monster m = resolver.fromName(task);
-		assertNotNull(m);
-		return m;
+		return TestMonsters.named(name);
 	}
 
 	@Test
 	public void outclassedItemsAreRemoved()
 	{
-		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demons"));
+		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demon"));
 		StyleResult r = o.optimise(bank("Abyssal whip", "Bronze full helm", "Helm of Neitiznot", "Leather boots",
 			"Dragon boots"), AttackType.SLASH);
 		assertTrue(r.isValid());
@@ -71,7 +70,7 @@ public class OptimizerTest
 	@Test
 	public void twoHandedWeaponsNeverUseAShield()
 	{
-		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demons"));
+		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demon"));
 		StyleResult r = o.optimise(bank("Dragon 2h sword", "Dragon defender", "Rune scimitar"), AttackType.SLASH);
 		assertTrue(r.isValid());
 		Optimizer.Candidate weapon = r.getGear()[EquipmentSlot.WEAPON.ordinal()];
@@ -84,7 +83,7 @@ public class OptimizerTest
 	@Test
 	public void bestOfTwoHandedVersusWeaponAndShield()
 	{
-		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demons"));
+		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demon"));
 		// the whip with a defender beats a dragon 2h sword against a 4-tick, high slash-defence target
 		StyleResult r = o.optimise(bank("Dragon 2h sword", "Dragon defender", "Abyssal whip"), AttackType.SLASH);
 		assertEquals("Abyssal whip", nameIn(r, EquipmentSlot.WEAPON));
@@ -94,7 +93,7 @@ public class OptimizerTest
 	@Test
 	public void completeSetIsTriedAsOneCandidate()
 	{
-		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demons"));
+		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demon"));
 		StyleResult r = o.optimise(bank("Abyssal whip", "Void melee helm", "Void knight top", "Void knight robe",
 			"Void knight gloves", "Helm of Neitiznot"), AttackType.SLASH);
 		assertTrue(r.getSetsConsidered().contains("Void Knight (melee)"));
@@ -106,7 +105,7 @@ public class OptimizerTest
 	@Test
 	public void slayerHelmChosenOnTask()
 	{
-		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(true), monster("Abyssal demons"));
+		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(true), monster("Abyssal demon"));
 		StyleResult r = o.optimise(bank("Abyssal whip", "Slayer helmet (i)", "Helm of Neitiznot"), AttackType.SLASH);
 		assertEquals("Slayer helmet (i)", nameIn(r, EquipmentSlot.HEAD));
 	}
@@ -114,7 +113,7 @@ public class OptimizerTest
 	@Test
 	public void rangedPicksCompatibleAmmo()
 	{
-		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demons"));
+		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demon"));
 		StyleResult r = o.optimise(bank("Magic shortbow", "Dragon arrow", "Rune arrow", "Bronze arrow"), AttackType.RANGED);
 		assertTrue(r.isValid());
 		assertEquals("Rune arrow", nameIn(r, EquipmentSlot.AMMO));
@@ -131,20 +130,9 @@ public class OptimizerTest
 	@Test
 	public void noUsableGearGivesNoResult()
 	{
-		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demons"));
+		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demon"));
 		StyleResult r = o.optimise(bank("Helm of Neitiznot"), AttackType.MAGIC);
 		assertTrue(!r.isValid());
-	}
-
-	@Test
-	public void taskNamesResolve()
-	{
-		assertEquals("Abyssal demon", monster("Abyssal demons").getName());
-		assertEquals("Kalphite Soldier", monster("Kalphites").getName());
-		assertEquals("Wolf", monster("Wolves").getName());
-		assertEquals("Dwarf", monster("Dwarves").getName());
-		assertEquals("Hellhound", monster("Hellhounds").getName());
-		assertEquals("Steel dragon", monster("Metal dragons").getName());
 	}
 
 	@Test
@@ -193,7 +181,7 @@ public class OptimizerTest
 	public void cancelFlagStopsTheSearch()
 	{
 		java.util.concurrent.atomic.AtomicBoolean cancel = new java.util.concurrent.atomic.AtomicBoolean(true);
-		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demons"), cancel);
+		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demon"), cancel);
 		List<Optimizer.Candidate> everything = new ArrayList<>();
 		for (int id = 0; id < 40_000; id++)
 		{
@@ -217,7 +205,7 @@ public class OptimizerTest
 	@Test
 	public void requiredShieldIsAlwaysWornAndRulesOutTwoHanders()
 	{
-		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(true), monster("Basilisks"));
+		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(true), monster("Basilisk"));
 		java.util.Map<EquipmentSlot, java.util.Set<String>> required = new java.util.EnumMap<>(EquipmentSlot.class);
 		required.put(EquipmentSlot.SHIELD, new java.util.HashSet<>(java.util.Arrays.asList("Mirror shield", "V's shield")));
 		StyleResult r = o.optimise(bank("Dragon 2h sword", "Abyssal whip", "Dragon defender", "Mirror shield"),
@@ -229,7 +217,7 @@ public class OptimizerTest
 	@Test
 	public void alternativesUseOtherWeapons()
 	{
-		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demons"));
+		Optimizer o = new Optimizer(DpsCalculatorTest.maxed(false), monster("Abyssal demon"));
 		// different weapon types, so none is removed as outclassed by another
 		StyleResult r = o.optimise(bank("Abyssal whip", "Dragon scimitar", "Dragon battleaxe"), AttackType.SLASH);
 		assertEquals(2, r.getAlternatives().size());
@@ -261,7 +249,7 @@ public class OptimizerTest
 	{
 		List<Optimizer.Candidate> owned = bank("Twisted bow", "Dragon arrow", "Rune arrow", "Amethyst arrow",
 			"Broad bolts", "Abyssal whip");
-		Optimizer optimizer = new Optimizer(DpsCalculatorTest.maxed(true), monster("Abyssal demons"));
+		Optimizer optimizer = new Optimizer(DpsCalculatorTest.maxed(true), monster("Abyssal demon"));
 		StyleResult ranged = optimizer.optimise(owned, AttackType.RANGED);
 		List<StyleResult.Alternative> options = optimizer.ammoOptions(ranged, owned);
 		assertEquals(3, options.size());
@@ -282,7 +270,7 @@ public class OptimizerTest
 		List<Optimizer.Candidate> owned = bank("Abyssal whip", "Dragon defender", "Fighter torso", "Bandos chestplate",
 			"Bandos tassets", "Obsidian platelegs", "Neitiznot faceguard", "Helm of Neitiznot", "Barrows gloves",
 			"Dragon boots", "Amulet of torture", "Fire cape", "Berserker ring (i)", "Granite maul");
-		Optimizer optimizer = new Optimizer(DpsCalculatorTest.maxed(true), monster("Gryphons"));
+		Optimizer optimizer = new Optimizer(DpsCalculatorTest.maxed(true), monster("Gryphon"));
 		StyleResult free = optimizer.optimise(owned, AttackType.SLASH);
 		StyleResult heavy = optimizer.optimise(owned, AttackType.SLASH, java.util.Collections.emptyMap(), 25000);
 		assertTrue(heavy.isValid());

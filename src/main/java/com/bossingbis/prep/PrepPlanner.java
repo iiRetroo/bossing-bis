@@ -355,7 +355,7 @@ public final class PrepPlanner
 		}
 
 		int combatPotions = request.getCombatPotions();
-		boolean magic = bestType == AttackType.MAGIC || bestType == AttackType.BURST;
+		boolean magic = bestType == AttackType.MAGIC;
 		List<String> stylePotions = bestType == null ? Collections.emptyList()
 			: bestType == AttackType.RANGED ? s.rangedPotions
 			: magic ? s.magicPotions

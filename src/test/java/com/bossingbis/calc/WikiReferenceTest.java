@@ -5,6 +5,7 @@ import com.bossingbis.data.EquipmentSlot;
 import com.bossingbis.data.GameData;
 import com.bossingbis.data.GearItem;
 import com.bossingbis.data.Monster;
+import com.bossingbis.data.TestMonsters;
 import com.google.gson.Gson;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -51,7 +52,7 @@ public class WikiReferenceTest
 	private static void check(int monsterId, AttackType type, Stance stance, boolean onTask,
 		int maxHit, double accuracyPercent, double dps, String... items)
 	{
-		Monster monster = data.getMonster(monsterId);
+		Monster monster = TestMonsters.byId(monsterId);
 		assertNotNull(monster);
 		GearItem[] gear = new GearItem[EquipmentSlot.values().length];
 		for (String name : items)
@@ -106,7 +107,7 @@ public class WikiReferenceTest
 		withInactive[EquipmentSlot.WEAPON.ordinal()] = inactive;
 		GearItem[] withDarklight = new GearItem[EquipmentSlot.values().length];
 		withDarklight[EquipmentSlot.WEAPON.ordinal()] = data.findItem("Darklight");
-		DpsCalculator calc = new DpsCalculator(player(false), data.getMonster(GREATER_DEMON_100));
+		DpsCalculator calc = new DpsCalculator(player(false), TestMonsters.byId(GREATER_DEMON_100));
 		CalcResult a = calc.single(withInactive, AttackType.SLASH, Stance.AGGRESSIVE);
 		CalcResult d = calc.single(withDarklight, AttackType.SLASH, Stance.AGGRESSIVE);
 		assertEquals(d.getMaxHit(), a.getMaxHit());
@@ -152,12 +153,12 @@ public class WikiReferenceTest
 	}
 
 	/**
-	 * Manual-cast Ice Barrage, as used for the Burst result. Checked on 2026-10-20 (version
+	 * Manual-cast Ice Barrage. Checked on 2026-10-20 (version
 	 * 89c3e25): "Magic, Manual Cast" with Ice Barrage selected, everything else as above.
 	 */
 	private static CalcResult barrage(String... items)
 	{
-		Monster monster = data.getMonster(ABYSSAL_DEMON);
+		Monster monster = TestMonsters.byId(ABYSSAL_DEMON);
 		GearItem[] gear = new GearItem[EquipmentSlot.values().length];
 		for (String name : items)
 		{
