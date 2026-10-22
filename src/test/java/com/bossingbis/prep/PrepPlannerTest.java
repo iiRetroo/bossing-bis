@@ -348,6 +348,16 @@ public class PrepPlannerTest
 	}
 
 	@Test
+	public void doomHasALarvaSwapForEachStyleAndNoDrainSpec()
+	{
+		PrepPlan doom = planner.plan(request("doom of mokhaiotl", AttackType.RANGED,
+			owned("Scorching bow", 1, "Arclight", 1, "Slayer's staff", 1, "Dragon warhammer", 1, "Shark", 50))
+			.monsterHitpoints(2000).suggestSpecWeapon(true).build());
+		assertTrue(names(doom).containsAll(List.of("Scorching bow", "Arclight", "Slayer's staff")));
+		assertFalse(names(doom).contains("Dragon warhammer"));
+	}
+
+	@Test
 	public void meleePotionFallbacks()
 	{
 		// a super combat potion first

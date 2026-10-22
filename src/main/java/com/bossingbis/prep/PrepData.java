@@ -41,6 +41,8 @@ public final class PrepData
 		boolean stacks;
 		/** The boss hits hard enough that combo eating helps. */
 		boolean comboEat;
+		/** The wiki advises against Defence-draining special attacks, so none is suggested. */
+		boolean noDrainSpec;
 		/** The least the worn gear must weigh, in kg; 0 for no limit. */
 		double minWeight;
 		List<String> tips;

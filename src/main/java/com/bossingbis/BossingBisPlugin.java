@@ -969,6 +969,11 @@ public class BossingBisPlugin extends Plugin
 				}
 				continue;
 			}
+			GearItem charged = data.findChargedVariant(item);
+			if (charged != null)
+			{
+				chargeableById.putIfAbsent(charged.getId(), new Optimizer.Candidate(charged, e.getKey()));
+			}
 			candidates.putIfAbsent(item.getId(), new Optimizer.Candidate(item, e.getKey()));
 		}
 		List<Optimizer.Candidate> chargeable = new ArrayList<>();
@@ -994,7 +999,7 @@ public class BossingBisPlugin extends Plugin
 		PlayerSetup setup = buildSetup();
 		Settings settings = new Settings(boss, selectedMonsterId, config.showPreparation(),
 			config.prayerPotions(), config.prayerRestore(), config.combatPotions(), config.fillFood(),
-			config.lootTools().getMaxKills(), config.specWeapon(), config.burstTargets(), selectedFood,
+			config.lootTools().getMaxKills(), config.specWeapon(), selectedFood,
 			config.serpentineHelm(), config.planSwitches(), config.switchTolerance(), config.wikiSwitches(), selectedAmmo,
 			selectedSpell, spellbookName(), client.getRealSkillLevel(Skill.MAGIC), finishedQuests(prep.data().spellQuests()),
 			client.getVarbitValue(VarbitID.LUMBRIDGE_DIARY_ELITE_COMPLETE) == 1);
@@ -1052,7 +1057,6 @@ public class BossingBisPlugin extends Plugin
 		boolean fillFood;
 		int lootMaxKills;
 		boolean specWeapon;
-		int burstTargets;
 		String preferredFood;
 		BossingBisConfig.SerpentineHelm serpentineHelm;
 		boolean planSwitches;
@@ -1250,18 +1254,6 @@ public class BossingBisPlugin extends Plugin
 			}
 			Map<AttackType, List<StyleResult.Alternative>> spellOptions = new EnumMap<>(AttackType.class);
 			spellOptions.put(AttackType.MAGIC, optimizer.spellOptions(results.get(AttackType.MAGIC)));
-			if (settings.getBurstTargets() > 0 && prep.stacks(boss))
-			{
-				// casting Ancients by hand on a stack: magic on the Ancient spellbook, DPS times the targets
-				PlayerSetup burstSetup = setup.toBuilder().ancientSpellbook(true)
-					.burstTargets(settings.getBurstTargets()).build();
-				Optimizer burstOptimizer = new Optimizer(burstSetup, monster, cancel);
-				StyleResult r = burstOptimizer.optimise(candidates, AttackType.MAGIC, required);
-				spellOptions.put(AttackType.BURST, burstOptimizer.spellOptions(r));
-				results.put(AttackType.BURST, new StyleResult(AttackType.BURST, r.getResult(), r.getGear(),
-					r.getCombinationsTried(), r.getItemsConsidered(), r.getItemsAfterPruning(), r.getSetsConsidered(),
-					r.isStoppedEarly(), r.getAlternatives()));
-			}
 
 			Map<AttackType, Double> givenUp = new EnumMap<>(AttackType.class);
 			for (AttackType t : AttackType.values())
@@ -1326,7 +1318,7 @@ public class BossingBisPlugin extends Plugin
 
 			OptimizationOutcome done = new OptimizationOutcome(boss, info.getName(), info.getSlayerTask(), monster,
 				wholeFight, info.isWholeFight() && choices.size() > 1, choices, results, sources, setup,
-				candidates.size(), hints, current, plan, settings.getBurstTargets(), keptNotes,
+				candidates.size(), hints, current, plan, keptNotes,
 				ammoOptions, minWeight, tooLight, serpentineCost,
 				spellOptions, phases, best == null ? null : best.getType());
 			outcome = done;

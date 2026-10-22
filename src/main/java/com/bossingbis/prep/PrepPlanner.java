@@ -157,15 +157,6 @@ public final class PrepPlanner
 	}
 
 	/**
-	 * Whether the boss's monsters bunch up, so bursting or barraging is worth working out.
-	 */
-	public boolean stacks(String boss)
-	{
-		PrepData.BossInfo info = data.boss(boss);
-		return info != null && info.stacks;
-	}
-
-	/**
 	 * Everything the inventory plan depends on.
 	 */
 	@Value
@@ -381,7 +372,8 @@ public final class PrepPlanner
 			}
 		}
 
-		if (request.isSuggestSpecWeapon() && request.getMonsterHitpoints() >= s.specMinHitpoints && s.specWeapons != null)
+		if (request.isSuggestSpecWeapon() && request.getMonsterHitpoints() >= s.specMinHitpoints && s.specWeapons != null
+			&& (info == null || !info.noDrainSpec))
 		{
 			for (PrepData.SpecWeapon spec : s.specWeapons)
 			{

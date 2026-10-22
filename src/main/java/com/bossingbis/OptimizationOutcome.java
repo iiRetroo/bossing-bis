@@ -41,8 +41,6 @@ class OptimizationOutcome
 	CurrentGear currentGear;
 	/** Requirements, inventory and teleports; only the requirements when preparation is turned off. */
 	PrepPlan prep;
-	/** Monsters each burst or barrage is assumed to hit, for the Burst result. */
-	int burstTargets;
 	/** Per style, the boss's recommended items that were kept on, and what they cost. */
 	Map<AttackType, List<String>> keptNotes;
 	/** The ranged set with each owned ammo swapped in, best first; empty when it takes none. */

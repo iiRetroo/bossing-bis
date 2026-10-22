@@ -218,20 +218,6 @@ public interface BossingBisConfig extends Config
 		return false;
 	}
 
-	@Range(max = 9)
-	@ConfigItem(
-		keyName = "burstTargets",
-		name = "Burst targets",
-		description = "For bosses marked as stacking in the data, also work out bursting or barraging, assuming "
-			+ "it hits this many monsters per cast. 0 turns it off.",
-		section = assumptionsSection,
-		position = 9
-	)
-	default int burstTargets()
-	{
-		return 3;
-	}
-
 	@ConfigItem(
 		keyName = "showPreparation",
 		name = "Show preparation",

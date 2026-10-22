@@ -536,6 +536,8 @@
       ],
       "tips": [
         "Needs The Final Dawn.",
+        "The wiki advises a demonbane (or multi-hit) swap for each combat style for the larvae, and no Defence-draining weapons.",
+        "The magic swap autocasts Superior Demonbane: Arceuus spellbook, 62 Magic and A Kingdom Divided, with fire and soul runes.",
         "Two ancient teleporters from the chest west of the lift shorten the trip back."
       ],
       "inventory": [
@@ -543,24 +545,35 @@
           "names": [
             "Scorching bow"
           ],
-          "note": "for the larvae",
+          "note": "demonbane ranged swap for the larvae",
           "switch": true
         },
         {
           "names": [
-            "Darklight"
+            "Darklight",
+            "Arclight",
+            "Emberlight"
           ],
-          "note": "for the larvae",
+          "note": "demonbane melee swap for the larvae",
           "switch": true
         },
         {
           "names": [
-            "Slayer's staff (e)"
+            "Slayer's staff (e)",
+            "Slayer's staff",
+            "Purging staff",
+            "Staff of the Dead",
+            "Toxic staff of the dead",
+            "Kodai wand",
+            "Master wand",
+            "Skull sceptre (i)",
+            "Blue moon spear"
           ],
-          "note": "for the larvae",
+          "note": "autocasts Superior Demonbane for the larvae",
           "switch": true
         }
-      ]
+      ],
+      "noDrainSpec": true
     },
     "duke sucellus": {
       "name": "Duke Sucellus",

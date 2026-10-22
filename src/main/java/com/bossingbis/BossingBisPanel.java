@@ -379,10 +379,6 @@ class BossingBisPanel extends PluginPanel
 			content.add(gap(6));
 			content.add(statsBox(shown, best));
 			content.add(banner(shown.getResult(), shown.getType()));
-			if (shown.getType() == AttackType.BURST && !outcome.getSetup().isAncientSpellbook())
-			{
-				content.add(left(text("Bursting needs the Ancient spellbook, and you're not on it.", WARN, true)));
-			}
 			if (outcome.getTooLight().contains(shown.getType()))
 			{
 				content.add(left(text("None of your sets for this style reach "
@@ -739,10 +735,7 @@ class BossingBisPanel extends PluginPanel
 	private JComponent banner(CalcResult r, AttackType type)
 	{
 		String main = r.getSpell() != null ? r.getSpell().getName() : r.getStance().getDisplayName();
-		int targets = outcome.getBurstTargets();
-		String sub = AttackType.BURST.getDisplayName().equals(shownTypeName())
-			? "Ancient Magicks, " + DPS_FORMAT.format(r.getDps() / Math.max(1, targets)) + " DPS on each of " + targets
-			: r.getSpell() != null ? "Autocast" : shownTypeName();
+		String sub = r.getSpell() != null ? "Autocast" : shownTypeName();
 		JLabel label = new JLabel("<html><center>" + escape(main) + "<br><font color='#d8c8b0'>" + escape(sub)
 			+ "</font></center></html>", SwingConstants.CENTER);
 		label.setFont(FontManager.getRunescapeSmallFont());
