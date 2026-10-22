@@ -175,7 +175,9 @@ public class PrepPlannerTest
 			// timing and what's coming
 			"flinch", "next attack", "when it", "when he", "when she", "when the", "as soon as", "swap to"})
 		{
-			assertFalse("boss data mentions \"" + banned + "\"", text.contains(banned));
+			// from the start of a word, so "volatile" doesn't count as "tile"
+			assertFalse("boss data mentions \"" + banned + "\"",
+				java.util.regex.Pattern.compile("(?<![a-z])" + java.util.regex.Pattern.quote(banned)).matcher(text).find());
 		}
 	}
 
@@ -375,6 +377,21 @@ public class PrepPlannerTest
 			.build());
 		assertTrue(names(plan).stream().noneMatch(n -> n.startsWith("Venator bow") || n.startsWith("Barrelchest")));
 		assertTrue(plan.getNotes().stream().anyMatch(n -> n.contains("needs charging or repairing")));
+	}
+
+	@Test
+	public void infernoAndMaggotKingSwaps()
+	{
+		// the Inferno: the wiki's blowpipe, barrage weapon and nibbler magic damage, matched whatever the case
+		PrepPlan zuk = planner.plan(request("tzkal-zuk", AttackType.RANGED, owned("Toxic blowpipe", 1,
+			"Eldritch nightmare staff", 1, "Occult necklace", 1, "Shark", 50)).build());
+		assertTrue(names(zuk).containsAll(List.of("Toxic blowpipe", "Eldritch Nightmare staff", "Occult necklace")));
+		assertTrue(zuk.getTips().stream().anyMatch(t -> t.contains("Saradomin brews")));
+		// the Maggot King's larvae: a bow from the wiki's list, not any ranged weapon
+		PrepPlan maggot = planner.plan(request("maggot king", AttackType.MAGIC, owned("Crystal bow", 1, "Rune crossbow", 1,
+			"Shark", 50)).build());
+		assertTrue(names(maggot).contains("Crystal bow"));
+		assertFalse(names(maggot).contains("Rune crossbow"));
 	}
 
 	@Test
