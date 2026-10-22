@@ -328,13 +328,14 @@ public interface BossingBisConfig extends Config
 		name = "Loot tools",
 		description = "Suggest items for what the monster drops: a herb sack for herbs, a rune pouch for "
 			+ "alchables, a bonecrusher for bones and so on. Common drops only counts loot that drops at "
-			+ "least once every " + 64 + " kills on average.",
+			+ "least once every " + 64 + " kills on average. Off by default: boss trips are short, so "
+			+ "the slots go to supplies.",
 		section = prepSection,
 		position = 8
 	)
 	default LootTools lootTools()
 	{
-		return LootTools.ALL;
+		return LootTools.OFF;
 	}
 
 	@ConfigItem(
