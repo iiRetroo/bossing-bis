@@ -291,17 +291,29 @@ public final class PrepPlanner
 		}
 
 		// swaps the wiki recommends for part of the fight: only ones you own, and not already planned
+		// (an uncharged, empty or broken copy can't be fought with, so it isn't carried)
+		OwnedItems usableGear = owned.usableGear();
 		for (PrepData.InventoryItem item : request.isWikiSwitches() ? wikiSwitches : List.<PrepData.InventoryItem>of())
 		{
-			String name = item.exact ? firstOwnedExact(item.names, owned) : firstOwned(item.names, owned);
+			String name = item.exact ? firstOwnedExact(item.names, usableGear) : firstOwned(item.names, usableGear);
 			boolean worn = item.names.stream().anyMatch(request.getWornNames()::contains);
-			if (name == null || worn || item.names.stream().anyMatch(n -> listed(lines, n)))
+			if (worn || item.names.stream().anyMatch(n -> listed(lines, n)))
 			{
 				continue;
 			}
+			if (name == null)
+			{
+				String unusable = item.exact ? firstOwnedExact(item.names, owned) : firstOwned(item.names, owned);
+				if (unusable != null)
+				{
+					notes.add("Your " + unusable + " needs charging or repairing before it can come as a wiki switch ("
+						+ item.note + ").");
+				}
+				continue;
+			}
 			slots += item.stackable
-				? addStack(lines, ids, owned, name, "wiki switch: " + item.note)
-				: addLine(lines, ids, owned, name, 1, "wiki switch: " + item.note, false);
+				? addStack(lines, ids, usableGear, name, "wiki switch: " + item.note)
+				: addLine(lines, ids, usableGear, name, 1, "wiki switch: " + item.note, false);
 		}
 
 		if (info != null && "dragon".equals(info.dragonfire))
@@ -375,11 +387,12 @@ public final class PrepPlanner
 		if (request.isSuggestSpecWeapon() && request.getMonsterHitpoints() >= s.specMinHitpoints && s.specWeapons != null
 			&& (info == null || !info.noDrainSpec))
 		{
+			OwnedItems specGear = owned.usableGear();
 			for (PrepData.SpecWeapon spec : s.specWeapons)
 			{
-				if (owned.owns(spec.name) && !request.getPlannedWeapons().contains(spec.name) && !listed(lines, spec.name))
+				if (specGear.owns(spec.name) && !request.getPlannedWeapons().contains(spec.name) && !listed(lines, spec.name))
 				{
-					slots += addLine(lines, ids, owned, spec.name, 1, "special attack: " + spec.note, false);
+					slots += addLine(lines, ids, specGear, spec.name, 1, "special attack: " + spec.note, false);
 					break;
 				}
 			}
@@ -395,16 +408,6 @@ public final class PrepPlanner
 		{
 			tips.addAll(info.tips);
 		}
-		if (info != null && info.stacks)
-		{
-			runes.other.add("bursting or barraging");
-			String lure = bestType == AttackType.BURST ? firstOwned(s.lureWeapons, owned) : null;
-			if (lure != null)
-			{
-				slots += addStack(lines, ids, owned, lure, "throw one at each monster to gather a stack, then burst it");
-			}
-		}
-
 		slots += addTeleports(lines, ids, owned, locationKeys, tips, request, runes);
 		slots += addRunes(lines, ids, owned, runes, request, notes);
 
@@ -606,12 +609,9 @@ public final class PrepPlanner
 	{
 		/** Purpose to the runes it needs per cast, in the order they were added. */
 		final Map<String, Map<String, Integer>> uses = new LinkedHashMap<>();
-		/** Purposes whose runes aren't listed (bursting or barraging). */
-		final List<String> other = new ArrayList<>();
-
 		boolean isEmpty()
 		{
-			return uses.isEmpty() && other.isEmpty();
+			return uses.isEmpty();
 		}
 
 		List<String> runeTypes()
@@ -690,10 +690,6 @@ public final class PrepPlanner
 						+ (fromStaff.isEmpty() ? "" : "; your staff gives the " + joinAnd(fromStaff)) + ")");
 				}
 			});
-			for (String other : runes.other)
-			{
-				parts.add("runes for " + other);
-			}
 			if (!parts.isEmpty() && !listed(lines, pouch))
 			{
 				slots += addLine(lines, ids, owned, pouch, 1, "with " + joinAnd(parts), false);

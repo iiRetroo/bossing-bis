@@ -179,7 +179,7 @@ class BossingBisPanel extends PluginPanel
 		showInBank.setToolTipText("Filter your bank to the suggested gear and supplies (click again for the full bank)");
 		showInBank.addActionListener(e -> plugin.toggleBankTag());
 		highlightToggle.setFont(FontManager.getRunescapeSmallFont());
-		highlightToggle.setToolTipText("Turn the bank outlines off or on, say if you stop a task part way");
+		highlightToggle.setToolTipText("Turn the bank outlines off or on, say if you stop part way through banking");
 		highlightToggle.addActionListener(e ->
 		{
 			plugin.toggleHighlights();
@@ -431,7 +431,7 @@ class BossingBisPanel extends PluginPanel
 		{
 			if (!outcome.getResults().containsKey(t))
 			{
-				// burst only for bosses whose monsters stack
+				// Burst is SlayerBIS's: no boss here gets a result for it
 				continue;
 			}
 			// with the ammo and spell picked in the panel, so cheaper picks show their real DPS

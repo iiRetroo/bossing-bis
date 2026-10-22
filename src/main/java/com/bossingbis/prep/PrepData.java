@@ -37,8 +37,6 @@ public final class PrepData
 		List<InventoryItem> inventory;
 		String dragonfire;
 		boolean venom;
-		/** Monsters bunch up, so multi-target spells work well. */
-		boolean stacks;
 		/** The boss hits hard enough that combo eating helps. */
 		boolean comboEat;
 		/** The wiki advises against Defence-draining special attacks, so none is suggested. */
@@ -176,8 +174,6 @@ public final class PrepData
 		List<String> wyvernShields;
 		/** Loot type (herbs, seeds, gems, bones, ashes, alchables) to the items that collect it. */
 		Map<String, List<String>> lootTools;
-		/** Cheap throwing weapons to tag monsters and gather them into a stack before bursting, cheapest first. */
-		List<String> lureWeapons;
 		/** Defence-reducing special attack weapons, best first. */
 		List<SpecWeapon> specWeapons;
 		/** A spec weapon is suggested for monsters with at least this much HP. */

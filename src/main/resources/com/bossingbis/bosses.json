@@ -1396,7 +1396,8 @@
     "phantom muspah": {
       "name": "Phantom Muspah",
       "monsters": [
-        "Phantom Muspah"
+        "Phantom Muspah (Ranged)",
+        "Phantom Muspah (Melee)"
       ],
       "wholeFight": true,
       "locations": [

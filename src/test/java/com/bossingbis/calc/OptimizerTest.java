@@ -249,6 +249,8 @@ public class OptimizerTest
 		assertEquals("Post-quest", vorkath.get(0).getVersion());
 		// a plain name brings every version
 		assertEquals(3, resolver.forBoss(List.of("Zulrah")).size());
+		// the Muspah's two forms, not its shield, teleport and post-shield versions
+		assertEquals(2, resolver.forBoss(List.of("Phantom Muspah (Ranged)", "Phantom Muspah (Melee)")).size());
 		List<Monster> dks = resolver.forBoss(List.of("Dagannoth Rex", "Dagannoth Prime", "Dagannoth Supreme"));
 		assertEquals("Dagannoth Rex", dks.get(0).getName());
 		assertEquals(3, dks.size());
